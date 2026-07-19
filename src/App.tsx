@@ -79,7 +79,7 @@ function Hero() {
         <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">
           {reducedMotion ? (
             <img
-              src="/drillship-poster.jpg"
+              src={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
               alt="Offshore drill ship at sunrise — field research environment"
               className="w-full h-full object-cover"
             />
@@ -89,12 +89,12 @@ function Hero() {
               loop
               muted
               playsInline
-              poster="/drillship-poster.jpg"
+              poster={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
               className="w-full h-full object-cover"
               aria-label="Looping footage of an offshore drill ship at sunrise — field research environment"
             >
-              <source src="/drillship-loop.webm" type="video/webm" />
-              <source src="/drillship-loop.mp4" type="video/mp4" />
+              <source src={`${import.meta.env.BASE_URL}drillship-loop.webm`} type="video/webm" />
+              <source src={`${import.meta.env.BASE_URL}drillship-loop.mp4`} type="video/mp4" />
             </video>
           )}
         </div>
