@@ -52,7 +52,9 @@ function Header({ hidden }: { hidden: boolean }) {
   return (
     <header
       onAnimationEnd={() => setIntroDone(true)}
-      className={`sticky top-0 z-20 bg-light px-8 md:px-16 lg:px-24 ${
+      // Intentionally kept at the site's original light tone (#F5F4F0),
+      // one shade lighter than the rest of the page's bg-light (#F2F0EA).
+      className={`sticky top-0 z-20 bg-[#F5F4F0] px-8 md:px-16 lg:px-24 ${
         reducedMotion || introDone ? '' : 'header-drop'
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >

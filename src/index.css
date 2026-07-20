@@ -35,7 +35,7 @@
    otherwise a dark strip lingers at the top after everything else goes light. */
 @keyframes bg-reveal {
   from { background-color: #333333; }
-  to { background-color: #F5F4F0; }
+  to { background-color: #F2F0EA; }
 }
 .bg-reveal {
   animation: bg-reveal 600ms ease-in 3000ms both;
@@ -94,7 +94,7 @@
   body,
   .bg-reveal {
     animation: none !important;
-    background-color: #F5F4F0 !important;
+    background-color: #F2F0EA !important;
   }
   .video-fade-in,
   .headline-fly-in,
