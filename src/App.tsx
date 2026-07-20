@@ -36,6 +36,20 @@ const caseStudies = [
   },
 ]
 
+function IntroOverlay() {
+  const reducedMotion = useReducedMotion()
+  const [done, setDone] = useState(false)
+
+  if (reducedMotion || done) return null
+
+  return (
+    <div
+      className="intro-cover fixed inset-0 z-50 bg-black pointer-events-none"
+      onAnimationEnd={() => setDone(true)}
+    />
+  )
+}
+
 function Placeholder({ label, className = '' }: { label: string; className?: string }) {
   return (
     <div
@@ -46,9 +60,16 @@ function Placeholder({ label, className = '' }: { label: string; className?: str
   )
 }
 
-function Header() {
+function Header({ hidden }: { hidden: boolean }) {
+  const reducedMotion = useReducedMotion()
+  const [introDone, setIntroDone] = useState(false)
   return (
-    <header className="sticky top-0 z-20 bg-light border-b border-text-light/10 px-8 md:px-16 lg:px-24">
+    <header
+      onAnimationEnd={() => setIntroDone(true)}
+      className={`sticky top-0 z-20 bg-light border-b border-text-light/10 px-8 md:px-16 lg:px-24 ${
+        reducedMotion || introDone ? '' : 'header-drop'
+      } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
+    >
       <div className="max-w-7xl mx-auto h-[72px] flex items-center justify-between gap-6">
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
@@ -113,6 +134,7 @@ function Hero() {
 }
 
 function Grid() {
+  const reducedMotion = useReducedMotion()
   const rows = [
     {
       col1: <Placeholder label="Loom thumbnail (~4 min)" className="w-3/4 aspect-video" />,
@@ -135,7 +157,9 @@ function Grid() {
   ]
 
   return (
-    <section className="bg-light px-8 md:px-16 lg:px-24 pb-20">
+    <section
+      className={`bg-light px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? '' : 'section-fade-in'}`}
+    >
       <div className="max-w-7xl mx-auto flex flex-col gap-14">
         {rows.map((row) => (
           <div key={row.label} className="grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8">
@@ -160,15 +184,20 @@ function Divider() {
   )
 }
 
-function CaseStudies() {
+function CaseStudies({ revealed }: { revealed: boolean }) {
+  const reducedMotion = useReducedMotion()
+  const isRevealed = revealed || reducedMotion
   return (
     <section id="case-studies" className="bg-light px-8 md:px-16 lg:px-24 py-20">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {caseStudies.map((cs) => (
+          {caseStudies.map((cs, i) => (
             <div
               key={cs.client}
-              className="border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+              className={`border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
+                isRevealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
+              }`}
+              style={{ transitionDelay: isRevealed && !reducedMotion ? `${i * 180}ms` : '0ms' }}
             >
               <Placeholder label="Screenshot" className="w-full aspect-video mb-2" />
               <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent">
@@ -195,7 +224,7 @@ function CaseStudies() {
 
 function Footer() {
   return (
-    <footer className="bg-light border-t border-text-light/10 px-8 md:px-16 lg:px-24 py-8">
+    <footer id="site-footer" className="bg-light border-t border-text-light/10 px-8 md:px-16 lg:px-24 py-8">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <p className="font-body text-sm text-text-light/60">Andrew Milmoe</p>
         <div className="flex items-center gap-5">
@@ -235,13 +264,45 @@ function Footer() {
 }
 
 export default function App() {
+  const [footerVisible, setFooterVisible] = useState(false)
+  const [caseStudiesRevealed, setCaseStudiesRevealed] = useState(false)
+
+  useEffect(() => {
+    const footerEl = document.getElementById('site-footer')
+    const caseStudiesEl = document.getElementById('case-studies')
+    if (!footerEl || !caseStudiesEl) return
+
+    const footerObserver = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { threshold: 0 }
+    )
+    footerObserver.observe(footerEl)
+
+    const caseStudiesObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCaseStudiesRevealed(true)
+          caseStudiesObserver.disconnect()
+        }
+      },
+      { threshold: 0.5 }
+    )
+    caseStudiesObserver.observe(caseStudiesEl)
+
+    return () => {
+      footerObserver.disconnect()
+      caseStudiesObserver.disconnect()
+    }
+  }, [])
+
   return (
     <main>
-      <Header />
+      <IntroOverlay />
+      <Header hidden={footerVisible} />
       <Hero />
       <Grid />
       <Divider />
-      <CaseStudies />
+      <CaseStudies revealed={caseStudiesRevealed} />
       <Footer />
     </main>
   )

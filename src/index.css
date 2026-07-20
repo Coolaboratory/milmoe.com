@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    font-family: Inter, sans-serif;
+    font-family: 'Public Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -13,5 +13,53 @@
     background-color: #0F1117;
     color: #F0EFE9;
     overflow-x: hidden;
+  }
+}
+
+/* Load-in sequence: black cover fades after 10ms over 400ms */
+@keyframes intro-cover-fade {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.intro-cover {
+  animation: intro-cover-fade 400ms cubic-bezier(0.22, 1, 0.36, 1) 10ms both;
+}
+
+/* Header drops in from above 2s after load */
+@keyframes header-drop {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+.header-drop {
+  animation: header-drop 550ms cubic-bezier(0.25, 1, 0.5, 1) 2000ms both;
+}
+
+/* Header slides away as the footer comes into view; a plain state-driven
+   transition, separate from the one-time load-in keyframe above */
+.header-hidden {
+  transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translateY(-100%);
+}
+
+/* Next section fades in once the header has finished dropping */
+@keyframes section-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.section-fade-in {
+  animation: section-fade-in 500ms ease-out 2550ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-cover,
+  .header-drop,
+  .section-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .header-hidden {
+    transition: none !important;
+    transform: none !important;
   }
 }
