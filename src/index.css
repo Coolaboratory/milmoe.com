@@ -16,22 +16,50 @@
   }
 }
 
-/* Load-in sequence: black cover fades after 500ms over 1000ms */
-@keyframes intro-cover-fade {
-  from { opacity: 1; }
-  to { opacity: 0; }
+/* Load-in sequence, timed in stages:
+   0ms       — page is dark, nothing else visible
+   1000ms    — video fades in (cubic ease) over 1000ms, done at 2000ms
+   3000ms    — background fades from dark to light over 600ms, done at 3600ms
+   4000ms    — header drops down over 550ms, done at 4550ms
+   5000ms    — headline flies in from the left over 600ms, done at 5600ms
+   5600ms+   — Grid rows fade in one at a time, 250ms apart (delays set inline per row) */
+
+/* Hero and Grid section backgrounds: dark on load, transitions to the site's
+   light bg. Applied to both since Grid's top edge is visible in the initial
+   viewport on most screens — only animating Hero left it showing through white. */
+@keyframes bg-reveal {
+  from { background-color: #0F1117; }
+  to { background-color: #F5F4F0; }
 }
-.intro-cover {
-  animation: intro-cover-fade 1000ms cubic-bezier(0.22, 1, 0.36, 1) 500ms both;
+.bg-reveal {
+  animation: bg-reveal 600ms ease-out 3000ms both;
 }
 
-/* Header drops in from above 2s after load */
+/* Drillship video eases in on the dark background before anything else moves */
+@keyframes video-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.video-fade-in {
+  animation: video-fade-in 1000ms cubic-bezier(0.33, 0, 0.2, 1) 1000ms both;
+}
+
+/* Headline flies in from the left once the background has settled */
+@keyframes headline-fly-in {
+  from { opacity: 0; transform: translateX(-160px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.headline-fly-in {
+  animation: headline-fly-in 600ms cubic-bezier(0.22, 1, 0.36, 1) 5000ms both;
+}
+
+/* Header drops in from above */
 @keyframes header-drop {
   from { transform: translateY(-100%); }
   to { transform: translateY(0); }
 }
 .header-drop {
-  animation: header-drop 550ms cubic-bezier(0.25, 1, 0.5, 1) 2000ms both;
+  animation: header-drop 550ms cubic-bezier(0.25, 1, 0.5, 1) 4000ms both;
 }
 
 /* Header slides away as the footer comes into view; a plain state-driven
@@ -41,19 +69,24 @@
   transform: translateY(-100%);
 }
 
-/* Next section fades in once the header has finished dropping */
-@keyframes section-fade-in {
+/* Grid rows fade in one at a time; animation-delay is set inline per row */
+@keyframes row-fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-.section-fade-in {
-  animation: section-fade-in 500ms ease-out 2550ms both;
+.grid-row-fade-in {
+  animation: row-fade-in 450ms ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-cover,
+  .bg-reveal {
+    animation: none !important;
+    background-color: #F5F4F0 !important;
+  }
+  .video-fade-in,
+  .headline-fly-in,
   .header-drop,
-  .section-fade-in {
+  .grid-row-fade-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

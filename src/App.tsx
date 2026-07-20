@@ -36,20 +36,6 @@ const caseStudies = [
   },
 ]
 
-function IntroOverlay() {
-  const reducedMotion = useReducedMotion()
-  const [done, setDone] = useState(false)
-
-  if (reducedMotion || done) return null
-
-  return (
-    <div
-      className="intro-cover fixed inset-0 z-50 bg-black pointer-events-none"
-      onAnimationEnd={() => setDone(true)}
-    />
-  )
-}
-
 function Placeholder({ label, className = '' }: { label: string; className?: string }) {
   return (
     <div
@@ -95,7 +81,9 @@ function Hero() {
   const reducedMotion = useReducedMotion()
 
   return (
-    <section className="bg-light px-8 md:px-16 lg:px-24 pb-16">
+    <section
+      className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
+    >
       <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
         <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">
           {reducedMotion ? (
@@ -111,7 +99,7 @@ function Hero() {
               muted
               playsInline
               poster={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover video-fade-in"
               aria-label="Looping footage of an offshore drill ship at sunrise — field research environment"
             >
               <source src={`${import.meta.env.BASE_URL}drillship-loop.webm`} type="video/webm" />
@@ -120,10 +108,14 @@ function Hero() {
           )}
         </div>
       </div>
-      <div className={`max-w-7xl mx-auto ${reducedMotion ? '' : 'section-fade-in'}`}>
+      <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8">
           <div />
-          <h1 className="md:col-span-2 font-display font-bold text-3xl lg:text-4xl text-text-light leading-snug">
+          <h1
+            className={`md:col-span-2 font-display font-bold text-3xl lg:text-4xl text-text-light leading-snug ${
+              reducedMotion ? '' : 'headline-fly-in'
+            }`}
+          >
             I take early-stage enterprise software from proof of concept to commercial-grade
             global product, in regulated, high-stakes environments.
           </h1>
@@ -158,11 +150,17 @@ function Grid() {
 
   return (
     <section
-      className={`bg-light px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? '' : 'section-fade-in'}`}
+      className={`px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
       <div className="max-w-7xl mx-auto flex flex-col gap-14">
-        {rows.map((row) => (
-          <div key={row.label} className="grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8">
+        {rows.map((row, i) => (
+          <div
+            key={row.label}
+            className={`grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8 ${
+              reducedMotion ? '' : 'grid-row-fade-in'
+            }`}
+            style={reducedMotion ? undefined : { animationDelay: `${5600 + i * 250}ms` }}
+          >
             <div>{row.col1}</div>
             <h2 className="font-display text-lg leading-snug text-text-light">
               <span className="block font-normal">{row.label}</span>
@@ -297,7 +295,6 @@ export default function App() {
 
   return (
     <main>
-      <IntroOverlay />
       <Header hidden={footerVisible} />
       <Hero />
       <Grid />
