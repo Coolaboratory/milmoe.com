@@ -13,7 +13,7 @@
     background-color: #333333;
     color: #F0EFE9;
     overflow-x: hidden;
-    animation: bg-reveal 600ms ease-out 3000ms both;
+    animation: bg-reveal 600ms ease-in 3000ms both;
   }
 }
 
@@ -34,7 +34,7 @@
   to { background-color: #F5F4F0; }
 }
 .bg-reveal {
-  animation: bg-reveal 600ms ease-out 3000ms both;
+  animation: bg-reveal 600ms ease-in 3000ms both;
 }
 
 /* Drillship video eases in on the dark background before anything else moves */
