@@ -7,6 +7,10 @@
     font-family: 'Public Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Reserve scrollbar space permanently so its presence never toggles —
+       otherwise the full-bleed video (sized off 100vw) can shift sideways
+       by the scrollbar's width if it appears/disappears mid-sequence. */
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -44,6 +48,12 @@
 }
 .video-fade-in {
   animation: video-fade-in 1000ms cubic-bezier(0.33, 0, 0.2, 1) 1000ms both;
+  /* Keep the video on its own stable compositing layer for the whole sequence,
+     not just while it's animating — otherwise it gets re-rasterized (and can
+     visibly snap by a pixel) when the Hero/body background animation starts
+     its own layer promotion at 3000ms. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Headline flies in from the left once the background has settled */
