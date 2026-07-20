@@ -281,7 +281,19 @@ function Footer() {
 
 export default function App() {
   const [footerVisible, setFooterVisible] = useState(false)
-  const [caseStudiesRevealed, setCaseStudiesRevealed] = useState(false)
+  const [caseStudiesInView, setCaseStudiesInView] = useState(false)
+  const [loadSequenceDone, setLoadSequenceDone] = useState(false)
+  // Case studies only reveal once BOTH are true — otherwise, on a tall enough
+  // window, the section is already 50% visible at t=0 and would assemble
+  // immediately, well before the rest of the load sequence (background
+  // reveal, header, headline, grid rows) has even run.
+  const caseStudiesRevealed = caseStudiesInView && loadSequenceDone
+
+  useEffect(() => {
+    // Matches the last grid row's fade-in finishing: 5600 + 2*250 delay + 450ms duration
+    const timer = setTimeout(() => setLoadSequenceDone(true), 6600)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const footerEl = document.getElementById('site-footer')
@@ -297,7 +309,7 @@ export default function App() {
     const caseStudiesObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setCaseStudiesRevealed(true)
+          setCaseStudiesInView(true)
           caseStudiesObserver.disconnect()
         }
       },
