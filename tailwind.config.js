@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"IBM Plex Sans"', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        display: ['"Instrument Sans"', 'sans-serif'],
+        body: ['"Public Sans"', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'monospace'],
       },
       colors: {
