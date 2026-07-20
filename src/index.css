@@ -20,7 +20,7 @@
    0ms       — page is dark, nothing else visible
    1000ms    — video fades in (cubic ease) over 1000ms, done at 2000ms
    3000ms    — background fades from dark to light over 600ms, done at 3600ms
-   4000ms    — header drops down over 550ms, done at 4550ms
+   4000ms    — header drops down over 1100ms, done at 5100ms
    5000ms    — headline flies in from the left over 600ms, done at 5600ms
    5600ms+   — Grid rows fade in one at a time, 250ms apart (delays set inline per row) */
 
@@ -59,7 +59,7 @@
   to { transform: translateY(0); }
 }
 .header-drop {
-  animation: header-drop 550ms cubic-bezier(0.25, 1, 0.5, 1) 4000ms both;
+  animation: header-drop 1100ms cubic-bezier(0.25, 1, 0.5, 1) 4000ms both;
 }
 
 /* Header slides away as the footer comes into view; a plain state-driven
