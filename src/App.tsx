@@ -53,7 +53,7 @@ function Header({ hidden }: { hidden: boolean }) {
     <header
       onAnimationEnd={() => setIntroDone(true)}
       // Intentionally kept at the site's original light tone (#F5F4F0),
-      // one shade lighter than the rest of the page's bg-light (#F2F0EA).
+      // same as CaseStudies/Footer — one shade lighter than Hero/Grid's bg-light (#EEECE6).
       className={`sticky top-0 z-20 bg-[#F5F4F0] px-8 md:px-16 lg:px-24 ${
         reducedMotion || introDone ? '' : 'header-drop'
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
@@ -198,7 +198,7 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
   const reducedMotion = useReducedMotion()
   const isRevealed = revealed || reducedMotion
   return (
-    <section id="case-studies" className="bg-light px-8 md:px-16 lg:px-24 py-20">
+    <section id="case-studies" className="bg-[#F5F4F0] px-8 md:px-16 lg:px-24 py-20">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {caseStudies.map((cs, i) => (
@@ -234,7 +234,7 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
 
 function Footer() {
   return (
-    <footer id="site-footer" className="bg-light border-t border-text-light/10 px-8 md:px-16 lg:px-24 py-8">
+    <footer id="site-footer" className="bg-[#F5F4F0] border-t border-text-light/10 px-8 md:px-16 lg:px-24 py-8">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <p className="font-body text-base font-medium text-text-light">Andrew G Milmoe</p>
         <div className="flex items-center gap-5">

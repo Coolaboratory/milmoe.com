@@ -10,7 +10,7 @@ export default {
       },
       colors: {
         dark: '#0F1117',
-        light: '#F2F0EA',
+        light: '#EEECE6',
         'text-dark': '#FAFAFA',
         'text-light': '#212121',
         accent: '#BF6B69',
