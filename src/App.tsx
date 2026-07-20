@@ -56,7 +56,7 @@ function Header({ hidden }: { hidden: boolean }) {
         reducedMotion || introDone ? '' : 'header-drop'
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >
-      <div className="max-w-7xl mx-auto h-9 flex items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto h-12 flex items-center justify-between gap-6">
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
           Chicago Area · Hybrid · andrew@milmoe.com
@@ -192,10 +192,10 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
           {caseStudies.map((cs, i) => (
             <div
               key={cs.client}
-              className={`border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
+              className={`border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-md ${
                 isRevealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
               }`}
-              style={{ transitionDelay: isRevealed && !reducedMotion ? `${i * 180}ms` : '0ms' }}
+              style={{ transitionDelay: isRevealed && !reducedMotion ? `${i * 320}ms` : '0ms' }}
             >
               <Placeholder label="Screenshot" className="w-full aspect-video mb-2" />
               <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent">
