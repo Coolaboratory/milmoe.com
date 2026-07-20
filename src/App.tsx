@@ -120,7 +120,7 @@ function Hero() {
           )}
         </div>
       </div>
-      <div className="max-w-7xl mx-auto">
+      <div className={`max-w-7xl mx-auto ${reducedMotion ? '' : 'section-fade-in'}`}>
         <div className="grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8">
           <div />
           <h1 className="md:col-span-2 font-display font-bold text-3xl lg:text-4xl text-text-light leading-snug">

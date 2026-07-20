@@ -16,13 +16,13 @@
   }
 }
 
-/* Load-in sequence: black cover fades after 10ms over 400ms */
+/* Load-in sequence: black cover fades after 500ms over 1000ms */
 @keyframes intro-cover-fade {
   from { opacity: 1; }
   to { opacity: 0; }
 }
 .intro-cover {
-  animation: intro-cover-fade 400ms cubic-bezier(0.22, 1, 0.36, 1) 10ms both;
+  animation: intro-cover-fade 1000ms cubic-bezier(0.22, 1, 0.36, 1) 500ms both;
 }
 
 /* Header drops in from above 2s after load */
