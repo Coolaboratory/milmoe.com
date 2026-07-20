@@ -62,10 +62,20 @@ function Header({ hidden }: { hidden: boolean }) {
           Chicago Area · Hybrid · andrew@milmoe.com
         </p>
         <nav className="flex items-center gap-5 shrink-0">
-          <a href="#" className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors">
+          <a
+            href="http://www.linkedin.com/in/agmilmoe"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors"
+          >
             LinkedIn
           </a>
-          <a href="#" className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors">
+          <a
+            href={`${import.meta.env.BASE_URL}MilmoeResumeQ3_2026.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors"
+          >
             Résumé
           </a>
           <a href="#case-studies" className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors">
@@ -227,7 +237,9 @@ function Footer() {
         <p className="font-body text-base font-medium text-text-light">Andrew Milmoe</p>
         <div className="flex items-center gap-5">
           <a
-            href="#"
+            href="http://www.linkedin.com/in/agmilmoe"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="LinkedIn"
             className="text-text-light/40 hover:text-accent transition-colors"
           >
@@ -236,7 +248,9 @@ function Footer() {
             </svg>
           </a>
           <a
-            href="#"
+            href={`${import.meta.env.BASE_URL}MilmoeResumeQ3_2026.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="Résumé"
             className="text-text-light/40 hover:text-accent transition-colors"
           >
