@@ -52,7 +52,7 @@ function Header({ hidden }: { hidden: boolean }) {
   return (
     <header
       onAnimationEnd={() => setIntroDone(true)}
-      className={`sticky top-0 z-20 bg-light border-b border-text-light/10 px-8 md:px-16 lg:px-24 ${
+      className={`sticky top-0 z-20 bg-light px-8 md:px-16 lg:px-24 ${
         reducedMotion || introDone ? '' : 'header-drop'
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >
