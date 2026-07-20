@@ -116,8 +116,8 @@ function Hero() {
               reducedMotion ? '' : 'headline-fly-in'
             }`}
           >
-            I take early-stage enterprise software from proof of concept to commercial-grade
-            global product, in regulated, high-stakes environments.
+            I take enterprise software from proof of concept to commercial-grade global product,
+            in regulated, high stakes environments.
           </h1>
         </div>
       </div>
