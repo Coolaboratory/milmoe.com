@@ -48,7 +48,7 @@ function Placeholder({ label, className = '' }: { label: string; className?: str
 
 function Header() {
   return (
-    <header className="sticky top-0 z-20 bg-light/95 backdrop-blur border-b border-text-light/10 px-8 md:px-16 lg:px-24">
+    <header className="sticky top-0 z-20 bg-light border-b border-text-light/10 px-8 md:px-16 lg:px-24">
       <div className="max-w-7xl mx-auto h-[72px] flex items-center justify-between gap-6">
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
@@ -74,7 +74,7 @@ function Hero() {
   const reducedMotion = useReducedMotion()
 
   return (
-    <section className="bg-light px-8 md:px-16 lg:px-24 pt-12 pb-16">
+    <section className="bg-light px-8 md:px-16 lg:px-24 pb-16">
       <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
         <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">
           {reducedMotion ? (
