@@ -240,7 +240,8 @@ function Footer() {
             href="http://www.linkedin.com/in/agmilmoe"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="LinkedIn"
+            title="AGMilmoe LinkedIn"
+            aria-label="AGMilmoe LinkedIn"
             className="text-text-light/40 hover:text-accent transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -251,7 +252,8 @@ function Footer() {
             href={`${import.meta.env.BASE_URL}MilmoeResumeQ3_2026.pdf`}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Résumé"
+            title="AGMilmoe Résumé"
+            aria-label="AGMilmoe Résumé"
             className="text-text-light/40 hover:text-accent transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
@@ -260,7 +262,9 @@ function Footer() {
             </svg>
           </a>
           <a
-            href="mailto:andrew@milmoe.com"
+            href={`mailto:andrew@milmoe.com?subject=${encodeURIComponent(
+              'Reaching out to you from Milmoe.com'
+            )}&body=${encodeURIComponent('Hi Andrew,\n\n')}`}
             aria-label="Email"
             className="text-text-light/40 hover:text-accent transition-colors"
           >
