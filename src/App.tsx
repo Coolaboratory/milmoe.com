@@ -198,13 +198,13 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
   const reducedMotion = useReducedMotion()
   const isRevealed = revealed || reducedMotion
   return (
-    <section id="case-studies" className="bg-[#F5F4F0] px-8 md:px-16 lg:px-24 py-20">
+    <section id="case-studies" className="bg-light px-8 md:px-16 lg:px-24 py-20">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {caseStudies.map((cs, i) => (
             <div
               key={cs.client}
-              className={`border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-md ${
+              className={`bg-[#F5F4F0] border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-md ${
                 isRevealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
               }`}
               style={{ transitionDelay: isRevealed && !reducedMotion ? `${i * 320}ms` : '0ms' }}
