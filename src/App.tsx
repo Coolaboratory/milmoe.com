@@ -48,17 +48,22 @@ function Placeholder({ label, className = '' }: { label: string; className?: str
 
 function Header({ hidden }: { hidden: boolean }) {
   const reducedMotion = useReducedMotion()
-  const [introDone, setIntroDone] = useState(false)
   return (
     <header
-      onAnimationEnd={() => setIntroDone(true)}
-      // Intentionally kept at the site's original light tone (#F5F4F0),
-      // same as CaseStudies/Footer — one shade lighter than Hero/Grid's bg-light (#EEECE6).
-      className={`sticky top-0 z-20 bg-[#F5F4F0] px-8 md:px-16 lg:px-24 ${
-        reducedMotion || introDone ? '' : 'header-drop'
+      // Bar background is intentionally kept at the site's original light tone
+      // (#F5F4F0), same as CaseStudies/Footer — one shade lighter than Hero/Grid's
+      // bg-light (#EEECE6). It reveals on its own timing (see header-bg-reveal) so
+      // it's already settled before the content below drops in — only the type
+      // should appear to descend, not one background color replacing another.
+      className={`sticky top-0 z-20 px-8 md:px-16 lg:px-24 ${
+        reducedMotion ? 'bg-[#F5F4F0]' : 'header-bg-reveal'
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >
-      <div className="max-w-7xl mx-auto h-12 flex items-center justify-between gap-6">
+      <div
+        className={`max-w-7xl mx-auto h-12 flex items-center justify-between gap-6 ${
+          reducedMotion ? '' : 'header-drop'
+        }`}
+      >
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew G Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
           Chicago Area · Hybrid · andrew@milmoe.com

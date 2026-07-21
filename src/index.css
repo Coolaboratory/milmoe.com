@@ -17,14 +17,14 @@
     background-color: #333333;
     color: #F0EFE9;
     overflow-x: hidden;
-    animation: bg-reveal 600ms ease-in 3000ms both;
+    animation: bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
   }
 }
 
 /* Load-in sequence, timed in stages:
    0ms       — page is dark, nothing else visible
    1000ms    — video fades in (cubic ease) over 1000ms, done at 2000ms
-   3000ms    — background fades from dark to light over 600ms, done at 3600ms
+   3000ms    — background fades from dark to light over 1100ms, done at 4100ms
    4000ms    — header drops down over 1100ms, done at 5100ms
    5000ms    — headline flies in from the left over 600ms, done at 5600ms
    5600ms+   — Grid rows fade in one at a time, 250ms apart (delays set inline per row) */
@@ -32,13 +32,26 @@
 /* Dark-to-light background reveal. Applied to Hero, Grid, and body itself —
    body's own background is what shows through the header's reserved space
    while it's still translated off-screen, so it needs to fade in sync too,
-   otherwise a dark strip lingers at the top after everything else goes light. */
+   otherwise a dark strip lingers at the top after everything else goes light.
+   Eases in slow, then softens again near the end rather than snapping to full speed. */
 @keyframes bg-reveal {
   from { background-color: #333333; }
   to { background-color: #EEECE6; }
 }
 .bg-reveal {
-  animation: bg-reveal 600ms ease-in 3000ms both;
+  animation: bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
+}
+
+/* Header's own bar reveals to the same light tone the header itself already
+   uses (#F5F4F0), not the page's darker #EEECE6 — otherwise when the header
+   drops in at 4000ms, its lighter rectangle visibly "replaces" a differently
+   -toned area instead of the type simply descending into an already-settled bar. */
+@keyframes header-bg-reveal {
+  from { background-color: #333333; }
+  to { background-color: #F5F4F0; }
+}
+.header-bg-reveal {
+  animation: header-bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
 }
 
 /* Drillship video eases in on the dark background before anything else moves */
@@ -95,6 +108,10 @@
   .bg-reveal {
     animation: none !important;
     background-color: #EEECE6 !important;
+  }
+  .header-bg-reveal {
+    animation: none !important;
+    background-color: #F5F4F0 !important;
   }
   .video-fade-in,
   .headline-fly-in,
