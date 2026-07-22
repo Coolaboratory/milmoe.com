@@ -78,7 +78,7 @@ function Header({ hidden }: { hidden: boolean }) {
       >
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew G Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
-          Chicago Area / Hybrid{' '}Andrew@Milmoe.com
+          Chicago Area / Hybrid{'   '}Andrew@Milmoe.com
         </p>
         <nav className="flex items-center gap-5 shrink-0">
           <a
