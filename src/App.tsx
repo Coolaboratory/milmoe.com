@@ -129,7 +129,7 @@ function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8">
           <div />
           <h1
-            className={`md:col-span-2 font-display font-bold text-3xl lg:text-4xl text-text-light leading-snug ${
+            className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
               reducedMotion ? '' : 'headline-fly-in'
             }`}
           >
