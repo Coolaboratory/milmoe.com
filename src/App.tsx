@@ -72,7 +72,7 @@ function Header({ hidden }: { hidden: boolean }) {
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >
       <div
-        className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[calc(100%/3_+_8px)_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
+        className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
           reducedMotion ? '' : 'header-drop'
         }`}
       >
@@ -138,7 +138,7 @@ function Hero() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_8px)_0.75fr_1.5fr] gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
           <div />
           <h1
             className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
@@ -181,14 +181,14 @@ function Grid() {
     <section
       className={`px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[calc(100%/3_+_8px)_0.75fr_1.5fr] md:grid-rows-3 gap-8 md:gap-y-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] md:grid-rows-3 gap-8 md:gap-y-10">
         <div
           className={`md:row-span-3 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
           style={reducedMotion ? undefined : { animationDelay: '5600ms' }}
         >
           <Placeholder
             label="Loom thumbnail (~4 min)"
-            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_90px)] aspect-video"
+            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_91px)] aspect-video"
           />
         </div>
         {rows.map((row, i) => (
