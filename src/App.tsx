@@ -12,6 +12,20 @@ function useReducedMotion() {
   return reduced
 }
 
+// Matches Tailwind's `md` breakpoint (768px) — the same desktop-only-enhancement
+// convention already used elsewhere on this page.
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    setIsDesktop(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return isDesktop
+}
+
 const caseStudies = [
   {
     industry: 'ENERGY',
@@ -108,35 +122,61 @@ function Header({ hidden }: { hidden: boolean }) {
 
 function Hero() {
   const reducedMotion = useReducedMotion()
+  const isDesktop = useIsDesktop()
+  // Pinned-video parallax is a desktop-only enhancement (same convention as
+  // the rest of the page) and is skipped entirely under reduced motion, both
+  // of which fall back to today's normal in-flow layout, no fixed positioning.
+  const parallaxActive = !reducedMotion && isDesktop
+
+  const videoBlock = reducedMotion ? (
+    <img
+      src={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
+      alt="Offshore drill ship at sunrise — field research environment"
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      poster={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
+      className="w-full h-full object-cover video-fade-in"
+      aria-label="Looping footage of an offshore drill ship at sunrise — field research environment"
+    >
+      <source src={`${import.meta.env.BASE_URL}drillship-loop.webm`} type="video/webm" />
+      <source src={`${import.meta.env.BASE_URL}drillship-loop.mp4`} type="video/mp4" />
+    </video>
+  )
 
   return (
     <section
-      className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
+      className={`px-8 md:px-16 lg:px-24 pb-16 ${
+        parallaxActive ? '' : reducedMotion ? 'bg-light' : 'bg-reveal'
+      }`}
     >
-      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
-        <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">
-          {reducedMotion ? (
-            <img
-              src={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
-              alt="Offshore drill ship at sunrise — field research environment"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              poster={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
-              className="w-full h-full object-cover video-fade-in"
-              aria-label="Looping footage of an offshore drill ship at sunrise — field research environment"
-            >
-              <source src={`${import.meta.env.BASE_URL}drillship-loop.webm`} type="video/webm" />
-              <source src={`${import.meta.env.BASE_URL}drillship-loop.mp4`} type="video/mp4" />
-            </video>
-          )}
+      {parallaxActive ? (
+        <>
+          {/* Pinned background layer: fixed to the viewport, behind everything
+              (-z-10), same box (aspect-[3/1], capped at 480px) as the in-flow
+              version below so it reads identically while the page is still at
+              scrollTop 0. */}
+          <div className="fixed top-0 left-0 w-screen aspect-[3/1] max-h-[480px] overflow-hidden -z-10">
+            {videoBlock}
+          </div>
+          {/* Invisible spacer: reserves the exact same box in normal flow so
+              removing the video from flow (now `fixed`) doesn't collapse the
+              page's scroll height or cause content below to jump up. */}
+          <div
+            className="relative left-1/2 right-1/2 -mx-[50vw] w-screen aspect-[3/1] max-h-[480px] mb-10"
+            aria-hidden="true"
+          />
+        </>
+      ) : (
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
+          <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">{videoBlock}</div>
         </div>
-      </div>
+      )}
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
           <div />
@@ -321,6 +361,7 @@ function Footer() {
 }
 
 export default function App() {
+  const reducedMotion = useReducedMotion()
   const [footerVisible, setFooterVisible] = useState(false)
   const [caseStudiesInView, setCaseStudiesInView] = useState(false)
   const [loadSequenceDone, setLoadSequenceDone] = useState(false)
@@ -335,6 +376,19 @@ export default function App() {
     const timer = setTimeout(() => setLoadSequenceDone(true), 6600)
     return () => clearTimeout(timer)
   }, [])
+
+  // Scroll is locked ("the fireworks") until the full entrance choreography —
+  // video fade-in, dark-to-light bg reveal, header drop, headline fly-in, and
+  // the Grid row fade-ins — has finished, so it can't be scrolled past
+  // mid-sequence. Skipped entirely under reduced motion, where there's no
+  // sequence to protect. This is the one Andrew's only ~90% sure on and wants
+  // to test live, so it's kept to this single derived boolean on purpose —
+  // add `&& isDesktop` (see useIsDesktop above) to also exempt mobile, or
+  // delete the effect below, if it doesn't feel right once he's scrolling it.
+  const scrollLocked = !reducedMotion && !loadSequenceDone
+  useEffect(() => {
+    document.documentElement.style.overflow = scrollLocked ? 'hidden' : ''
+  }, [scrollLocked])
 
   useEffect(() => {
     const footerEl = document.getElementById('site-footer')
