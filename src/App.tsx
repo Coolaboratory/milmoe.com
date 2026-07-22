@@ -232,9 +232,10 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {caseStudies.map((cs, i) => (
-            <div
+            <a
               key={cs.client}
-              className={`bg-[#F5F4F0] border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-md ${
+              href={cs.href}
+              className={`bg-[#F5F4F0] border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-500 hover:-translate-y-[3px] hover:shadow-md ${
                 isRevealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
               }`}
               style={{ transitionDelay: isRevealed && !reducedMotion ? `${i * 320}ms` : '0ms' }}
@@ -259,13 +260,7 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
               <p className="font-body text-[15px] leading-relaxed flex-1 text-text-light/70">
                 {cs.hook}
               </p>
-              <a
-                href={cs.href}
-                className="font-body text-sm text-accent hover:text-accent/80 transition-colors"
-              >
-                View case study →
-              </a>
-            </div>
+            </a>
           ))}
         </div>
       </div>
