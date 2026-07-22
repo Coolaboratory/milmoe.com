@@ -72,14 +72,13 @@ function Header({ hidden }: { hidden: boolean }) {
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >
       <div
-        className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[1fr_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
+        className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[calc(100%/3_+_8px)_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
           reducedMotion ? '' : 'header-drop'
         }`}
       >
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew G Milmoe</p>
-        <p className="font-body text-[13px] text-text-light/60 hidden md:inline-flex md:gap-x-[4.5em]">
-          <span>Chicago Area / Hybrid</span>
-          <span>Andrew@Milmoe.com</span>
+        <p className="font-body text-[13px] text-text-light/60 hidden md:block">
+          <span className="whitespace-nowrap">Chicago Area / Hybrid</span>{'     '}Andrew@Milmoe.com
         </p>
         <nav className="flex items-center gap-5 shrink-0 md:justify-self-end">
           <a
@@ -139,7 +138,7 @@ function Hero() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_8px)_0.75fr_1.5fr] gap-8">
           <div />
           <h1
             className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
