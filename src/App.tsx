@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -146,22 +146,22 @@ function Grid() {
   const reducedMotion = useReducedMotion()
   const rows = [
     {
-      col1: <Placeholder label="Loom thumbnail (~4 min)" className="w-3/4 aspect-video" />,
-      label: 'My approach',
+      label: 'How',
       value: 'Systems level thinking',
-      body: 'I work above the pixel level: field research, product roadmap influence, and rapid prototyping to reduce business risk through usability and user testing. I bring insights back from the field to drive product direction — not just execute briefs.',
+      body: 'UI design is the last 5% of the job. I spend the other 95% on field research, roadmap influence, and rapid prototyping, making sure the problem is right before anything ships. I bring insights back from the field to drive product direction, not just execute briefs.',
+      rowStart: 'md:row-start-1',
     },
     {
-      col1: null,
-      label: 'Where I do it',
+      label: 'Where',
       value: 'Regulated, high-stakes environments',
       body: 'Healthcare (HIPAA), aerospace (ITAR), and industrial IoT. Frontline workers whose tools need to disappear — software that enables them to focus on the work that matters, not the system gathering their data.',
+      rowStart: 'md:row-start-2',
     },
     {
-      col1: null,
-      label: 'Current differentiator',
+      label: 'What',
       value: 'AI fluency',
-      body: 'Not aspirational. Already in practice: used BlueGPT at Blue Origin to automate RegEx queries and explore enterprise adoption. Built this site using Claude for strategy and design. Designing for AI-assisted workflows including systems where users must learn to trust the insights the system presents.',
+      body: 'Not aspirational. Already in practice: used BlueGPT at Blue Origin to automate RegEx queries and explore enterprise adoption. Built this site end to end, strategy, design, and code, with Claude Code. Designing for AI-assisted workflows including systems where users must learn to trust the insights the system presents.',
+      rowStart: 'md:row-start-3',
     },
   ]
 
@@ -169,22 +169,35 @@ function Grid() {
     <section
       className={`px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
-      <div className="max-w-7xl mx-auto flex flex-col gap-14">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] md:grid-rows-3 gap-8 md:gap-y-10">
+        <div
+          className={`md:row-span-3 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
+          style={reducedMotion ? undefined : { animationDelay: '5600ms' }}
+        >
+          <Placeholder label="Loom thumbnail (~4 min)" className="w-3/4 aspect-video" />
+        </div>
         {rows.map((row, i) => (
-          <div
-            key={row.label}
-            className={`grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] gap-8 ${
-              reducedMotion ? '' : 'grid-row-fade-in'
-            }`}
-            style={reducedMotion ? undefined : { animationDelay: `${5600 + i * 250}ms` }}
-          >
-            <div>{row.col1}</div>
-            <h2 className="font-display text-lg leading-snug text-text-light">
-              <span className="block font-normal">{row.label}</span>
-              <span className="block font-semibold">{row.value}</span>
+          <Fragment key={row.label}>
+            <h2
+              className={`${row.rowStart} md:col-start-2 font-display text-lg leading-snug text-text-light ${
+                reducedMotion ? '' : 'grid-row-fade-in'
+              }`}
+              style={reducedMotion ? undefined : { animationDelay: `${5600 + i * 250}ms` }}
+            >
+              <span className="block text-[11px] font-medium tracking-widest uppercase text-accent">
+                {row.label}
+              </span>
+              <span className="block font-semibold mt-1">{row.value}</span>
             </h2>
-            <p className="font-body text-[15px] text-text-light/70 leading-relaxed">{row.body}</p>
-          </div>
+            <p
+              className={`${row.rowStart} md:col-start-3 font-body text-[15px] text-text-light/70 leading-relaxed ${
+                reducedMotion ? '' : 'grid-row-fade-in'
+              }`}
+              style={reducedMotion ? undefined : { animationDelay: `${5600 + i * 250}ms` }}
+            >
+              {row.body}
+            </p>
+          </Fragment>
         ))}
       </div>
     </section>
