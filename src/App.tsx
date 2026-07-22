@@ -182,7 +182,7 @@ function Grid() {
     <section
       className={`px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[1fr_0.75fr_1.5fr] md:grid-rows-3 gap-8 md:gap-y-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[calc(100%/3_+_8px)_0.75fr_1.5fr] md:grid-rows-3 gap-8 md:gap-y-10">
         <div
           className={`md:row-span-3 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
           style={reducedMotion ? undefined : { animationDelay: '5600ms' }}
