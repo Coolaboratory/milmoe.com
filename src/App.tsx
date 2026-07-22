@@ -72,7 +72,7 @@ function Header({ hidden }: { hidden: boolean }) {
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >
       <div
-        className={`max-w-7xl mx-auto h-12 flex items-center justify-between gap-6 ${
+        className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[1fr_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
           reducedMotion ? '' : 'header-drop'
         }`}
       >
@@ -81,7 +81,7 @@ function Header({ hidden }: { hidden: boolean }) {
           <span>Chicago Area / Hybrid</span>
           <span>Andrew@Milmoe.com</span>
         </p>
-        <nav className="flex items-center gap-5 shrink-0">
+        <nav className="flex items-center gap-5 shrink-0 md:justify-self-end">
           <a
             href="http://www.linkedin.com/in/agmilmoe"
             target="_blank"
