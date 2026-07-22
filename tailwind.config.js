@@ -8,6 +8,9 @@ export default {
         body: ['"Public Sans"', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'monospace'],
       },
+      fontSize: {
+        subhead: ['20px', '26px'],
+      },
       colors: {
         dark: '#0F1117',
         light: '#EEECE6',

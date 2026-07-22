@@ -192,7 +192,7 @@ function Grid() {
         {rows.map((row, i) => (
           <Fragment key={row.label}>
             <h2
-              className={`${row.rowStart} md:col-start-2 font-display text-lg leading-snug text-text-light ${
+              className={`${row.rowStart} md:col-start-2 font-display text-subhead text-text-light ${
                 reducedMotion ? '' : 'grid-row-fade-in'
               }`}
               style={reducedMotion ? undefined : { animationDelay: `${5600 + i * 250}ms` }}
@@ -250,7 +250,7 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
                 {cs.industry}
               </p>
               <div className="flex items-center justify-between gap-4">
-                <h3 className="font-display text-2xl font-semibold text-text-light">{cs.client}</h3>
+                <h3 className="font-display text-subhead font-semibold text-text-light">{cs.client}</h3>
                 <img
                   src={`${import.meta.env.BASE_URL}${cs.logo}`}
                   alt={cs.logoAlt}
