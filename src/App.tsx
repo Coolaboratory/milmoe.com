@@ -186,7 +186,10 @@ function Grid() {
           className={`md:row-span-3 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
           style={reducedMotion ? undefined : { animationDelay: '5600ms' }}
         >
-          <Placeholder label="Loom thumbnail (~4 min)" className="w-3/4 aspect-video" />
+          <Placeholder
+            label="Loom thumbnail (~4 min)"
+            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_90px)] aspect-video"
+          />
         </div>
         {rows.map((row, i) => (
           <Fragment key={row.label}>
