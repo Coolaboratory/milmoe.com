@@ -19,6 +19,10 @@ const caseStudies = [
     role: 'Sr. Staff UX Product Designer',
     hook: 'A prototype two engineers built became a product the sales team led with. $180M in service contracts; time to data access for field engineers dropped from 8 hours to 15 minutes.',
     href: '/work/ge-digital/',
+    logo: 'ge-digital-logo.png',
+    logoAlt: 'GE Digital logo',
+    image: 'ge-digital-work.jpg',
+    imageAlt: 'GE Digital product screenshot',
   },
   {
     industry: 'AEROSPACE',
@@ -26,6 +30,10 @@ const caseStudies = [
     role: 'Lead User Experience Designer',
     hook: 'Rocket engineers were copying and pasting between siloed applications. I proposed and shipped a unified data insights pipeline.',
     href: '/work/blue-origin/',
+    logo: 'blue-origin-logo.png',
+    logoAlt: 'Blue Origin logo',
+    image: 'blue-origin-work.jpg',
+    imageAlt: 'Blue Origin product screenshot',
   },
   {
     industry: 'HEALTHCARE',
@@ -33,6 +41,10 @@ const caseStudies = [
     role: 'Principal UX Product Designer',
     hook: 'HIPAA-compliant telehealth portal, concept to launch in 60 days, built for frontline clinical staff.',
     href: '/work/ontrak/',
+    logo: 'ontrak-health-logo.png',
+    logoAlt: 'Ontrak Health logo',
+    image: 'ontrak-health-work.jpg',
+    imageAlt: 'Ontrak Health product screenshot',
   },
 ]
 
@@ -227,11 +239,22 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
               }`}
               style={{ transitionDelay: isRevealed && !reducedMotion ? `${i * 320}ms` : '0ms' }}
             >
-              <Placeholder label="Screenshot" className="w-full aspect-video mb-2" />
+              <img
+                src={`${import.meta.env.BASE_URL}${cs.image}`}
+                alt={cs.imageAlt}
+                className="w-full aspect-video object-cover rounded-sm mb-2"
+              />
               <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent">
                 {cs.industry}
               </p>
-              <h3 className="font-display text-2xl font-semibold text-text-light">{cs.client}</h3>
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="font-display text-2xl font-semibold text-text-light">{cs.client}</h3>
+                <img
+                  src={`${import.meta.env.BASE_URL}${cs.logo}`}
+                  alt={cs.logoAlt}
+                  className="h-6 w-auto object-contain shrink-0"
+                />
+              </div>
               <p className="font-body text-[13px] text-text-light/50">{cs.role}</p>
               <p className="font-body text-[15px] leading-relaxed flex-1 text-text-light/70">
                 {cs.hook}
