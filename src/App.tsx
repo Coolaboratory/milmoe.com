@@ -66,7 +66,7 @@ function Header({ hidden }: { hidden: boolean }) {
       >
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew G Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
-          Chicago Area · Hybrid · andrew@milmoe.com
+          Chicago Area / Hybrid{' '}Andrew@Milmoe.com
         </p>
         <nav className="flex items-center gap-5 shrink-0">
           <a
@@ -83,10 +83,10 @@ function Header({ hidden }: { hidden: boolean }) {
             rel="noopener noreferrer"
             className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors"
           >
-            Résumé
+            Resume
           </a>
           <a href="#case-studies" className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors">
-            Case Studies
+            Work
           </a>
         </nav>
       </div>
@@ -259,8 +259,8 @@ function Footer() {
             href={`${import.meta.env.BASE_URL}MilmoeResumeQ3_2026.pdf`}
             target="_blank"
             rel="noopener noreferrer"
-            title="AGMilmoe Résumé"
-            aria-label="AGMilmoe Résumé"
+            title="AGMilmoe Resume"
+            aria-label="AGMilmoe Resume"
             className="text-text-light/40 hover:text-accent transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
