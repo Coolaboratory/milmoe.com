@@ -152,17 +152,34 @@ function Hero() {
   return (
     <>
       {/* Video: its natural hero size and position (full-bleed width,
-          aspect-[3/1] capped at 480px) — the only thing that changes is
+          capped at 480px tall) — the only thing that changes is
           `position: fixed` instead of scrolling with the page. Sits outside
           Hero's own section so Hero's opaque background never paints over
           it; at rest (scroll 0) this looks identical to the pre-parallax
-          page: video on top, headline directly below. `inset-x-0` (rather
-          than `w-screen`) stretches it to the true viewport width via
-          left/right, sidestepping the 100vw vs. actual-viewport-width
-          mismatch `w-screen` can hit. */}
+          page: video on top, headline directly below. `left-0 w-full` (a
+          hard-definite 100% of the fixed box's containing block, i.e. the
+          viewport) rather than `inset-x-0` (a stretched width) or `w-screen`
+          (100vw, which mismatches the true viewport width when a scrollbar
+          is present).
+          Height is deliberately `min(100vw/3, 480px)` rather than the
+          `aspect-[3/1] max-h-[480px]` pairing used everywhere else on this
+          page: on a `position: fixed` box specifically, WebKit's
+          aspect-ratio-vs-max-height sizing algorithm recomputes width FROM
+          the max-height-clamped height (480 * 3 = 1440px) instead of
+          keeping it stretched to the viewport, freezing the video's width
+          at 1440px on wider screens — confirmed via Playwright, reproduced
+          even with an explicit `width: 100%` in place of the stretch-fit.
+          Computing height directly via viewport units sidesteps the
+          aspect-ratio property (and its cross-axis recompute) entirely, so
+          width always tracks the viewport uncapped, only height clamps.
+          `top-12` pins the video's visible top edge to the sticky Header's
+          bottom edge (Header is h-12 = 48px) rather than the true viewport
+          top, so it isn't partly hidden behind the opaque header — its
+          painted box then exactly coincides with the spacer's flow box
+          below. */}
       {parallaxActive ? (
         <>
-          <div className="fixed inset-x-0 top-0 aspect-[3/1] max-h-[480px] overflow-hidden -z-10">
+          <div className="fixed left-0 top-12 w-full h-[min(calc(100vw/3),480px)] overflow-hidden -z-10">
             {videoBlock}
           </div>
           {/* Invisible spacer, same full-bleed box: reserves the flow space
