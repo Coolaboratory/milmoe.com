@@ -12,20 +12,6 @@ function useReducedMotion() {
   return reduced
 }
 
-// Matches Tailwind's `md` breakpoint (768px) — the same desktop-only-enhancement
-// convention already used elsewhere on this page.
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false)
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)')
-    setIsDesktop(mq.matches)
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
-  return isDesktop
-}
-
 const caseStudies = [
   {
     industry: 'ENERGY',
@@ -74,16 +60,6 @@ function Placeholder({ label, className = '' }: { label: string; className?: str
 
 function Header({ hidden }: { hidden: boolean }) {
   const reducedMotion = useReducedMotion()
-  // The `header-drop` entrance animation leaves this div's computed `transform`
-  // at the identity matrix (via `animation-fill-mode: both`) forever after it
-  // finishes, rather than reverting to `transform: none`. A lingering non-`none`
-  // transform on a normal-flow child of a `position: sticky` parent can keep
-  // that child pinned to its own leftover compositing layer instead of the
-  // sticky parent's box, desyncing the two during scroll — a known WebKit sticky
-  // + animated-transform interaction. Once the one-time entrance animation is
-  // done, drop the class entirely so the computed transform goes back to a true
-  // `none` and the div is an entirely plain sticky-parent child again.
-  const [dropAnimationDone, setDropAnimationDone] = useState(false)
   return (
     <header
       // Bar background is intentionally kept at the site's original light tone
@@ -97,9 +73,8 @@ function Header({ hidden }: { hidden: boolean }) {
     >
       <div
         className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
-          reducedMotion || dropAnimationDone ? '' : 'header-drop'
+          reducedMotion ? '' : 'header-drop'
         }`}
-        onAnimationEnd={() => setDropAnimationDone(true)}
       >
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew G Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
@@ -133,95 +108,49 @@ function Header({ hidden }: { hidden: boolean }) {
 
 function Hero() {
   const reducedMotion = useReducedMotion()
-  const isDesktop = useIsDesktop()
-  // Pinned-video parallax is a desktop-only enhancement (same convention as
-  // the rest of the page) and is skipped entirely under reduced motion, both
-  // of which fall back to today's normal in-flow layout, no fixed positioning.
-  const parallaxActive = !reducedMotion && isDesktop
-
-  const videoBlock = reducedMotion ? (
-    <img
-      src={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
-      alt="Offshore drill ship at sunrise — field research environment"
-      className="w-full h-full object-cover"
-    />
-  ) : (
-    <video
-      autoPlay
-      loop
-      muted
-      playsInline
-      poster={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
-      className="w-full h-full object-cover video-fade-in"
-      aria-label="Looping footage of an offshore drill ship at sunrise — field research environment"
-    >
-      <source src={`${import.meta.env.BASE_URL}drillship-loop.webm`} type="video/webm" />
-      <source src={`${import.meta.env.BASE_URL}drillship-loop.mp4`} type="video/mp4" />
-    </video>
-  )
 
   return (
-    <>
-      {/* Video: its natural hero size and position (full-bleed width,
-          capped at 480px tall) — the only thing that changes is
-          `position: fixed` instead of scrolling with the page. Sits outside
-          Hero's own section so Hero's opaque background never paints over
-          it; at rest (scroll 0) this looks identical to the pre-parallax
-          page: video on top, headline directly below. `left-0 w-full` (a
-          hard-definite 100% of the fixed box's containing block, i.e. the
-          viewport) rather than `inset-x-0` (a stretched width) or `w-screen`
-          (100vw, which mismatches the true viewport width when a scrollbar
-          is present).
-          Height is deliberately `min(100vw/3, 480px)` rather than the
-          `aspect-[3/1] max-h-[480px]` pairing used everywhere else on this
-          page: on a `position: fixed` box specifically, WebKit's
-          aspect-ratio-vs-max-height sizing algorithm recomputes width FROM
-          the max-height-clamped height (480 * 3 = 1440px) instead of
-          keeping it stretched to the viewport, freezing the video's width
-          at 1440px on wider screens — confirmed via Playwright, reproduced
-          even with an explicit `width: 100%` in place of the stretch-fit.
-          Computing height directly via viewport units sidesteps the
-          aspect-ratio property (and its cross-axis recompute) entirely, so
-          width always tracks the viewport uncapped, only height clamps.
-          `top-12` pins the video's visible top edge to the sticky Header's
-          bottom edge (Header is h-12 = 48px) rather than the true viewport
-          top, so it isn't partly hidden behind the opaque header — its
-          painted box then exactly coincides with the spacer's flow box
-          below. */}
-      {parallaxActive ? (
-        <>
-          <div className="fixed left-0 top-12 w-full h-[min(calc(100vw/3),480px)] overflow-hidden -z-10">
-            {videoBlock}
-          </div>
-          {/* Invisible spacer, same full-bleed box: reserves the flow space
-              the now-fixed video no longer occupies, so scroll height and
-              the headline's position below it are unaffected. */}
-          <div
-            className="relative left-1/2 right-1/2 -mx-[50vw] w-screen aspect-[3/1] max-h-[480px] mb-10"
-            aria-hidden="true"
-          />
-        </>
-      ) : (
-        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
-          <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">{videoBlock}</div>
-        </div>
-      )}
-      <section className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
-            <div />
-            <h1
-              className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
-                reducedMotion ? '' : 'headline-fly-in'
-              }`}
+    <section
+      className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
+    >
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
+        <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">
+          {reducedMotion ? (
+            <img
+              src={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
+              alt="Offshore drill ship at sunrise — field research environment"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
+              className="w-full h-full object-cover video-fade-in"
+              aria-label="Looping footage of an offshore drill ship at sunrise — field research environment"
             >
-              I take enterprise software from proof of concept to commercial-grade global product,
-              in regulated, high stakes environments.
-            </h1>
-          </div>
+              <source src={`${import.meta.env.BASE_URL}drillship-loop.webm`} type="video/webm" />
+              <source src={`${import.meta.env.BASE_URL}drillship-loop.mp4`} type="video/mp4" />
+            </video>
+          )}
         </div>
-      </section>
-    </>
+      </div>
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
+          <div />
+          <h1
+            className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
+              reducedMotion ? '' : 'headline-fly-in'
+            }`}
+          >
+            I take enterprise software from proof of concept to commercial-grade global product,
+            in regulated, high stakes environments.
+          </h1>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -392,7 +321,6 @@ function Footer() {
 }
 
 export default function App() {
-  const reducedMotion = useReducedMotion()
   const [footerVisible, setFooterVisible] = useState(false)
   const [caseStudiesInView, setCaseStudiesInView] = useState(false)
   const [loadSequenceDone, setLoadSequenceDone] = useState(false)
@@ -407,27 +335,6 @@ export default function App() {
     const timer = setTimeout(() => setLoadSequenceDone(true), 6600)
     return () => clearTimeout(timer)
   }, [])
-
-  // Scroll is locked only through the initial dark-to-light "fade to white"
-  // (see `bg-reveal` in index.css: 1100ms animation starting at a 3000ms
-  // delay, so it completes at 4100ms) — before the header drops in or the
-  // headline flies in, per Andrew's ask. This is deliberately a separate,
-  // shorter timer from `loadSequenceDone` above (which stays 6600ms, gating
-  // only the CaseStudies reveal, untouched). Skipped entirely under reduced
-  // motion, where there's no sequence to protect. Andrew's only ~90% sure on
-  // keeping a scroll lock at all, so it's kept to this single derived
-  // boolean on purpose — add `&& isDesktop` (see useIsDesktop above) to also
-  // exempt mobile, or delete the effect below, if it doesn't feel right once
-  // he's scrolling it.
-  const [bgRevealDone, setBgRevealDone] = useState(false)
-  useEffect(() => {
-    const timer = setTimeout(() => setBgRevealDone(true), 4100)
-    return () => clearTimeout(timer)
-  }, [])
-  const scrollLocked = !reducedMotion && !bgRevealDone
-  useEffect(() => {
-    document.documentElement.style.overflow = scrollLocked ? 'hidden' : ''
-  }, [scrollLocked])
 
   useEffect(() => {
     const footerEl = document.getElementById('site-footer')
