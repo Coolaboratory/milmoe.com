@@ -160,19 +160,19 @@ function Grid() {
     {
       label: 'How',
       value: 'Systems level thinking',
-      body: 'UI design is the last 5% of the job. I spend the other 95% on field research, roadmap influence, and rapid prototyping, making sure the problem is right before anything ships. I bring insights back from the field to drive product direction, not just execute briefs.',
+      body: 'UI design is the last 5% of the job. It begins with on-site field research and rapid prototyping to test assumptions with frontline workers before we start coding. These insights shape the roadmap, reducing the risk of building features no one needs.',
       rowStart: 'md:row-start-1',
     },
     {
       label: 'Where',
       value: 'Regulated, high-stakes environments',
-      body: 'Healthcare (HIPAA), aerospace (ITAR), and industrial IoT. Frontline workers whose tools need to disappear — software that enables them to focus on the work that matters, not the system gathering their data.',
+      body: 'Enterprise customers in industrial IoT, aerospace (ITAR), and healthcare (HIPAA) need fleet-wide visibility into the outcomes their frontline workers produce. As veteran specialists retire, their tools need to carry decades of expertise forward to the newly trained engineers and nurses stepping into their roles, so both can focus on the work, not the paperwork.',
       rowStart: 'md:row-start-2',
     },
     {
       label: 'What',
       value: 'AI fluency',
-      body: 'Not aspirational. Already in practice: used BlueGPT at Blue Origin to automate RegEx queries and explore enterprise adoption. Built this site end to end, strategy, design, and code, with Claude Code. Designing for AI-assisted workflows including systems where users must learn to trust the insights the system presents.',
+      body: 'A decade working alongside ML and data science teams, translating research-grade output into business outcomes. Currently training frontier models to generate UI designs on contract. Built this site end to end, strategy, design, and code, with Claude Code.',
       rowStart: 'md:row-start-3',
     },
   ]
