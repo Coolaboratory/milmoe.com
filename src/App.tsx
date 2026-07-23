@@ -74,6 +74,16 @@ function Placeholder({ label, className = '' }: { label: string; className?: str
 
 function Header({ hidden }: { hidden: boolean }) {
   const reducedMotion = useReducedMotion()
+  // The `header-drop` entrance animation leaves this div's computed `transform`
+  // at the identity matrix (via `animation-fill-mode: both`) forever after it
+  // finishes, rather than reverting to `transform: none`. A lingering non-`none`
+  // transform on a normal-flow child of a `position: sticky` parent can keep
+  // that child pinned to its own leftover compositing layer instead of the
+  // sticky parent's box, desyncing the two during scroll — a known WebKit sticky
+  // + animated-transform interaction. Once the one-time entrance animation is
+  // done, drop the class entirely so the computed transform goes back to a true
+  // `none` and the div is an entirely plain sticky-parent child again.
+  const [dropAnimationDone, setDropAnimationDone] = useState(false)
   return (
     <header
       // Bar background is intentionally kept at the site's original light tone
@@ -87,8 +97,9 @@ function Header({ hidden }: { hidden: boolean }) {
     >
       <div
         className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
-          reducedMotion ? '' : 'header-drop'
+          reducedMotion || dropAnimationDone ? '' : 'header-drop'
         }`}
+        onAnimationEnd={() => setDropAnimationDone(true)}
       >
         <p className="font-body text-base font-medium text-text-light shrink-0">Andrew G Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
