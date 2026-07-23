@@ -150,21 +150,24 @@ function Hero() {
   )
 
   return (
-    <section className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}>
+    <>
+      {/* Video: its natural hero size and position (full-bleed width,
+          aspect-[3/1] capped at 480px) — the only thing that changes is
+          `position: fixed` instead of scrolling with the page. Sits outside
+          Hero's own section so Hero's opaque background never paints over
+          it; at rest (scroll 0) this looks identical to the pre-parallax
+          page: video on top, headline directly below. `inset-x-0` (rather
+          than `w-screen`) stretches it to the true viewport width via
+          left/right, sidestepping the 100vw vs. actual-viewport-width
+          mismatch `w-screen` can hit. */}
       {parallaxActive ? (
         <>
-          {/* Pinned background layer: fixed to the viewport, behind everything
-              (-z-10), same box (aspect-[3/1], capped at 480px) as the in-flow
-              version below so it reads identically while the page is still at
-              scrollTop 0. `inset-x-0` (rather than `w-screen`) stretches it to
-              the true viewport width via left/right, sidestepping the 100vw
-              vs. actual-viewport-width mismatch that `w-screen` can hit. */}
           <div className="fixed inset-x-0 top-0 aspect-[3/1] max-h-[480px] overflow-hidden -z-10">
             {videoBlock}
           </div>
-          {/* Invisible spacer: reserves the exact same box in normal flow so
-              removing the video from flow (now `fixed`) doesn't collapse the
-              page's scroll height or cause content below to jump up. */}
+          {/* Invisible spacer, same full-bleed box: reserves the flow space
+              the now-fixed video no longer occupies, so scroll height and
+              the headline's position below it are unaffected. */}
           <div
             className="relative left-1/2 right-1/2 -mx-[50vw] w-screen aspect-[3/1] max-h-[480px] mb-10"
             aria-hidden="true"
@@ -175,20 +178,22 @@ function Hero() {
           <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">{videoBlock}</div>
         </div>
       )}
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
-          <div />
-          <h1
-            className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
-              reducedMotion ? '' : 'headline-fly-in'
-            }`}
-          >
-            I take enterprise software from proof of concept to commercial-grade global product,
-            in regulated, high stakes environments.
-          </h1>
+      <section className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
+            <div />
+            <h1
+              className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
+                reducedMotion ? '' : 'headline-fly-in'
+              }`}
+            >
+              I take enterprise software from proof of concept to commercial-grade global product,
+              in regulated, high stakes environments.
+            </h1>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 
