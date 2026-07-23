@@ -150,18 +150,16 @@ function Hero() {
   )
 
   return (
-    <section
-      className={`px-8 md:px-16 lg:px-24 pb-16 ${
-        parallaxActive ? '' : reducedMotion ? 'bg-light' : 'bg-reveal'
-      }`}
-    >
+    <section className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}>
       {parallaxActive ? (
         <>
           {/* Pinned background layer: fixed to the viewport, behind everything
               (-z-10), same box (aspect-[3/1], capped at 480px) as the in-flow
               version below so it reads identically while the page is still at
-              scrollTop 0. */}
-          <div className="fixed top-0 left-0 w-screen aspect-[3/1] max-h-[480px] overflow-hidden -z-10">
+              scrollTop 0. `inset-x-0` (rather than `w-screen`) stretches it to
+              the true viewport width via left/right, sidestepping the 100vw
+              vs. actual-viewport-width mismatch that `w-screen` can hit. */}
+          <div className="fixed inset-x-0 top-0 aspect-[3/1] max-h-[480px] overflow-hidden -z-10">
             {videoBlock}
           </div>
           {/* Invisible spacer: reserves the exact same box in normal flow so
@@ -377,15 +375,23 @@ export default function App() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Scroll is locked ("the fireworks") until the full entrance choreography —
-  // video fade-in, dark-to-light bg reveal, header drop, headline fly-in, and
-  // the Grid row fade-ins — has finished, so it can't be scrolled past
-  // mid-sequence. Skipped entirely under reduced motion, where there's no
-  // sequence to protect. This is the one Andrew's only ~90% sure on and wants
-  // to test live, so it's kept to this single derived boolean on purpose —
-  // add `&& isDesktop` (see useIsDesktop above) to also exempt mobile, or
-  // delete the effect below, if it doesn't feel right once he's scrolling it.
-  const scrollLocked = !reducedMotion && !loadSequenceDone
+  // Scroll is locked only through the initial dark-to-light "fade to white"
+  // (see `bg-reveal` in index.css: 1100ms animation starting at a 3000ms
+  // delay, so it completes at 4100ms) — before the header drops in or the
+  // headline flies in, per Andrew's ask. This is deliberately a separate,
+  // shorter timer from `loadSequenceDone` above (which stays 6600ms, gating
+  // only the CaseStudies reveal, untouched). Skipped entirely under reduced
+  // motion, where there's no sequence to protect. Andrew's only ~90% sure on
+  // keeping a scroll lock at all, so it's kept to this single derived
+  // boolean on purpose — add `&& isDesktop` (see useIsDesktop above) to also
+  // exempt mobile, or delete the effect below, if it doesn't feel right once
+  // he's scrolling it.
+  const [bgRevealDone, setBgRevealDone] = useState(false)
+  useEffect(() => {
+    const timer = setTimeout(() => setBgRevealDone(true), 4100)
+    return () => clearTimeout(timer)
+  }, [])
+  const scrollLocked = !reducedMotion && !bgRevealDone
   useEffect(() => {
     document.documentElement.style.overflow = scrollLocked ? 'hidden' : ''
   }, [scrollLocked])
