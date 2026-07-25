@@ -115,6 +115,16 @@
   animation: row-fade-in 450ms ease-out both;
 }
 
+/* Proof-points row (above the CaseStudies cards): opacity-only fade-in, no
+   transform. Duration/easing match grid-row-fade-in's plain opacity fade
+   (450ms ease-out) for a consistent rhythm. Implemented as a CSS transition
+   rather than a fixed-delay keyframe like grid-row-fade-in, because the
+   trigger here is runtime state (App's caseStudiesRevealed — scroll into
+   view AND the load-sequence timer), not a fixed time since mount. */
+.proof-points-fade-in {
+  transition: opacity 450ms ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   body,
   .bg-reveal {
@@ -136,6 +146,10 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+  .proof-points-fade-in {
+    transition: none !important;
+    opacity: 1 !important;
   }
   .header-hidden {
     transition: none !important;

@@ -235,6 +235,9 @@ function Divider() {
 function CaseStudies({ revealed }: { revealed: boolean }) {
   const reducedMotion = useReducedMotion()
   const isRevealed = revealed || reducedMotion
+  // Cards start their own i*320ms stagger only once the proof-points row
+  // above them has visually finished its 450ms fade-in, not simultaneously.
+  const CARDS_BASE_DELAY_MS = 450
   return (
     <section
       id="case-studies"
@@ -258,7 +261,14 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
               // maxes out at 22px (23px overflows by ~0.5px at 1024px, lg's
               // own tightest width). Hero-headline size (26px/32px) overflows
               // badly below ~1280px, confirmed via measurement, not used.
-              className="font-display font-bold whitespace-nowrap min-w-0 text-lg md:text-base lg:text-[22px] text-text-light pl-[33px]"
+              //
+              // Opacity-only fade (no transform), gated on the same isRevealed
+              // signal the cards below use. proof-points-fade-in is omitted
+              // entirely under reduced motion, matching Hero/Grid's pattern —
+              // the row just renders at its final opacity immediately.
+              className={`font-display font-bold whitespace-nowrap min-w-0 text-lg md:text-base lg:text-[22px] text-text-light pl-[33px] ${
+                isRevealed ? 'opacity-100' : 'opacity-0'
+              } ${reducedMotion ? '' : 'proof-points-fade-in'}`}
             >
               {point}
             </p>
@@ -272,7 +282,10 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
               className={`bg-[#F5F4F0] border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-500 hover:-translate-y-[3px] hover:shadow-md ${
                 isRevealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
               }`}
-              style={{ transitionDelay: isRevealed && !reducedMotion ? `${i * 320}ms` : '0ms' }}
+              style={{
+                transitionDelay:
+                  isRevealed && !reducedMotion ? `${CARDS_BASE_DELAY_MS + i * 320}ms` : '0ms',
+              }}
             >
               <img
                 src={`${import.meta.env.BASE_URL}${cs.image}`}
