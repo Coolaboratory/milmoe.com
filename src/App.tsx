@@ -81,7 +81,7 @@ function Header({ hidden }: { hidden: boolean }) {
           reducedMotion ? '' : 'header-drop'
         }`}
       >
-        <p className="font-display text-base font-medium text-text-light shrink-0">Andrew G Milmoe</p>
+        <p className="font-display text-subhead font-semibold text-text-light shrink-0">Andrew G Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
           <span className="whitespace-nowrap">Chicago Area / Hybrid</span>{'     '}Andrew@Milmoe.com
         </p>
@@ -290,7 +290,7 @@ function Footer() {
   return (
     <footer id="site-footer" className="bg-[#F5F4F0] border-t border-text-light/10 px-8 md:px-16 lg:px-24 py-8">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <p className="font-display text-base font-medium text-text-light">Andrew G Milmoe</p>
+        <p className="font-display text-subhead font-semibold text-text-light">Andrew G Milmoe</p>
         <div className="flex items-center gap-5">
           <a
             href="http://www.linkedin.com/in/agmilmoe"
