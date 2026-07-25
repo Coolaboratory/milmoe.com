@@ -242,7 +242,20 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
           {proofPoints.map((point, i) => (
             <p
               key={i}
-              className="font-display font-bold whitespace-nowrap text-lg md:text-base lg:text-xl text-text-light"
+              // 33px = each card's own 1px border + 32px (p-8) padding, so this
+              // lines up with the card's actual content start (verified via
+              // computed styles), not the card's outer edge. Cards/proof-points
+              // both use equal-width grid-cols-3 tracks, so the same fixed
+              // inset applies uniformly to all three columns via padding, no
+              // per-column calc needed (unlike the uneven Header/Hero/Grid split).
+              // Sized as large as verified to fit cleanly at every tested
+              // width (768-1440px): md tier is capped at 16px (17px already
+              // overflows "60 days: 0 → Launch" by ~1.5px at 768px, the
+              // tightest width in that range); lg tier has real headroom and
+              // maxes out at 22px (23px overflows by ~0.5px at 1024px, lg's
+              // own tightest width). Hero-headline size (26px/32px) overflows
+              // badly below ~1280px, confirmed via measurement, not used.
+              className="font-display font-bold whitespace-nowrap min-w-0 text-lg md:text-base lg:text-[22px] text-text-light pl-[33px]"
             >
               {point}
             </p>
