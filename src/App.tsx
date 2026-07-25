@@ -238,7 +238,7 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
   return (
     <section id="case-studies" className="bg-light px-8 md:px-16 lg:px-24 py-20">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-9">
           {proofPoints.map((point, i) => (
             <p
               key={i}
