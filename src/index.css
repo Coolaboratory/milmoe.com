@@ -42,6 +42,18 @@
   animation: bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
 }
 
+/* CaseStudies' own background reveal — same starting dark color, duration,
+   easing, and 3000ms delay as .bg-reveal, but ends at the section's own
+   #e6eaee shade (deliberately different from Hero/Grid's #EEECE6), so it
+   can't just reuse .bg-reveal verbatim without fading to the wrong color. */
+@keyframes case-studies-bg-reveal {
+  from { background-color: #333333; }
+  to { background-color: #e6eaee; }
+}
+.case-studies-bg-reveal {
+  animation: case-studies-bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
+}
+
 /* Header's own bar reveals to the same light tone the header itself already
    uses (#F5F4F0), not the page's darker #EEECE6 — otherwise when the header
    drops in at 4000ms, its lighter rectangle visibly "replaces" a differently
@@ -112,6 +124,10 @@
   .header-bg-reveal {
     animation: none !important;
     background-color: #F5F4F0 !important;
+  }
+  .case-studies-bg-reveal {
+    animation: none !important;
+    background-color: #e6eaee !important;
   }
   .video-fade-in,
   .headline-fly-in,
