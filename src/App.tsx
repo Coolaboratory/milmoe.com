@@ -15,7 +15,7 @@ function useReducedMotion() {
 // Headline-style proof points, one per CaseStudies card below, in the same
 // order (GE Digital, Blue Origin, Ontrak Health) so each sits directly above
 // and left-aligns with its corresponding card via the same 3-col grid.
-const proofPoints = ['8-10hrs → 10-15min', 'Hrs cut/launch', '60 days: 0 → Launch']
+const proofPoints = ['6-8hrs → 10-15min', 'Hrs cut/launch', '60 days: 0 → Launch']
 
 const caseStudies = [
   {
