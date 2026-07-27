@@ -12,12 +12,12 @@ function useReducedMotion() {
   return reduced
 }
 
-// Headline-style proof points, one per CaseStudies card below, in the same
+// Headline-style proof points, one per work-sample card below, in the same
 // order (GE Digital, Blue Origin, Ontrak Health) so each sits directly above
 // and left-aligns with its corresponding card via the same 3-col grid.
 const proofPoints = ['6-8hrs → 10-15min', 'Hrs cut/launch', '60 days: 0 → Launch']
 
-const caseStudies = [
+const workSamples = [
   {
     industry: 'ENERGY',
     client: 'GE Digital',
@@ -68,7 +68,7 @@ function Header({ hidden }: { hidden: boolean }) {
   return (
     <header
       // Bar background is intentionally kept at the site's original light tone
-      // (#F5F4F0), same as CaseStudies/Footer — one shade lighter than Hero/Grid's
+      // (#F5F4F0), same as WorkSamples/Footer — one shade lighter than Hero/Grid's
       // bg-light (#EEECE6). It reveals on its own timing (see header-bg-reveal) so
       // it's already settled before the content below drops in — only the type
       // should appear to descend, not one background color replacing another.
@@ -102,7 +102,7 @@ function Header({ hidden }: { hidden: boolean }) {
           >
             Resume
           </a>
-          <a href="#case-studies" className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors">
+          <a href="#work" className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors">
             Work
           </a>
         </nav>
@@ -232,7 +232,7 @@ function Divider() {
   )
 }
 
-function CaseStudies({ revealed }: { revealed: boolean }) {
+function WorkSamples({ revealed }: { revealed: boolean }) {
   const reducedMotion = useReducedMotion()
   const isRevealed = revealed || reducedMotion
   // Cards start their own i*320ms stagger only once the proof-points row
@@ -240,8 +240,8 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
   const CARDS_BASE_DELAY_MS = 450
   return (
     <section
-      id="case-studies"
-      className={`px-8 md:px-16 lg:px-24 py-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'case-studies-bg-reveal'}`}
+      id="work"
+      className={`px-8 md:px-16 lg:px-24 py-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'work-samples-bg-reveal'}`}
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-9">
@@ -275,7 +275,7 @@ function CaseStudies({ revealed }: { revealed: boolean }) {
           ))}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {caseStudies.map((cs, i) => (
+          {workSamples.map((cs, i) => (
             <a
               key={cs.client}
               href={cs.href}
@@ -366,13 +366,13 @@ function Footer() {
 
 export default function App() {
   const [footerVisible, setFooterVisible] = useState(false)
-  const [caseStudiesInView, setCaseStudiesInView] = useState(false)
+  const [workSamplesInView, setWorkSamplesInView] = useState(false)
   const [loadSequenceDone, setLoadSequenceDone] = useState(false)
-  // Case studies only reveal once BOTH are true — otherwise, on a tall enough
+  // Work samples only reveal once BOTH are true — otherwise, on a tall enough
   // window, the section is already 50% visible at t=0 and would assemble
   // immediately, well before the rest of the load sequence (background
   // reveal, header, headline, grid rows) has even run.
-  const caseStudiesRevealed = caseStudiesInView && loadSequenceDone
+  const workSamplesRevealed = workSamplesInView && loadSequenceDone
 
   useEffect(() => {
     // Matches the last grid row's fade-in finishing: 5600 + 2*250 delay + 450ms duration
@@ -382,8 +382,8 @@ export default function App() {
 
   useEffect(() => {
     const footerEl = document.getElementById('site-footer')
-    const caseStudiesEl = document.getElementById('case-studies')
-    if (!footerEl || !caseStudiesEl) return
+    const workSamplesEl = document.getElementById('work')
+    if (!footerEl || !workSamplesEl) return
 
     const footerObserver = new IntersectionObserver(
       ([entry]) => setFooterVisible(entry.isIntersecting),
@@ -391,20 +391,20 @@ export default function App() {
     )
     footerObserver.observe(footerEl)
 
-    const caseStudiesObserver = new IntersectionObserver(
+    const workSamplesObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setCaseStudiesInView(true)
-          caseStudiesObserver.disconnect()
+          setWorkSamplesInView(true)
+          workSamplesObserver.disconnect()
         }
       },
       { threshold: 0.5 }
     )
-    caseStudiesObserver.observe(caseStudiesEl)
+    workSamplesObserver.observe(workSamplesEl)
 
     return () => {
       footerObserver.disconnect()
-      caseStudiesObserver.disconnect()
+      workSamplesObserver.disconnect()
     }
   }, [])
 
@@ -414,7 +414,7 @@ export default function App() {
       <Hero />
       <Grid />
       <Divider />
-      <CaseStudies revealed={caseStudiesRevealed} />
+      <WorkSamples revealed={workSamplesRevealed} />
       <Footer />
     </main>
   )
