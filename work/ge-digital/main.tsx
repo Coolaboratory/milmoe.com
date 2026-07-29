@@ -1,13 +1,40 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../../src/index.css'
-import { WorkStub } from '../../src/components/WorkStub'
+import { OnePager, type OnePagerContent } from '../../src/components/OnePager'
 
-// Placeholder copy: GE Digital's one-pager hasn't been drafted yet, so this
-// reuses the existing landing-card hook text from workSamples in App.tsx
-// verbatim. Swap for finalized one-pager copy once it exists.
+// GE Digital one-pager content. Single-narrative page (no Lead/Supporting
+// split) — the Visor Service Portal pivot from a two-engineer Berlin
+// prototype to a $180M, 10-year service contract.
+const content: OnePagerContent = {
+  industry: 'ENERGY',
+  client: 'GE Digital',
+  role: 'Sr. Staff UX Product Designer',
+  headline:
+    "Turned a two-engineer prototype into a $180M product, cutting field engineers' time-to-data from 8 hours to 15 minutes.",
+  sceneSetter:
+    'The GE Power Conversion Visor Service Portal began as a pilot two hardware engineers built in Berlin for remote access to marine power systems — it worked occasionally but hadn\'t met the business\'s real goals (reducing warranty claims, driving service-contract sales, cutting customer downtime), and every dropped connection risked up to $1M/day for a customer.',
+  sections: [
+    {
+      eyebrow: 'THE WORK',
+      title: 'Visor Service Portal',
+      body: [
+        'Came in as UX lead as the team shifted from engineering-led to human-centered process. Ran 35 field interviews across France, Germany, and England, plus a site visit to a drill ship off Louisiana.',
+        'The original design leaned on a live remote-desktop connection over an unreliable satellite link — when it dropped, the only fallback was flying a colleague out by helicopter. The pivot: stop delivering the interface, start delivering the artifact — a failure notification, then a second notification when the diagnostic trip-report file was ready, so the engineer could diagnose from the file itself in minutes without needing the connection to hold.',
+      ],
+      proofPoints: [
+        '$180M, 10-year service contract',
+        'Time-to-data: 6-8 hours → 10-15 minutes',
+        "Promoted onto GE's Asset Performance Management team",
+      ],
+      primaryImage: true,
+      imageCount: 2,
+    },
+  ],
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <WorkStub headline="A prototype two engineers built became a product the sales team led with. $180M in service contracts; time to data access for field engineers dropped from 8 hours to 15 minutes." />
+    <OnePager content={content} />
   </StrictMode>
 )

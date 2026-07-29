@@ -156,3 +156,27 @@
     transform: none !important;
   }
 }
+
+/* One-pager pages (Ontrak, GE Digital, Blue Origin — body.onepager, set in
+   each work/<slug>/index.html) opt out of the homepage's own multi-second
+   dark-to-light entrance choreography. That sequence is timed against the
+   Hero's video/background reveal, which doesn't exist on these subpages, so
+   replaying it verbatim would show a blank dark header for several seconds
+   on every subpage load — effectively a dark band, which the one-pager
+   design rules explicitly forbid. The Header/Footer components themselves
+   are still the exact same, unmodified components (same markup, fonts,
+   colors, sticky/hide-on-footer-approach behavior); this only fast-forwards
+   the fixed-delay entrance keyframes that are meaningless off the homepage. */
+body.onepager {
+  background-color: #e6eaee;
+  color: #212121;
+  animation: none;
+}
+body.onepager .header-bg-reveal {
+  animation: none;
+  background-color: #F5F4F0;
+}
+body.onepager .header-drop {
+  animation: none;
+  transform: none;
+}
