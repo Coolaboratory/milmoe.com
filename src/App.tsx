@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
+import { getDisplayEmail, getMailtoHref } from './lib/email'
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -83,7 +84,7 @@ function Header({ hidden }: { hidden: boolean }) {
       >
         <p className="font-display text-subhead font-semibold text-text-light shrink-0">Andrew G Milmoe</p>
         <p className="font-body text-[13px] text-text-light/60 hidden md:block">
-          <span className="whitespace-nowrap">Chicago Area / Hybrid</span>{'     '}Andrew@Milmoe.com
+          <span className="whitespace-nowrap">Chicago Area / Hybrid</span>{'     '}{getDisplayEmail()}
         </p>
         <nav className="flex items-center gap-5 shrink-0 md:justify-self-end">
           <a
@@ -347,9 +348,7 @@ function Footer() {
             </svg>
           </a>
           <a
-            href={`mailto:andrew@milmoe.com?subject=${encodeURIComponent(
-              'Reaching out to you from Milmoe.com'
-            )}&body=${encodeURIComponent('Hi Andrew,\n\n')}`}
+            href={getMailtoHref('Reaching out to you from Milmoe.com', 'Hi Andrew,\n\n')}
             aria-label="Email"
             className="text-text-light/40 hover:text-accent transition-colors"
           >
