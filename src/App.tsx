@@ -24,7 +24,7 @@ const workSamples = [
     industry: 'AEROSPACE',
     client: 'Blue Origin',
     role: 'Lead User Experience Designer',
-    hook: 'Rocket engineers were copying and pasting between siloed applications. I proposed and shipped a unified data insights pipeline.',
+    hook: 'Rocket engineers were copying and pasting between siloed systems, so I proposed a unified data insights pipeline connecting test planning through flight outcomes.',
     href: `${import.meta.env.BASE_URL}work/blue-origin/`,
     logo: 'blue-origin-logo.png',
     logoAlt: 'Blue Origin logo',
