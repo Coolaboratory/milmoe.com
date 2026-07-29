@@ -40,7 +40,13 @@ export function Header({ hidden }: { hidden: boolean }) {
           >
             Resume
           </a>
-          <a href="#work" className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors">
+          {/* Root-relative + hash so this resolves correctly from the homepage
+              (in-page scroll, same as a bare "#work") and from any one-pager
+              subpage (full navigation back to the homepage's #work anchor). */}
+          <a
+            href={`${import.meta.env.BASE_URL}#work`}
+            className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors"
+          >
             Work
           </a>
         </nav>
