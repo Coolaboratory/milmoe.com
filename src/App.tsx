@@ -35,7 +35,7 @@ const workSamples = [
     industry: 'HEALTHCARE',
     client: 'Ontrak Health',
     role: 'Principal UX Product Designer',
-    hook: 'HIPAA-compliant telehealth portal, concept to launch in 60 days, built for frontline clinical staff.',
+    hook: "Ontrak's Member Outreach team was stuck waiting on an overloaded AI/ML team for every customer query. I built the MVP that fixed it, a tool the AI/ML team later adopted to run its own campaigns.",
     href: '/work/ontrak/',
     logo: 'ontrak-health-logo.png',
     logoAlt: 'Ontrak Health logo',
