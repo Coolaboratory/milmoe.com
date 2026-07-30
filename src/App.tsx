@@ -20,15 +20,11 @@ function hasSeenIntro(): boolean {
   }
 }
 
-// Headline-style proof points, one per work-sample card below, in the same
-// order (GE Digital, Blue Origin, Ontrak Health) so each sits directly above
-// and left-aligns with its corresponding card via the same 3-col grid.
-const proofPoints = ['6-8hrs → 10-15min', 'Hrs cut/launch', '60 days: 0 → Launch']
-
 const workSamples = [
   {
     industry: 'ENERGY',
     client: 'GE Digital',
+    stat: '6hrs → 15min',
     role: 'Sr. Staff UX Product Designer',
     hook: "My research revealed field engineers didn't need a better connection, they needed the diagnostic data itself. That insight turned a failing pilot into the product the sales team led with, landing a $180M service contract, the first of several that followed.",
     href: `${import.meta.env.BASE_URL}work/ge-digital/`,
@@ -40,6 +36,7 @@ const workSamples = [
   {
     industry: 'AEROSPACE',
     client: 'Blue Origin',
+    stat: 'Hrs cut/launch',
     role: 'Lead User Experience Designer',
     hook: 'Rocket engineers were copying and pasting between siloed systems, so I proposed a unified data insights pipeline connecting test planning through flight outcomes.',
     href: `${import.meta.env.BASE_URL}work/blue-origin/`,
@@ -51,6 +48,7 @@ const workSamples = [
   {
     industry: 'HEALTHCARE',
     client: 'Ontrak Health',
+    stat: '60 days: 0 → Launch',
     role: 'Principal UX Product Designer',
     hook: "Ontrak's Member Outreach team was stuck waiting on an overloaded AI/ML team for every customer query. I built the MVP that fixed it, a tool the AI/ML team later adopted to run its own campaigns.",
     href: `${import.meta.env.BASE_URL}work/ontrak/`,
@@ -204,8 +202,11 @@ function Divider() {
 function WorkSamples({ revealed }: { revealed: boolean }) {
   const reducedMotion = useReducedMotion()
   const isRevealed = revealed || reducedMotion
-  // Cards start their own i*320ms stagger only once the proof-points row
-  // above them has visually finished its 450ms fade-in, not simultaneously.
+  // Cards start their own i*320ms stagger 450ms after the section becomes
+  // revealed, giving a beat before they animate in (previously timed to let
+  // an above-grid proof-points row finish its own fade-in first; that row
+  // has since been folded into each card, but the same pacing still reads
+  // well for the cards alone).
   const CARDS_BASE_DELAY_MS = 450
   return (
     <section
@@ -213,36 +214,6 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
       className={`px-8 md:px-16 lg:px-24 py-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'work-samples-bg-reveal'}`}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-9">
-          {proofPoints.map((point, i) => (
-            <p
-              key={i}
-              // 33px = each card's own 1px border + 32px (p-8) padding, so this
-              // lines up with the card's actual content start (verified via
-              // computed styles), not the card's outer edge. Cards/proof-points
-              // both use equal-width grid-cols-3 tracks, so the same fixed
-              // inset applies uniformly to all three columns via padding, no
-              // per-column calc needed (unlike the uneven Header/Hero/Grid split).
-              // Sized as large as verified to fit cleanly at every tested
-              // width (768-1440px): md tier is capped at 16px (17px already
-              // overflows "60 days: 0 → Launch" by ~1.5px at 768px, the
-              // tightest width in that range); lg tier has real headroom and
-              // maxes out at 22px (23px overflows by ~0.5px at 1024px, lg's
-              // own tightest width). Hero-headline size (26px/32px) overflows
-              // badly below ~1280px, confirmed via measurement, not used.
-              //
-              // Opacity-only fade (no transform), gated on the same isRevealed
-              // signal the cards below use. proof-points-fade-in is omitted
-              // entirely under reduced motion, matching Hero/Grid's pattern —
-              // the row just renders at its final opacity immediately.
-              className={`font-display font-bold whitespace-nowrap min-w-0 text-lg md:text-base lg:text-[22px] text-text-light pl-[33px] ${
-                isRevealed ? 'opacity-100' : 'opacity-0'
-              } ${reducedMotion ? '' : 'proof-points-fade-in'}`}
-            >
-              {point}
-            </p>
-          ))}
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {workSamples.map((cs, i) => (
             <a
@@ -264,18 +235,19 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
               <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent">
                 {cs.industry}
               </p>
-              <div className="flex items-center justify-between gap-4">
-                <h3 className="font-display text-subhead font-semibold text-text-light">{cs.client}</h3>
-                <img
-                  src={`${import.meta.env.BASE_URL}${cs.logo}`}
-                  alt={cs.logoAlt}
-                  className="h-6 w-auto object-contain shrink-0"
-                />
-              </div>
-              <p className="font-body text-[13px] text-text-light/50">{cs.role}</p>
+              <h3 className="font-display text-subhead font-semibold text-text-light">{cs.stat}</h3>
               <p className="font-body text-[15px] leading-relaxed flex-1 text-text-light/70">
                 {cs.hook}
               </p>
+              <div className="flex items-center justify-between gap-4 pt-1">
+                <p className="font-body text-[13px] text-text-light">{cs.client}</p>
+                <img
+                  src={`${import.meta.env.BASE_URL}${cs.logo}`}
+                  alt={cs.logoAlt}
+                  className="h-5 w-auto object-contain shrink-0"
+                />
+              </div>
+              <p className="font-body text-[13px] text-text-light/50">{cs.role}</p>
             </a>
           ))}
         </div>

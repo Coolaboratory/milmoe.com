@@ -115,16 +115,6 @@
   animation: row-fade-in 450ms ease-out both;
 }
 
-/* Proof-points row (above the WorkSamples cards): opacity-only fade-in, no
-   transform. Duration/easing match grid-row-fade-in's plain opacity fade
-   (450ms ease-out) for a consistent rhythm. Implemented as a CSS transition
-   rather than a fixed-delay keyframe like grid-row-fade-in, because the
-   trigger here is runtime state (App's workSamplesRevealed — scroll into
-   view AND the load-sequence timer), not a fixed time since mount. */
-.proof-points-fade-in {
-  transition: opacity 450ms ease-out;
-}
-
 @media (prefers-reduced-motion: reduce) {
   body,
   .bg-reveal {
@@ -146,10 +136,6 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
-  }
-  .proof-points-fade-in {
-    transition: none !important;
-    opacity: 1 !important;
   }
   .header-hidden {
     transition: none !important;
@@ -190,11 +176,6 @@ body.intro-skip .grid-row-fade-in {
   opacity: 1 !important;
   transform: none !important;
 }
-body.intro-skip .proof-points-fade-in {
-  transition: none !important;
-  opacity: 1 !important;
-}
-
 /* One-pager pages (Ontrak, GE Digital, Blue Origin — body.onepager, set in
    each work/<slug>/index.html) opt out of the homepage's own multi-second
    dark-to-light entrance choreography. That sequence is timed against the
