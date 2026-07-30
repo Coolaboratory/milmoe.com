@@ -157,6 +157,44 @@
   }
 }
 
+/* Returning to the homepage from a one-pager (or any other same-session
+   revisit to "/") skips the multi-second entrance choreography and renders
+   straight into the settled state — the visitor already watched it once.
+   Detected via a sessionStorage flag (set in App.tsx on first homepage
+   mount) and applied as a class on <body> via useLayoutEffect, so it lands
+   before the browser's first paint — no flash of the dark intro state.
+   Mirrors the prefers-reduced-motion overrides above, selector-driven
+   instead of media-query-driven, using the same body.onepager pattern
+   already established below for one-pager pages. Deliberately does NOT
+   touch .header-hidden — that's the sticky header's ongoing hide-on-footer-
+   scroll behavior, not part of the one-time intro, and should keep working
+   normally on a revisit. */
+body.intro-skip,
+body.intro-skip .bg-reveal {
+  animation: none !important;
+  background-color: #EEECE6 !important;
+}
+body.intro-skip .header-bg-reveal {
+  animation: none !important;
+  background-color: #F5F4F0 !important;
+}
+body.intro-skip .work-samples-bg-reveal {
+  animation: none !important;
+  background-color: #e6eaee !important;
+}
+body.intro-skip .video-fade-in,
+body.intro-skip .headline-fly-in,
+body.intro-skip .header-drop,
+body.intro-skip .grid-row-fade-in {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+body.intro-skip .proof-points-fade-in {
+  transition: none !important;
+  opacity: 1 !important;
+}
+
 /* One-pager pages (Ontrak, GE Digital, Blue Origin — body.onepager, set in
    each work/<slug>/index.html) opt out of the homepage's own multi-second
    dark-to-light entrance choreography. That sequence is timed against the

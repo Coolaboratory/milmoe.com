@@ -1,7 +1,24 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { useReducedMotion } from './hooks/useReducedMotion'
+
+// Session-scoped "have they already seen the homepage intro" flag. Read
+// synchronously during App's first render (not in an effect) so the very
+// first rendered output already reflects it — this is a CSR-only app with
+// no hydration to mismatch, so there's no reason to defer the read.
+const INTRO_SEEN_KEY = 'milmoe:intro-seen'
+
+function hasSeenIntro(): boolean {
+  try {
+    return sessionStorage.getItem(INTRO_SEEN_KEY) === '1'
+  } catch {
+    // Storage can throw in locked-down contexts (e.g. private browsing edge
+    // cases) — fail open to "hasn't seen it", which just means the intro
+    // plays every time, the pre-existing behavior.
+    return false
+  }
+}
 
 // Headline-style proof points, one per work-sample card below, in the same
 // order (GE Digital, Blue Origin, Ontrak Health) so each sits directly above
@@ -268,20 +285,40 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
 }
 
 export default function App() {
+  const [skipIntro] = useState(hasSeenIntro)
   const [footerVisible, setFooterVisible] = useState(false)
   const [workSamplesInView, setWorkSamplesInView] = useState(false)
   const [loadSequenceDone, setLoadSequenceDone] = useState(false)
   // Work samples only reveal once BOTH are true — otherwise, on a tall enough
   // window, the section is already 50% visible at t=0 and would assemble
   // immediately, well before the rest of the load sequence (background
-  // reveal, header, headline, grid rows) has even run.
-  const workSamplesRevealed = workSamplesInView && loadSequenceDone
+  // reveal, header, headline, grid rows) has even run. Skipped entirely on
+  // a same-session revisit (skipIntro) — the section renders already
+  // revealed, same as the rest of the settled page.
+  const workSamplesRevealed = skipIntro || (workSamplesInView && loadSequenceDone)
+
+  // Mark the intro as seen for the rest of this browser session, and apply
+  // the CSS override class (see body.intro-skip in index.css) before the
+  // browser's first paint, so a revisit never flashes the dark intro state.
+  // useLayoutEffect (not useEffect) specifically so this runs synchronously
+  // after DOM mutations but before paint.
+  useLayoutEffect(() => {
+    if (skipIntro) {
+      document.body.classList.add('intro-skip')
+    }
+    try {
+      sessionStorage.setItem(INTRO_SEEN_KEY, '1')
+    } catch {
+      // Ignore — worst case the intro replays on the next visit this session.
+    }
+  }, [skipIntro])
 
   useEffect(() => {
+    if (skipIntro) return
     // Matches the last grid row's fade-in finishing: 5600 + 2*250 delay + 450ms duration
     const timer = setTimeout(() => setLoadSequenceDone(true), 6600)
     return () => clearTimeout(timer)
-  }, [])
+  }, [skipIntro])
 
   useEffect(() => {
     const footerEl = document.getElementById('site-footer')
