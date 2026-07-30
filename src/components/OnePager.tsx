@@ -118,7 +118,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
             href={`${import.meta.env.BASE_URL}#work`}
             className="font-body text-[14px] font-medium text-accent hover:underline"
           >
-            ← Work
+            ← Back
           </a>
         </div>
       </div>
