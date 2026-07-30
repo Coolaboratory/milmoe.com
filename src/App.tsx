@@ -151,7 +151,7 @@ function Grid() {
         >
           <Placeholder
             label="Video: Sample work, coming soon"
-            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_91px)] h-full"
+            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_91px)] aspect-video"
           />
         </div>
         {rows.map((row, i) => (
