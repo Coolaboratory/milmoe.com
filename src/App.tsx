@@ -131,11 +131,11 @@ function Grid() {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] md:grid-rows-3 gap-8 md:gap-y-10">
         <div
-          className={`md:row-span-3 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
+          className={`md:col-start-1 md:row-start-1 md:row-span-2 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
           style={reducedMotion ? undefined : { animationDelay: '5600ms' }}
         >
           <Placeholder
-            label="Loom thumbnail (~4 min)"
+            label="Video: Sample work, coming soon"
             className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_91px)] aspect-video"
           />
         </div>
@@ -162,6 +162,15 @@ function Grid() {
             </p>
           </Fragment>
         ))}
+        <div
+          className={`md:col-start-1 md:row-start-3 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
+          style={reducedMotion ? undefined : { animationDelay: `${5600 + 2 * 250}ms` }}
+        >
+          <Placeholder
+            label="Video: Using Claude to build this site, coming soon"
+            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_91px)] aspect-video"
+          />
+        </div>
       </div>
     </section>
   )
