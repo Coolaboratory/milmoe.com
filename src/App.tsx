@@ -24,7 +24,7 @@ const workSamples = [
   {
     industry: 'ENERGY',
     client: 'GE Digital',
-    stat: '6hrs → 15min',
+    stat: '6 hours → 15 minutes',
     role: 'Sr. Staff UX Product Designer',
     hook: "My research revealed field engineers didn't need a better connection, they needed the diagnostic data itself. That insight turned a failing pilot into the product the sales team led with, landing a $180M service contract, the first of several that followed.",
     href: `${import.meta.env.BASE_URL}work/ge-digital/`,
@@ -36,7 +36,7 @@ const workSamples = [
   {
     industry: 'AEROSPACE',
     client: 'Blue Origin',
-    stat: 'Hrs cut/launch',
+    stat: 'Hours cut per launch',
     role: 'Lead User Experience Designer',
     hook: 'Rocket engineers were copying and pasting between siloed systems, so I proposed a unified data insights pipeline connecting test planning through flight outcomes.',
     href: `${import.meta.env.BASE_URL}work/blue-origin/`,
@@ -81,7 +81,7 @@ function Hero() {
           {reducedMotion ? (
             <img
               src={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
-              alt="Offshore drill ship at sunrise — field research environment"
+              alt="Offshore drill ship at sunrise, field research environment"
               className="w-full h-full object-cover"
             />
           ) : (
@@ -92,7 +92,7 @@ function Hero() {
               playsInline
               poster={`${import.meta.env.BASE_URL}drillship-poster.jpg`}
               className="w-full h-full object-cover video-fade-in"
-              aria-label="Looping footage of an offshore drill ship at sunrise — field research environment"
+              aria-label="Looping footage of an offshore drill ship at sunrise, field research environment"
             >
               <source src={`${import.meta.env.BASE_URL}drillship-loop.webm`} type="video/webm" />
               <source src={`${import.meta.env.BASE_URL}drillship-loop.mp4`} type="video/mp4" />
@@ -144,14 +144,14 @@ function Grid() {
     <section
       className={`px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] md:grid-rows-3 gap-8 md:gap-y-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8 md:gap-y-10">
         <div
-          className={`md:col-start-1 md:row-start-1 md:row-span-2 ${reducedMotion ? '' : 'grid-row-fade-in'}`}
+          className={`md:col-start-1 md:row-start-1 md:row-span-2 h-full ${reducedMotion ? '' : 'grid-row-fade-in'}`}
           style={reducedMotion ? undefined : { animationDelay: '5600ms' }}
         >
           <Placeholder
             label="Video: Sample work, coming soon"
-            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_91px)] aspect-video"
+            className="w-3/4 md:ml-[33px] md:w-[calc(100%_-_91px)] h-full"
           />
         </div>
         {rows.map((row, i) => (
