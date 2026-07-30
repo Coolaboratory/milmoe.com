@@ -21,10 +21,12 @@ const content: OnePagerContent = {
       body: [
         'Came in as UX lead as the team shifted from engineering-led to human-centered process. Ran 35 field interviews across France, Germany, and England, plus a site visit to a drill ship off Louisiana.',
         'The original design leaned on a live remote-desktop connection over an unreliable satellite link — when it dropped, the only fallback was flying a colleague out by helicopter. The pivot: stop delivering the interface, start delivering the artifact — a failure notification, then a second notification when the diagnostic trip-report file was ready, so the engineer could diagnose from the file itself in minutes without needing the connection to hold.',
+        'The old pilot was disliked enough that customers were "accidentally" unplugging it, costing the sales team business. The system that came out of the pivot became standard issue on every Power Conversion marine system — a deal closer for salespeople instead of a deal breaker.',
       ],
       proofPoints: [
         '$180M, 10-year service contract',
         'Time-to-data: 6-8 hours → 10-15 minutes',
+        'Field engineers could self-diagnose ~80% of issues from the trip-report file alone',
         "Promoted onto GE's Asset Performance Management team",
       ],
       primaryImage: true,
