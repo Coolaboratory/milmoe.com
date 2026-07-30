@@ -33,7 +33,7 @@ export function Header({ hidden }: { hidden: boolean }) {
             768-1536px viewports, confirmed via measurement, so the overflow
             never reaches it. */}
         <p className="font-body text-[13px] text-text-light/60 hidden md:block whitespace-nowrap">
-          <span>Chicago Area / Hybrid</span>{'     '}{getDisplayEmail()}
+          <span>Chicago Area / Hybrid</span>{'     '}{getDisplayEmail()}
         </p>
         <nav className="flex items-center gap-5 shrink-0 md:justify-self-end">
           <a
