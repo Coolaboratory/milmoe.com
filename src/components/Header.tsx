@@ -20,8 +20,20 @@ export function Header({ hidden }: { hidden: boolean }) {
         }`}
       >
         <p className="font-display text-subhead font-semibold text-text-light shrink-0">Andrew G Milmoe</p>
-        <p className="font-body text-[13px] text-text-light/60 hidden md:block">
-          <span className="whitespace-nowrap">Chicago Area / Hybrid</span>{'     '}{getDisplayEmail()}
+        {/* whitespace-nowrap on the whole line, not just the inner span: the
+            gap below is plain ASCII spaces (a valid line-break point), and
+            this middle grid column (sized by the shared RAIL_GRID formula
+            for cross-page alignment, not by this line's own content) is
+            narrower than the full line's natural width at every viewport up
+            to the site's max-w-7xl cap — confirmed via computed DOM
+            measurement (needs ~266px, column tops out ~260px). Without this,
+            the browser wraps at that gap and drops the email to its own
+            line. Forcing nowrap lets the line overflow rightward instead,
+            which is safe: the nav column sits 32-374px further right across
+            768-1536px viewports, confirmed via measurement, so the overflow
+            never reaches it. */}
+        <p className="font-body text-[13px] text-text-light/60 hidden md:block whitespace-nowrap">
+          <span>Chicago Area / Hybrid</span>{'     '}{getDisplayEmail()}
         </p>
         <nav className="flex items-center gap-5 shrink-0 md:justify-self-end">
           <a
