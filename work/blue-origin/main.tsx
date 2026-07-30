@@ -21,7 +21,7 @@ const content: OnePagerContent = {
       eyebrow: 'THE WORK',
       title: 'Data Insights Pipeline',
       body: [
-        'Embedded directly with the engineering team — a technical product manager, five software engineers, and Andrew. Found engineers manually constructing complex queries every time, switching between siloed testing, scripting, analysis, and visualization tools, and cross-referencing real-time data against historical data under real launch-rate pressure, with no visibility into data readiness or test schedules.',
+        'Embedded directly with the engineering team: a technical product manager, five software engineers, and Andrew. Found engineers manually constructing complex queries every time, switching between siloed testing, scripting, analysis, and visualization tools, and cross-referencing real-time data against historical data under real launch-rate pressure, with no visibility into data readiness or test schedules.',
         'Identified query construction as the primary cognitive bottleneck and proposed an end-to-end pipeline connecting test planning through flight outcomes, embedded inside the existing query workflow rather than a separate standalone tool.',
       ],
       proofPoints: [
