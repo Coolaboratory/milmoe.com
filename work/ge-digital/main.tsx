@@ -11,7 +11,7 @@ const content: OnePagerContent = {
   client: 'GE Digital',
   role: 'Sr. Staff UX Product Designer',
   headline:
-    "Turned a two-engineer prototype into a $180M product, cutting field engineers' time-to-data from 8 hours to 15 minutes.",
+    "My research revealed field engineers didn't need a better connection, they needed the diagnostic data itself. That insight turned a failing pilot into the product the sales team led with, landing a $180M service contract, the first of several that followed.",
   sceneSetter:
     'The GE Power Conversion Visor Service Portal began as a pilot two hardware engineers built in Berlin for remote access to marine power systems — it worked occasionally but hadn\'t met the business\'s real goals (reducing warranty claims, driving service-contract sales, cutting customer downtime), and every dropped connection risked up to $1M/day for a customer.',
   sections: [

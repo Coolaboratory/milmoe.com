@@ -13,7 +13,7 @@ const workSamples = [
     industry: 'ENERGY',
     client: 'GE Digital',
     role: 'Sr. Staff UX Product Designer',
-    hook: 'A prototype two engineers built became a product the sales team led with. $180M in service contracts; time to data access for field engineers dropped from 8 hours to 15 minutes.',
+    hook: "My research revealed field engineers didn't need a better connection, they needed the diagnostic data itself. That insight turned a failing pilot into the product the sales team led with, landing a $180M service contract, the first of several that followed.",
     href: `${import.meta.env.BASE_URL}work/ge-digital/`,
     logo: 'ge-digital-logo.png',
     logoAlt: 'GE Digital logo',
