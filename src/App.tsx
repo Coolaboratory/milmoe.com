@@ -50,7 +50,7 @@ const workSamples = [
     client: 'Ontrak Health',
     stat: '60 days: 0 → Launch',
     role: 'Principal UX Product Designer',
-    hook: "Ontrak's Member Outreach team was stuck waiting on an overloaded AI/ML team for every customer query. I built the MVP that fixed it, a tool the AI/ML team later adopted to run its own campaigns.",
+    hook: "Ontrak's Member Outreach team was stuck waiting on an overloaded AI/ML team for every customer query. I designed the MVP that fixed it, a tool the AI/ML team later adopted to run its own campaigns.",
     href: `${import.meta.env.BASE_URL}work/ontrak/`,
     logo: 'ontrak-health-logo.png',
     logoAlt: 'Ontrak Health logo',

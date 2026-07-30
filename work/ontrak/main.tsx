@@ -13,7 +13,7 @@ const content: OnePagerContent = {
   client: 'Ontrak Health',
   role: 'Principal UX Product Designer',
   headline:
-    "Built the MVP that freed Ontrak's Member Outreach team from an overloaded AI/ML team's query backlog, a tool the AI/ML team itself later adopted to run its own campaigns.",
+    "Ontrak's Member Outreach team was stuck waiting on an overloaded AI/ML team for every customer query. I designed the MVP that fixed it, a tool the AI/ML team later adopted to run its own campaigns.",
   sceneSetter:
     "Ontrak was a fast-growing startup whose AI/ML team was heads-down on infrastructure, leaving the Member Outreach team stuck waiting on custom data queries — and every delay cost conversions.",
   sections: [
