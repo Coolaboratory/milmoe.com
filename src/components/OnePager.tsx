@@ -112,27 +112,24 @@ export function OnePager({ content }: { content: OnePagerContent }) {
     <main>
       <Header hidden={footerVisible} />
 
-      <div className="px-8 md:px-16 lg:px-24 bg-[#e6eaee] pt-7">
-        <div className="max-w-7xl mx-auto">
-          <a
-            href={`${import.meta.env.BASE_URL}#work`}
-            className="font-body text-[14px] font-medium text-accent hover:underline"
-          >
-            ← Back
-          </a>
-        </div>
-      </div>
-
       <Rail bg={heroBg} className="pt-10 pb-12 md:pb-16">
         <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8`}>
-          <div>
-            <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent mb-2">
-              {industry}
-            </p>
-            <h1 className="font-display font-bold text-[32px] md:text-[34px] text-text-light leading-tight mb-1">
-              {client}
-            </h1>
-            <p className="font-body text-[15px] text-text-light/60">{role}</p>
+          <div className="flex flex-col justify-between">
+            <div>
+              <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent mb-2">
+                {industry}
+              </p>
+              <h1 className="font-display font-bold text-[32px] md:text-[34px] text-text-light leading-tight mb-1">
+                {client}
+              </h1>
+              <p className="font-body text-[15px] text-text-light/60">{role}</p>
+            </div>
+            <a
+              href={`${import.meta.env.BASE_URL}#work`}
+              className="font-body text-[14px] font-medium text-accent hover:underline mt-6 md:mt-0"
+            >
+              ← Back
+            </a>
           </div>
           <div className="md:col-span-2">
             <p className="font-display font-semibold text-[22px] md:text-[24px] text-text-light/85 leading-snug max-w-tight">
