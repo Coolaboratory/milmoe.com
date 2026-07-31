@@ -38,8 +38,13 @@ export type SectionContent = {
    *  section already differentiates its 2 images from body copy. */
   primaryImage?: boolean
   /** How many gray placeholder images stack in this section's images column
-   *  (in addition to the optional primary image above). */
+   *  (in addition to the optional primary image above). Ignored when
+   *  `images` is provided. */
   imageCount: number
+  /** Real image srcs to render in the images column, replacing the gray
+   *  `imageCount` placeholders with actual `<img>` elements in the same
+   *  stacked position/treatment. Leave unset to keep gray placeholders. */
+  images?: string[]
 }
 
 export type OnePagerContent = {
@@ -48,6 +53,16 @@ export type OnePagerContent = {
   role: string
   headline: string
   sceneSetter: string
+  /** Where the sceneSetter text renders. 'row' (default) is a standalone
+   *  full-width row below the hero — Blue Origin and Ontrak's existing
+   *  pattern, unchanged. 'hero' embeds the sceneSetter inside the hero rail
+   *  itself, alongside the headline and an optional heroImage — GE Digital's
+   *  stakes paragraph earns a spot in the hero rather than its own row. */
+  sceneSetterPlacement?: 'row' | 'hero'
+  /** Secondary supporting image shown in the hero. Only rendered when
+   *  sceneSetterPlacement is 'hero'. Sized deliberately small/secondary —
+   *  the headline stays the hero's primary content. */
+  heroImage?: string
   sections: SectionContent[]
 }
 
@@ -74,7 +89,16 @@ function Rail({
   )
 }
 
-function ImageStack({ count }: { count: number }) {
+function ImageStack({ count, images }: { count: number; images?: string[] }) {
+  if (images && images.length > 0) {
+    return (
+      <div className="flex flex-col gap-4">
+        {images.map((src, i) => (
+          <img key={src} src={src} alt="" className="w-full aspect-video object-cover rounded-sm" />
+        ))}
+      </div>
+    )
+  }
   return (
     <div className="flex flex-col gap-4">
       {Array.from({ length: count }).map((_, i) => (
@@ -85,13 +109,23 @@ function ImageStack({ count }: { count: number }) {
 }
 
 export function OnePager({ content }: { content: OnePagerContent }) {
-  const { industry, client, role, headline, sceneSetter, sections } = content
-  // Row order: hero(0), scene-setter(1), then one entry per section,
-  // then the CTA — alternation continues straight through so weight reads
-  // consistently no matter how many sections a given page has.
+  const {
+    industry,
+    client,
+    role,
+    headline,
+    sceneSetter,
+    sceneSetterPlacement = 'row',
+    heroImage,
+    sections,
+  } = content
+  // Row order: hero(0), scene-setter(1) — only when it renders as its own
+  // row — then one entry per section, then the CTA — alternation continues
+  // straight through so weight reads consistently no matter how many rows a
+  // given page actually has.
   let rowIndex = 0
   const heroBg = railBg(rowIndex++)
-  const sceneBg = railBg(rowIndex++)
+  const sceneBg = sceneSetterPlacement === 'row' ? railBg(rowIndex++) : undefined
 
   // Same hide-on-footer-approach behavior as the landing page's Header —
   // per Andrew's non-negotiable "identical Header/Footer" requirement, this
@@ -137,14 +171,31 @@ export function OnePager({ content }: { content: OnePagerContent }) {
             </p>
           </div>
         </div>
+
+        {sceneSetterPlacement === 'hero' && (
+          <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start mt-8 md:mt-10`}>
+            <p className="font-body text-[15px] text-text-light/60 leading-relaxed">{sceneSetter}</p>
+            {heroImage && (
+              <div className="md:col-span-2">
+                <img
+                  src={heroImage}
+                  alt=""
+                  className="w-full max-w-[240px] aspect-[16/10] object-cover rounded-sm"
+                />
+              </div>
+            )}
+          </div>
+        )}
       </Rail>
 
-      <Rail bg={sceneBg} className="py-10 md:py-12">
-        <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8`}>
-          <p className="font-body text-[15px] text-text-light/60 leading-relaxed">{sceneSetter}</p>
-          <div className="hidden md:block md:col-span-2" />
-        </div>
-      </Rail>
+      {sceneSetterPlacement === 'row' && (
+        <Rail bg={sceneBg!} className="py-10 md:py-12">
+          <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8`}>
+            <p className="font-body text-[15px] text-text-light/60 leading-relaxed">{sceneSetter}</p>
+            <div className="hidden md:block md:col-span-2" />
+          </div>
+        </Rail>
+      )}
 
       {sections.map((section, i) => {
         const bg = railBg(rowIndex++)
@@ -207,7 +258,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
                 )}
               </div>
 
-              <ImageStack count={section.imageCount} />
+              <ImageStack count={section.imageCount} images={section.images} />
             </div>
           </Rail>
         )
