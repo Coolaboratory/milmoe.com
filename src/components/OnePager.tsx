@@ -29,8 +29,10 @@ export type SectionContent = {
    *  not every section has one (see Blue Origin, which has none). */
   metric?: { value: string; caption?: string }
   /** Short declarative proof statements — font-display bold, never mono,
-   *  never a fabricated numeric metric. */
-  proofPoints?: string[]
+   *  never a fabricated numeric metric. A plain string keeps the original
+   *  dot-marker row; `{ label, value }` renders as a mini-eyebrow row,
+   *  reusing the page's own eyebrow style per stat instead of a bullet. */
+  proofPoints?: (string | { label: string; value: string })[]
   /** Render one full-width visual above this section's rail row, before the
    *  narrower stacked images in the images column. Used for single-narrative
    *  pages (GE Digital, Blue Origin) to give the section a primary visual
@@ -53,15 +55,20 @@ export type OnePagerContent = {
   role: string
   headline: string
   sceneSetter: string
+  /** Leading substring of `sceneSetter` to render bold (e.g. the client/
+   *  product name). Must match the start of `sceneSetter` exactly — if it
+   *  doesn't, the whole paragraph just renders unstyled. */
+  sceneSetterEmphasis?: string
   /** Where the sceneSetter text renders. 'row' (default) is a standalone
-   *  full-width row below the hero — Blue Origin and Ontrak's existing
-   *  pattern, unchanged. 'hero' embeds the sceneSetter inside the hero rail
-   *  itself, alongside the headline and an optional heroImage — GE Digital's
-   *  stakes paragraph earns a spot in the hero rather than its own row. */
-  sceneSetterPlacement?: 'row' | 'hero'
-  /** Secondary supporting image shown in the hero. Only rendered when
-   *  sceneSetterPlacement is 'hero'. Sized deliberately small/secondary —
-   *  the headline stays the hero's primary content. */
+   *  full-width row below the hero, on its own alternated background — Blue
+   *  Origin and Ontrak's existing pattern, unchanged. 'section' renders it
+   *  at the top of the first section's own rail, above that section's body
+   *  copy, so context/body/proofPoints all share one background band
+   *  instead of alternating per micro-section — GE Digital's pattern. */
+  sceneSetterPlacement?: 'row' | 'section'
+  /** Secondary supporting image shown in the hero, alongside the headline.
+   *  Sized deliberately small/secondary — the headline stays the hero's
+   *  primary content. */
   heroImage?: string
   sections: SectionContent[]
 }
@@ -70,7 +77,19 @@ export type OnePagerContent = {
  *  Systems Rail mockup — row weight (Lead vs. Supporting) reads through
  *  tint/spacing/size contrast, never a dark reversal. */
 function railBg(index: number) {
-  return index % 2 === 0 ? 'bg-[#f7f7f4]' : 'bg-[#e6eaee]'
+  return index % 2 === 0 ? 'bg-[#F5F4F0]' : 'bg-[#e6eaee]'
+}
+
+/** Renders `text` with its leading `emphasis` substring bolded, falling
+ *  back to plain text if `emphasis` is unset or doesn't actually lead. */
+function withEmphasis(text: string, emphasis?: string) {
+  if (!emphasis || !text.startsWith(emphasis)) return text
+  return (
+    <>
+      <strong className="font-semibold">{emphasis}</strong>
+      {text.slice(emphasis.length)}
+    </>
+  )
 }
 
 function Rail({
@@ -92,17 +111,22 @@ function Rail({
 function ImageStack({ count, images }: { count: number; images?: string[] }) {
   if (images && images.length > 0) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         {images.map((src, i) => (
-          <img key={src} src={src} alt="" className="w-full aspect-video object-cover rounded-sm" />
+          <img
+            key={src}
+            src={src}
+            alt=""
+            className="w-full aspect-video object-cover rounded-sm border-2 border-white"
+          />
         ))}
       </div>
     )
   }
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-8">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="w-full aspect-video rounded-sm bg-gray-300" />
+        <div key={i} className="w-full aspect-video rounded-sm bg-gray-300 border-2 border-white" />
       ))}
     </div>
   )
@@ -115,6 +139,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
     role,
     headline,
     sceneSetter,
+    sceneSetterEmphasis,
     sceneSetterPlacement = 'row',
     heroImage,
     sections,
@@ -153,37 +178,35 @@ export function OnePager({ content }: { content: OnePagerContent }) {
               <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent mb-2">
                 {industry}
               </p>
-              <h1 className="font-display font-bold text-[32px] md:text-[34px] text-text-light leading-tight mb-1">
+              <h1 className="font-display font-bold text-[16px] md:text-[17px] text-text-light leading-relaxed mb-1">
                 {client}
               </h1>
               <p className="font-body text-[15px] text-text-light/60">{role}</p>
             </div>
             <a
               href={`${import.meta.env.BASE_URL}#work`}
-              className="font-body text-[14px] font-medium text-accent hover:underline mt-6 md:mt-0"
+              className="font-body text-[14px] font-medium text-accent hover:underline mt-10"
             >
               ← Back
             </a>
           </div>
           <div className="md:col-span-2">
-            <p className="font-display font-semibold text-[22px] md:text-[24px] text-text-light/85 leading-snug max-w-tight">
+            <p className="font-display font-semibold text-[22px] md:text-[24px] text-text-light/85 leading-snug text-pretty max-w-tight">
               {headline}
             </p>
           </div>
         </div>
 
-        {sceneSetterPlacement === 'hero' && (
+        {heroImage && (
           <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start mt-8 md:mt-10`}>
-            <p className="font-body text-[15px] text-text-light/60 leading-relaxed">{sceneSetter}</p>
-            {heroImage && (
-              <div className="md:col-span-2">
-                <img
-                  src={heroImage}
-                  alt=""
-                  className="w-full max-w-[240px] aspect-[16/10] object-cover rounded-sm"
-                />
-              </div>
-            )}
+            <div className="hidden md:block" />
+            <div className="md:col-span-2">
+              <img
+                src={heroImage}
+                alt=""
+                className="w-full max-w-sm aspect-video object-cover rounded-sm"
+              />
+            </div>
           </div>
         )}
       </Rail>
@@ -191,7 +214,9 @@ export function OnePager({ content }: { content: OnePagerContent }) {
       {sceneSetterPlacement === 'row' && (
         <Rail bg={sceneBg!} className="py-10 md:py-12">
           <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8`}>
-            <p className="font-body text-[15px] text-text-light/60 leading-relaxed">{sceneSetter}</p>
+            <p className="font-body text-[16px] md:text-[17px] text-text-light/85 leading-relaxed text-pretty">
+              {withEmphasis(sceneSetter, sceneSetterEmphasis)}
+            </p>
             <div className="hidden md:block md:col-span-2" />
           </div>
         </Rail>
@@ -199,67 +224,105 @@ export function OnePager({ content }: { content: OnePagerContent }) {
 
       {sections.map((section, i) => {
         const bg = railBg(rowIndex++)
+        const showContextRow = i === 0 && sceneSetterPlacement === 'section'
+
+        const labelColumn = (
+          <div>
+            <p
+              className={`font-body text-[11px] font-medium tracking-widest uppercase mb-2 ${
+                section.eyebrowMuted ? 'text-text-light/45' : 'text-accent'
+              }`}
+            >
+              {section.eyebrow}
+            </p>
+            <h2 className="font-display font-semibold text-text-light text-[22px] md:text-[26px] leading-snug text-pretty">
+              {section.title}
+            </h2>
+          </div>
+        )
+
+        const contentColumn = (
+          <div>
+            {section.metric && (
+              <>
+                <p className="font-display font-bold text-text-light text-[32px] md:text-[38px] leading-none mb-2">
+                  {section.metric.value}
+                </p>
+                {section.metric.caption && (
+                  <p className="font-body text-[15px] text-text-light/70 mb-5">{section.metric.caption}</p>
+                )}
+              </>
+            )}
+
+            {section.body.map((paragraph, pi) => (
+              <p
+                key={pi}
+                className="font-body text-[16px] md:text-[17px] text-text-light/85 leading-relaxed text-pretty mb-4 last:mb-0"
+              >
+                {paragraph}
+              </p>
+            ))}
+
+            {section.quote && (
+              <blockquote className="font-body italic text-[17px] md:text-[18px] text-text-light/85 leading-relaxed text-pretty border-l-2 border-accent pl-5 my-6">
+                {section.quote}
+              </blockquote>
+            )}
+
+            {section.proofPoints && section.proofPoints.length > 0 && (
+              <div className="flex flex-col gap-6 mt-6 pt-5 border-t border-dashed border-text-light/20">
+                {section.proofPoints.map((point, ppi) =>
+                  typeof point === 'string' ? (
+                    <div key={ppi} className="flex gap-3">
+                      <span className="mt-[9px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                      <p className="font-display font-bold text-[16px] text-text-light text-pretty">{point}</p>
+                    </div>
+                  ) : (
+                    <div key={ppi}>
+                      <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent mb-1">
+                        {point.label}
+                      </p>
+                      <p className="font-display font-bold text-[16px] text-text-light text-pretty">
+                        {point.value}
+                      </p>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+        )
+
+        const imagesColumn = <ImageStack count={section.imageCount} images={section.images} />
+
         return (
           <Rail key={section.title} bg={bg} className="py-12 md:py-16">
             {section.primaryImage && (
               <div className="w-full aspect-video rounded-sm bg-gray-300 mb-10 md:mb-14" />
             )}
-            <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start`}>
-              <div>
-                <p
-                  className={`font-body text-[11px] font-medium tracking-widest uppercase mb-2 ${
-                    section.eyebrowMuted ? 'text-text-light/45' : 'text-accent'
-                  }`}
-                >
-                  {section.eyebrow}
-                </p>
-                <h2 className="font-display font-semibold text-text-light text-[22px] md:text-[26px] leading-snug">
-                  {section.title}
-                </h2>
-              </div>
-
-              <div>
-                {section.metric && (
-                  <>
-                    <p className="font-display font-bold text-text-light text-[32px] md:text-[38px] leading-none mb-2">
-                      {section.metric.value}
+            {showContextRow ? (
+              <>
+                <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start`}>
+                  {labelColumn}
+                  <div className="md:col-span-2">
+                    <p className="font-body text-[16px] md:text-[17px] text-text-light/85 leading-relaxed text-pretty">
+                      {withEmphasis(sceneSetter, sceneSetterEmphasis)}
                     </p>
-                    {section.metric.caption && (
-                      <p className="font-body text-[15px] text-text-light/70 mb-5">
-                        {section.metric.caption}
-                      </p>
-                    )}
-                  </>
-                )}
-
-                {section.body.map((paragraph, pi) => (
-                  <p
-                    key={pi}
-                    className="font-body text-[16px] md:text-[17px] text-text-light/85 leading-relaxed mb-4 last:mb-0"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-
-                {section.quote && (
-                  <blockquote className="font-body italic text-[17px] md:text-[18px] text-text-light/85 leading-relaxed border-l-2 border-accent pl-5 my-6">
-                    {section.quote}
-                  </blockquote>
-                )}
-
-                {section.proofPoints && section.proofPoints.length > 0 && (
-                  <div className="flex flex-col gap-2 mt-6 pt-5 border-t border-dashed border-text-light/20">
-                    {section.proofPoints.map((point, ppi) => (
-                      <p key={ppi} className="font-display font-bold text-[16px] text-text-light">
-                        {point}
-                      </p>
-                    ))}
                   </div>
-                )}
+                </div>
+                <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start mt-8 md:mt-10`}>
+                  <div className="hidden md:block" />
+                  {contentColumn}
+                  {imagesColumn}
+                </div>
+              </>
+            ) : (
+              <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start`}>
+                {labelColumn}
+                {contentColumn}
+                {imagesColumn}
               </div>
-
-              <ImageStack count={section.imageCount} images={section.images} />
-            </div>
+            )}
           </Rail>
         )
       })}
