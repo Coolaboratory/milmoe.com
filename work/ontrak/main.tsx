@@ -38,7 +38,7 @@ const content: OnePagerContent = {
   sections: [
     {
       eyebrow: 'THE WORK',
-      title: 'Align, Build, Trust',
+      title: 'Align, Build, Scale',
       body: [
         'Served as liaison between the AI/ML and Clinical teams, sketching the claims-to-campaign process on a whiteboard and turning it into a shared diagram the CTO liked enough to ask him to share with the entire organization.',
         'Over about a year of spare time, on a team of one designer and two engineers, that same clarity became List Manager, a lean MVP built from existing components and shipped in time for a client sales call.',
