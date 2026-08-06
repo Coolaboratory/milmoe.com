@@ -2,12 +2,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'node:url'
 
-// base is '/' on Vercel (staging, served at its own domain root) and
-// '/milmoe.com/' everywhere else (GitHub Pages production, served under a
-// repo-name subpath). Vercel sets process.env.VERCEL during its builds.
+// base defaults to '/' (correct for Vercel staging and any other host
+// serving from its own domain root). Only GitHub Pages needs the
+// '/milmoe.com/' repo-name subpath, so that's opt-in via GH_PAGES, set
+// explicitly in .github/workflows/deploy.yml's build step — deliberately
+// NOT keyed off Vercel's own env vars, since those aren't guaranteed to be
+// exposed to the build without an extra per-project toggle. When this
+// branch is eventually promoted to main, deploy.yml's build step there
+// needs `env: GH_PAGES: 'true'` added too, or production will build with
+// the wrong base path.
 export default defineConfig({
   plugins: [react()],
-  base: process.env.VERCEL ? '/' : '/milmoe.com/',
+  base: process.env.GH_PAGES ? '/milmoe.com/' : '/',
   build: {
     rollupOptions: {
       // Native multi-page build: each case-study one-pager is a real static
