@@ -22,7 +22,7 @@ const content: OnePagerContent = {
     "GE Power Conversion's Visor Service Portal, a pilot built by two hardware engineers, was failing badly enough that customers were unplugging it. Selected as UX lead to find out why and turn it around, with the business's highest-profile software bet riding on it.",
   sceneSetterEmphasis: "GE Power Conversion's Visor Service Portal",
   sceneSetterPlacement: 'section',
-  heroImage: `${import.meta.env.BASE_URL}workshop.png`,
+  heroImage: `${import.meta.env.BASE_URL}workshop-wide.png`,
   sections: [
     {
       eyebrow: 'THE WORK',

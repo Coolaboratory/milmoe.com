@@ -71,10 +71,12 @@ export type OnePagerContent = {
    *  copy, so context/body/proofPoints all share one background band
    *  instead of alternating per micro-section — GE Digital's pattern. */
   sceneSetterPlacement?: 'row' | 'section'
-  /** Secondary supporting image shown in the hero, alongside the headline.
+  /** Secondary supporting image(s) shown in the hero, below the headline.
    *  Sized deliberately small/secondary — the headline stays the hero's
-   *  primary content. */
-  heroImage?: string
+   *  primary content. Pass an array to show more than one, side by side.
+   *  All render at a fixed height with natural (uncropped) width — a wide
+   *  image simply renders wider, a tall one narrower, never cropped. */
+  heroImage?: string | string[]
   sections: SectionContent[]
 }
 
@@ -161,6 +163,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
     heroImage,
     sections,
   } = content
+  const heroImages = heroImage ? (Array.isArray(heroImage) ? heroImage : [heroImage]) : []
   // Row order: hero(0), scene-setter(1) — only when it renders as its own
   // row — then one entry per section, then the CTA — alternation continues
   // straight through so weight reads consistently no matter how many rows a
@@ -214,15 +217,13 @@ export function OnePager({ content }: { content: OnePagerContent }) {
           </div>
         </div>
 
-        {heroImage && (
+        {heroImages.length > 0 && (
           <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start mt-8 md:mt-10`}>
             <div className="hidden md:block" />
-            <div className="md:col-span-2">
-              <img
-                src={heroImage}
-                alt=""
-                className="w-full max-w-sm aspect-video object-cover rounded-sm"
-              />
+            <div className="md:col-span-2 flex flex-wrap gap-4">
+              {heroImages.map((src) => (
+                <img key={src} src={src} alt="" className="h-[216px] w-auto max-w-full rounded-sm" />
+              ))}
             </div>
           </div>
         )}
