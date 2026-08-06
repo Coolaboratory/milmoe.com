@@ -47,6 +47,11 @@ export type SectionContent = {
    *  `imageCount` placeholders with actual `<img>` elements in the same
    *  stacked position/treatment. Leave unset to keep gray placeholders. */
   images?: string[]
+  /** When true, `images` render at full column width with their natural
+   *  aspect ratio (no forced 16:9, no cropping) — for screenshots/diagrams
+   *  where cropping would cut off real content. Default false keeps the
+   *  existing fixed-aspect-ratio, object-cover treatment. */
+  imagesUncropped?: boolean
 }
 
 export type OnePagerContent = {
@@ -108,7 +113,15 @@ function Rail({
   )
 }
 
-function ImageStack({ count, images }: { count: number; images?: string[] }) {
+function ImageStack({
+  count,
+  images,
+  uncropped = false,
+}: {
+  count: number
+  images?: string[]
+  uncropped?: boolean
+}) {
   if (images && images.length > 0) {
     return (
       <div className="flex flex-col gap-8">
@@ -117,7 +130,11 @@ function ImageStack({ count, images }: { count: number; images?: string[] }) {
             key={src}
             src={src}
             alt=""
-            className="w-full aspect-video object-cover rounded-sm border-2 border-white"
+            className={
+              uncropped
+                ? 'w-full h-auto rounded-sm border-2 border-white'
+                : 'w-full aspect-video object-cover rounded-sm border-2 border-white'
+            }
           />
         ))}
       </div>
@@ -293,7 +310,9 @@ export function OnePager({ content }: { content: OnePagerContent }) {
           </div>
         )
 
-        const imagesColumn = <ImageStack count={section.imageCount} images={section.images} />
+        const imagesColumn = (
+          <ImageStack count={section.imageCount} images={section.images} uncropped={section.imagesUncropped} />
+        )
 
         return (
           <Rail key={section.title} bg={bg} className="py-12 md:py-16">

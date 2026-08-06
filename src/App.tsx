@@ -135,7 +135,7 @@ function Grid() {
     {
       label: 'What',
       value: 'AI fluency',
-      body: 'A decade working alongside ML and data science teams, translating research-grade output into business outcomes. Currently training frontier models to generate UI designs on contract. Built this site end to end, strategy, design, and code, with Claude Code.',
+      body: 'A decade working alongside ML and data science teams, translating research-grade output into business outcomes. Currently training frontier models to generate UI designs on contract. Built this site end to end with Claude Code CLI, using agents trained for management, research, strategy, design, and code.',
       rowStart: 'md:row-start-3',
     },
   ]

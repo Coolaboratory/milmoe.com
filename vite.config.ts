@@ -2,9 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'node:url'
 
+// base is '/' on Vercel (staging, served at its own domain root) and
+// '/milmoe.com/' everywhere else (GitHub Pages production, served under a
+// repo-name subpath). Vercel sets process.env.VERCEL during its builds.
 export default defineConfig({
   plugins: [react()],
-  base: '/milmoe.com/',
+  base: process.env.VERCEL ? '/' : '/milmoe.com/',
   build: {
     rollupOptions: {
       // Native multi-page build: each case-study one-pager is a real static
