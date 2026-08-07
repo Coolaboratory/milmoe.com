@@ -26,7 +26,7 @@ const content: OnePagerContent = {
   client: 'Ontrak Health',
   role: 'Principal UX Product Designer',
   headline:
-    "Ontrak's growth was hampered by opaque, manual processes splintered across siloed teams. Called in to diagram it, sparking the tool that now runs the business.",
+    "Ontrak's growth was hampered by opaque, manual processes splintered across siloed teams. Called in to diagram it, sparking the tool that supported 130% revenue growth in a year.",
   sceneSetter:
     "Brought in to align stakeholders on the Care Team Portal's requirements, and found the upstream process was scattered spreadsheets and ill-timed periodic queries. The CTO asked him to sketch out a List Manager tool as a side project.",
   sceneSetterEmphasis: 'List Manager',
