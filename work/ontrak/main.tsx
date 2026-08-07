@@ -28,7 +28,7 @@ const content: OnePagerContent = {
   headline:
     "Ontrak's growth was hampered by opaque, manual processes splintered across siloed teams. Called in to diagram it, sparking the tool that now runs the business.",
   sceneSetter:
-    "List Manager didn't exist yet, just manual spreadsheets bridging claims data to outreach campaigns, with no shared way for AI/ML, Outreach, and Clinical to see the process end to end. Brought in to align stakeholders on the Care Team Portal, and List Manager grew alongside it as a side project to close that gap.",
+    "Brought in to align stakeholders on the Care Team Portal's requirements, and found the upstream process was scattered spreadsheets and ill-timed periodic queries. The CTO asked him to sketch out a List Manager tool as a side project.",
   sceneSetterEmphasis: 'List Manager',
   sceneSetterPlacement: 'section',
   heroImage: [
@@ -40,8 +40,8 @@ const content: OnePagerContent = {
       eyebrow: 'THE WORK',
       title: 'Align, Build, Scale',
       body: [
-        'Served as liaison between the AI/ML and Clinical teams, sketching the claims-to-campaign process on a whiteboard and turning it into a shared diagram the CTO liked enough to ask him to share with the entire organization.',
-        'Over about a year of spare time, on a team of one designer and two engineers, that same clarity became List Manager, a lean MVP built from existing components and shipped in time for a client sales call.',
+        'Diagrammed the claims-to-campaign process to build a systems-level understanding of how Ontrak created value, work the CTO liked enough to share with the entire organization.',
+        'Over about a year of spare time, on a team of one designer and two engineers, built List Manager as a lean MVP from existing components, shipped in time for a client sales call.',
         "The CTO's new Operational Data & Analytics team produced data too complex for stakeholders to use. Combined it with the original diagram to build an executive dashboard, giving leadership a shared way to forecast staffing and spot bottlenecks.",
       ],
       proofPoints: [

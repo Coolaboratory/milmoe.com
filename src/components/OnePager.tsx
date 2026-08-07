@@ -87,14 +87,18 @@ function railBg(index: number) {
   return index % 2 === 0 ? 'bg-[#F5F4F0]' : 'bg-[#e6eaee]'
 }
 
-/** Renders `text` with its leading `emphasis` substring bolded, falling
- *  back to plain text if `emphasis` is unset or doesn't actually lead. */
+/** Renders `text` with its first occurrence of `emphasis` bolded (leading
+ *  or mid-sentence), falling back to plain text if `emphasis` is unset or
+ *  not found. */
 function withEmphasis(text: string, emphasis?: string) {
-  if (!emphasis || !text.startsWith(emphasis)) return text
+  if (!emphasis) return text
+  const start = text.indexOf(emphasis)
+  if (start === -1) return text
   return (
     <>
+      {text.slice(0, start)}
       <strong className="font-semibold">{emphasis}</strong>
-      {text.slice(emphasis.length)}
+      {text.slice(start + emphasis.length)}
     </>
   )
 }
