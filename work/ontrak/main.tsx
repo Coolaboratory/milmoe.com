@@ -26,7 +26,7 @@ const content: OnePagerContent = {
   client: 'Ontrak Health',
   role: 'Principal UX Product Designer',
   headline:
-    "Ontrak's growth was hampered by opaque, manual processes splintered across siloed teams. Called in to diagram it, sparking the tool that ended up running the business.",
+    "Ontrak's growth was hampered by opaque, manual processes splintered across siloed teams. Called in to diagram it, sparking the tool that now runs the business.",
   sceneSetter:
     "List Manager didn't exist yet, just manual spreadsheets bridging claims data to outreach campaigns, with no shared way for AI/ML, Outreach, and Clinical to see the process end to end. Brought in to align stakeholders on the Care Team Portal, and List Manager grew alongside it as a side project to close that gap.",
   sceneSetterEmphasis: 'List Manager',
