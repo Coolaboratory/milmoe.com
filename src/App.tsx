@@ -219,7 +219,13 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
             <a
               key={cs.client}
               href={cs.href}
-              className={`bg-[#F5F4F0] border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 transition-all duration-500 hover:-translate-y-[3px] hover:shadow-md ${
+              // Entrance-only transition (opacity/transform for the scroll-reveal
+              // slide-and-scale-in). Kept on its own element and its own
+              // transition-property list, at the original 500ms, so it can never
+              // be affected by the hover-lift speed below — they used to share a
+              // single `transition-all duration-500`, which meant any change to
+              // one silently changed the other.
+              className={`group block transition-[opacity,transform] duration-500 ${
                 isRevealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
               }`}
               style={{
@@ -227,27 +233,33 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
                   isRevealed && !reducedMotion ? `${CARDS_BASE_DELAY_MS + i * 320}ms` : '0ms',
               }}
             >
-              <img
-                src={`${import.meta.env.BASE_URL}${cs.image}`}
-                alt={cs.imageAlt}
-                className="w-full aspect-video object-cover rounded-sm mb-2"
-              />
-              <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent">
-                {cs.industry}
-              </p>
-              <h3 className="font-display text-subhead font-semibold text-text-light">{cs.stat}</h3>
-              <p className="font-body text-[15px] leading-relaxed flex-1 text-text-light/70">
-                {cs.hook}
-              </p>
-              <div className="flex items-center justify-between gap-4 pt-1">
-                <p className="font-body text-[13px] text-text-light">{cs.client}</p>
+              {/* Card chrome + hover lift live here, independent of the entrance
+                  transition above. 250ms is intentionally half of the entrance's
+                  500ms — was previously the same 500ms, made twice as fast per
+                  request. */}
+              <div className="bg-[#F5F4F0] border border-text-light/10 rounded-md p-8 shadow-sm flex flex-col gap-3 h-full transition-[transform,box-shadow] duration-[250ms] group-hover:-translate-y-[3px] group-hover:shadow-md">
                 <img
-                  src={`${import.meta.env.BASE_URL}${cs.logo}`}
-                  alt={cs.logoAlt}
-                  className="h-5 w-auto object-contain shrink-0"
+                  src={`${import.meta.env.BASE_URL}${cs.image}`}
+                  alt={cs.imageAlt}
+                  className="w-full aspect-video object-cover rounded-sm mb-2"
                 />
+                <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent">
+                  {cs.industry}
+                </p>
+                <h3 className="font-display text-subhead font-semibold text-text-light">{cs.stat}</h3>
+                <p className="font-body text-[15px] leading-relaxed flex-1 text-text-light/70">
+                  {cs.hook}
+                </p>
+                <div className="flex items-center justify-between gap-4 pt-1">
+                  <p className="font-body text-[13px] text-text-light">{cs.client}</p>
+                  <img
+                    src={`${import.meta.env.BASE_URL}${cs.logo}`}
+                    alt={cs.logoAlt}
+                    className="h-5 w-auto object-contain shrink-0"
+                  />
+                </div>
+                <p className="font-body text-[13px] text-text-light/50">{cs.role}</p>
               </div>
-              <p className="font-body text-[13px] text-text-light/50">{cs.role}</p>
             </a>
           ))}
         </div>
