@@ -197,7 +197,13 @@ export function OnePager({ content }: { content: OnePagerContent }) {
 
       <Rail bg={heroBg} className="pt-10 pb-12 md:pb-16">
         <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8`}>
-          <div className="flex flex-col justify-between">
+          {/* self-start keeps this column's height tied to its own content
+              (info block + mt-10 + Back link) instead of the CSS grid's
+              default row-stretch behavior, which would otherwise match it to
+              the tallest cell in the row, including the headline+images
+              column below. Without this, Back drifts down whenever the
+              headline column grows, unrelated to this column's own content. */}
+          <div className="flex flex-col justify-between self-start">
             <div>
               <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent mb-2">
                 {industry}
@@ -218,19 +224,21 @@ export function OnePager({ content }: { content: OnePagerContent }) {
             <p className="font-display font-semibold text-[22px] md:text-[24px] text-text-light/85 leading-snug text-pretty max-w-tight">
               {headline}
             </p>
+            {/* Hero images live in normal flow directly below the headline
+                paragraph, so their position tracks the headline's own
+                rendered height (via margin-top) rather than a fixed offset
+                from the row's stretched/grid-computed height. A short
+                headline and a long headline both get the same visual gap
+                to the images that follow. */}
+            {heroImages.length > 0 && (
+              <div className="flex flex-wrap gap-4 mt-8 md:mt-10">
+                {heroImages.map((src) => (
+                  <img key={src} src={src} alt="" className="h-[216px] w-auto max-w-full rounded-sm" />
+                ))}
+              </div>
+            )}
           </div>
         </div>
-
-        {heroImages.length > 0 && (
-          <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8 items-start mt-8 md:mt-10`}>
-            <div className="hidden md:block" />
-            <div className="md:col-span-2 flex flex-wrap gap-4">
-              {heroImages.map((src) => (
-                <img key={src} src={src} alt="" className="h-[216px] w-auto max-w-full rounded-sm" />
-              ))}
-            </div>
-          </div>
-        )}
       </Rail>
 
       {sceneSetterPlacement === 'row' && (
