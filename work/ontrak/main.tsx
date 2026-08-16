@@ -21,15 +21,20 @@ import { OnePager, type OnePagerContent } from '../../src/components/OnePager'
 // a side project. This reopens the earlier 2026-07-30 call to hold Care
 // Team Portal out of this page entirely; it's still just a passing mention
 // here, not a developed section — the working doc has the full initiative.
+//
+// Rewritten 2026-08-16 (Andrew, approved this session): value-stream-map
+// framing replaces the prior "Align, Build, Scale" headline/body/
+// proofPoints. AI/ML's List Manager adoption drops from a headline proof
+// point to a body-copy mention — sidebar detail, not headline material.
 const content: OnePagerContent = {
   industry: 'HEALTHCARE',
   client: 'Ontrak Health',
   role: 'Principal UX Product Designer',
   headline:
-    "Ontrak's growth was hampered by opaque, manual processes splintered across siloed teams. Called in to diagram it, sparking the tool that supported 130% revenue growth in a year.",
+    "Mapping the Value Stream: How a 3-person side project supported 135% growth",
   sceneSetter:
-    "Brought in to align stakeholders on the Care Team Portal's requirements, and found the upstream process was scattered spreadsheets and ill-timed periodic queries. The CTO asked him to sketch out a List Manager tool as a side project.",
-  sceneSetterEmphasis: 'List Manager',
+    "Ontrak's growth was outpacing its ability to see itself. Claims-to-enrollment ran through Operations, AI/ML, and Clinical teams with no shared model of where members dropped off. Outreach was kept waiting by a research-oriented AI/ML team that routinely deprioritized their queries. The CTO asked me to look into it while maintaining progress on our Care Team Portal.",
+  sceneSetterEmphasis: 'Care Team Portal',
   sceneSetterPlacement: 'section',
   heroImage: [
     `${import.meta.env.BASE_URL}ontrak-sketch.png`,
@@ -40,14 +45,14 @@ const content: OnePagerContent = {
       eyebrow: 'THE WORK',
       title: 'Align, Build, Scale',
       body: [
-        'Diagrammed the claims-to-campaign process to build a systems-level understanding of how Ontrak created value, work the CTO liked enough to share with the entire organization.',
-        'Over about a year of spare time, on a team of one designer and two engineers, built List Manager as a lean MVP from existing components, shipped in time for a client sales call.',
-        "The CTO's new Operational Data & Analytics team produced data too complex for stakeholders to use. Combined it with the original diagram to build an executive dashboard, giving leadership a shared way to forecast staffing and spot bottlenecks.",
+        "Mapped the claims-to-enrollment value stream to build the shared attrition model that had been missing. That diagnosis traced why outreach stalled: Operations' segment requests were queuing behind a research-oriented AI/ML team's own priorities, with AI/ML acting as de facto gatekeeper of member data.",
+        'Designed List Manager, a self-serve query tool that let Operations pull its own outreach segments directly, removing the dependency. AI/ML itself later adopted the tool too.',
+        "Paired the value stream model with metrics from the CTO's new Operational Data & Analytics team to design an executive dashboard, giving leadership a shared way to forecast staffing and spot constraints.",
       ],
       proofPoints: [
-        { label: 'ADOPTION', value: 'List Manager adopted by the AI/ML team itself to run its own campaigns' },
-        { label: 'REACH', value: "The diagram behind it was shared company-wide at the CTO's request" },
-        { label: 'INVESTMENT', value: 'Won dedicated PM and Visual Design resources to keep it going' },
+        { label: 'REACH', value: "Value stream model rolled out org-wide at the CTO's direction" },
+        { label: 'ADOPTION', value: "Executive dashboard became operations leadership's OKR instrument" },
+        { label: 'OWNERSHIP', value: 'List Manager gave Operations self-serve access, ending its dependency on AI/ML' },
       ],
       imageCount: 3,
       images: [
