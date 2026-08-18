@@ -108,8 +108,8 @@ function Hero() {
               reducedMotion ? '' : 'headline-fly-in'
             }`}
           >
-            I take enterprise software from proof of concept to commercial-grade global product,
-            in regulated, high stakes environments.
+            I turn complex enterprise software into scalable, global products
+            built for high-stakes operations.
           </h1>
         </div>
       </div>
