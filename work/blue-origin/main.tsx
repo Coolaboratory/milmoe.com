@@ -3,30 +3,33 @@ import { createRoot } from 'react-dom/client'
 import '../../src/index.css'
 import { OnePager, type OnePagerContent } from '../../src/components/OnePager'
 
-// Blue Origin one-pager content. Single-narrative page. This is the
-// weakest of the three proof-wise — only "proposed" is confirmed, no
-// hard outcome number and no BlueGPT/RegEx-automation claim (both
-// unconfirmed per Team Inbox/Milmoe_WorkSample_Blue-Origin.md and the
-// project_milmoe_blue_origin_facts memory). Don't paper over that here.
+// Blue Origin one-pager content. Updated 2026-08-23: the pipeline is
+// operational (not just proposed), the near-real-time visualization tool
+// is real and personally witnessed by Andrew in use, and the Mission
+// Control Network-adjacent work is accurate — previously flagged as
+// unconfirmed, since resolved per Andrew's direct confirmation (see
+// project_milmoe_blue_origin_facts memory).
 const content: OnePagerContent = {
   industry: 'AEROSPACE',
   client: 'Blue Origin',
   role: 'Lead User Experience Designer',
   headline:
-    'Rocket engineers were copying and pasting between siloed systems, so I proposed a unified data insights pipeline connecting test planning through flight outcomes.',
+    'Can an aerospace company scale if its engineers are stuck moving files?',
   sceneSetter:
-    'Engineering-led team in academic-to-commercial transition. Rocket engines generate massive telemetry across test and flight phases; engineers had to interpret it fast between launches, under ITAR compliance constraints.',
+    'Rocket engines generate enormous volumes of test and flight telemetry, and roughly 2,000 engineers across Blue Origin depended on a shared platform, BDMS, to search and retrieve it. In practice, engineers were falling back on spreadsheets, directory diving, and manual file transfers that could run up to 8 hours, workarounds nobody upstream had visibility into. I joined to find out why.',
   sections: [
     {
       eyebrow: 'THE WORK',
       title: 'Data Insights Pipeline',
       body: [
-        'Embedded directly with the engineering team: a technical product manager, five software engineers, and Andrew. Found engineers manually constructing complex queries every time, switching between siloed testing, scripting, analysis, and visualization tools, and cross-referencing real-time data against historical data under real launch-rate pressure, with no visibility into data readiness or test schedules.',
-        'Identified query construction as the primary cognitive bottleneck and proposed an end-to-end pipeline connecting test planning through flight outcomes, embedded inside the existing query workflow rather than a separate standalone tool.',
+        "I interviewed close to 30 flight and propulsion engineers on site to find out where the platform was breaking down. A few didn't know it existed. Over half had tried it a year earlier, found it too slow to be worth the trouble, and never went back, defaulting to the manual workarounds that ate their time instead. That scale of abandonment was invisible to the product team; nobody had measured it because nobody had asked.",
+        'The findings shifted my strategy from optimizing query performance to redesigning the workflows engineers actually needed: preparation, test, analysis, and decision-making, with the abandoned-user segment as the priority. I designed the test and flight data operations insights pipeline that came out of that reframe, connecting previously siloed applications across the full rocket component lifecycle, from design and testing through flight and maintenance.',
+        "I also designed and delivered a near-real-time launch data visualization tool in a matter of weeks, giving subject matter experts a way to compare live and historical data without disrupting the systems they were watching. It ran one degree of separation from the Mission Control Network, close enough to support pre-launch and in-flight decisions without introducing new risk to systems that couldn't afford one.",
       ],
       proofPoints: [
-        'Proposed an end-to-end data insights pipeline',
-        'Adopted the BlueKit enterprise design system',
+        { label: 'ADOPTION', value: 'Research participants returned as users and brought their teams with them, spreading uptake across roughly 2,000 engineers' },
+        { label: 'PIPELINE', value: 'Delivered a data insights pipeline spanning the full rocket component lifecycle, from design and testing through flight and maintenance' },
+        { label: 'TRUST', value: 'Built a launch data visualization tool operating one degree from Mission Control, without introducing risk to mission-critical systems' },
       ],
       primaryImage: true,
       imageCount: 2,
