@@ -128,7 +128,7 @@ function Grid() {
     },
     {
       label: 'Where',
-      value: 'Regulated, high-stakes environments',
+      value: 'Regulated Environments',
       body: 'Enterprise customers in industrial IoT, aerospace (ITAR), and healthcare (HIPAA) need fleet-wide visibility into the outcomes their frontline workers produce. As veteran specialists retire, their tools need to carry decades of expertise forward to the newly trained engineers and nurses stepping into their roles, so both can focus on the work, not the paperwork.',
       rowStart: 'md:row-start-2',
     },
