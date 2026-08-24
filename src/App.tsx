@@ -104,12 +104,13 @@ function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
           <div />
           <h1
-            className={`md:col-span-2 font-display font-bold text-[26px] lg:text-[32px] text-text-light leading-snug ${
+            className={`md:col-span-2 font-display font-bold text-[24px] lg:text-[30px] text-text-light leading-snug ${
               reducedMotion ? '' : 'headline-fly-in'
             }`}
           >
-            I turn complex enterprise software into scalable, global products
-            built for high-stakes operations.
+            I scale software from proof-of-concept to global,{' '}
+            <span className="whitespace-nowrap">high-stakes</span> operations
+            through user-centered design.
           </h1>
         </div>
       </div>
@@ -135,7 +136,7 @@ function Grid() {
     {
       label: 'What',
       value: 'AI fluency',
-      body: 'A decade working alongside ML and data science teams, translating research-grade output into business outcomes. Currently training frontier models to generate UI designs on contract. Built this site end to end with Claude Code CLI, using agents trained for management, research, strategy, design, and code.',
+      body: 'A decade working alongside ML and data science teams, turning technically proven ideas to usable, reliable, scalable global enterprise products. Currently training frontier models to generate UI designs on contract. Built this site end to end with Claude Code CLI, using agents trained for management, research, strategy, design, and code.',
       rowStart: 'md:row-start-3',
     },
   ]

@@ -365,7 +365,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
         </p>
         <a
           href={getMailtoHref(`Reaching out about ${client}`, 'Hi Andrew,\n\n')}
-          className="font-body text-[16px] font-medium text-accent border-b border-accent pb-0.5 hover:opacity-80 transition-opacity"
+          className="font-body text-[16px] font-medium text-accent hover:opacity-80 transition-opacity"
         >
           Schedule a conversation →
         </a>

@@ -14,25 +14,31 @@ const content: OnePagerContent = {
   client: 'Blue Origin',
   role: 'Lead User Experience Designer',
   headline:
-    'Can an aerospace company scale if its engineers are stuck moving files?',
+    'Can an astronautics company scale if its engineers are stuck moving files?',
+  heroImage: `${import.meta.env.BASE_URL}be3-test-wide.png`,
   sceneSetter:
-    'Rocket engines generate enormous volumes of test and flight telemetry, and roughly 2,000 engineers across Blue Origin depended on a shared platform, BDMS, to search and retrieve it. In practice, engineers were falling back on spreadsheets, directory diving, and manual file transfers that could run up to 8 hours, workarounds nobody upstream had visibility into. I joined to find out why.',
+    'Rocket engines generate enormous volumes of test and flight telemetry, and roughly 2,000 engineers across Blue Origin depended on a shared data lake, to search for and retrieve it. In practice, engineers were falling back on spreadsheets, directory diving, and manual file transfers that could run up to 8 hours, workarounds nobody on the team had prioritized.',
+  sceneSetterPlacement: 'section',
   sections: [
     {
       eyebrow: 'THE WORK',
-      title: 'Data Insights Pipeline',
+      title: 'Research, Reframe, Velocity',
       body: [
-        "I interviewed close to 30 flight and propulsion engineers on site to find out where the platform was breaking down. A few didn't know it existed. Over half had tried it a year earlier, found it too slow to be worth the trouble, and never went back, defaulting to the manual workarounds that ate their time instead. That scale of abandonment was invisible to the product team; nobody had measured it because nobody had asked.",
-        'The findings shifted my strategy from optimizing query performance to redesigning the workflows engineers actually needed: preparation, test, analysis, and decision-making, with the abandoned-user segment as the priority. I designed the test and flight data operations insights pipeline that came out of that reframe, connecting previously siloed applications across the full rocket component lifecycle, from design and testing through flight and maintenance.',
-        "I also designed and delivered a near-real-time launch data visualization tool in a matter of weeks, giving subject matter experts a way to compare live and historical data without disrupting the systems they were watching. It ran one degree of separation from the Mission Control Network, close enough to support pre-launch and in-flight decisions without introducing new risk to systems that couldn't afford one.",
+        'I interviewed 30+ flight, propulsion, and test engineers on-site to understand where the platform succeeded or failed. Over half had abandoned it as too slow, reverting to manual workarounds that consumed engineering time and five figures in monthly storage costs.',
+        'The findings shifted my strategy from optimizing query performance to redesigning the workflows engineers struggled with. I designed the test and flight data insights pipeline, connecting siloed applications across the rocket component lifecycle, from design and testing through flight and maintenance.',
+        'I also designed and delivered a near-real-time launch data visualization tool in weeks, enabling subject matter experts to compare live and historical data. It operated one degree from the Mission Control Network, close enough to support pre-launch and in-flight decisions without risk of disrupting critical systems.',
       ],
       proofPoints: [
-        { label: 'ADOPTION', value: 'Research participants returned as users and brought their teams with them, spreading uptake across roughly 2,000 engineers' },
-        { label: 'PIPELINE', value: 'Delivered a data insights pipeline spanning the full rocket component lifecycle, from design and testing through flight and maintenance' },
-        { label: 'TRUST', value: 'Built a launch data visualization tool operating one degree from Mission Control, without introducing risk to mission-critical systems' },
+        { label: 'ADOPTION', value: 'UX Research built trust, advocacy, and broader adoption' },
+        { label: 'PIPELINE', value: 'Designed a data insights pipeline spanning the component lifecycle' },
+        { label: 'TRUST', value: 'Extended access to near-real time data without compromising Mission Control reliability' },
       ],
-      primaryImage: true,
       imageCount: 2,
+      images: [
+        `${import.meta.env.BASE_URL}ng2-liftoff.jpg`,
+        `${import.meta.env.BASE_URL}twitter-post.png`,
+      ],
+      imagesUncropped: true,
     },
   ],
 }

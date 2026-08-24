@@ -34,7 +34,6 @@ const content: OnePagerContent = {
     "Mapping the Value Stream: How a 3-person side project supported 135% growth",
   sceneSetter:
     "Ontrak's growth was outpacing its ability to see itself. Claims-to-enrollment ran through Operations, AI/ML, and Clinical teams with no shared model of where members dropped off. Outreach was kept waiting by a research-oriented AI/ML team that routinely deprioritized their queries. The CTO asked me to look into it while maintaining progress on our Care Team Portal.",
-  sceneSetterEmphasis: 'Care Team Portal',
   sceneSetterPlacement: 'section',
   heroImage: [
     `${import.meta.env.BASE_URL}ontrak-sketch.png`,
