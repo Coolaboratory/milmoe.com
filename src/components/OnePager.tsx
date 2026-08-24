@@ -52,6 +52,10 @@ export type SectionContent = {
    *  where cropping would cut off real content. Default false keeps the
    *  existing fixed-aspect-ratio, object-cover treatment. */
   imagesUncropped?: boolean
+  /** Attribution link pinned to the bottom-right corner of the last image
+   *  in the images column (e.g. a client's own press photo). Optional —
+   *  only set on pages using imagery that isn't Andrew's own work. */
+  imageCredit?: { label: string; href: string }
 }
 
 export type OnePagerContent = {
@@ -123,25 +127,38 @@ function ImageStack({
   count,
   images,
   uncropped = false,
+  credit,
 }: {
   count: number
   images?: string[]
   uncropped?: boolean
+  credit?: { label: string; href: string }
 }) {
   if (images && images.length > 0) {
     return (
       <div className="flex flex-col gap-8">
         {images.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt=""
-            className={
-              uncropped
-                ? 'w-full h-auto rounded-sm border-2 border-white'
-                : 'w-full aspect-video object-cover rounded-sm border-2 border-white'
-            }
-          />
+          <div key={src}>
+            <img
+              src={src}
+              alt=""
+              className={
+                uncropped
+                  ? 'w-full h-auto rounded-sm border-2 border-white'
+                  : 'w-full aspect-video object-cover rounded-sm border-2 border-white'
+              }
+            />
+            {credit && i === images.length - 1 && (
+              <a
+                href={credit.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-right mt-1 font-body text-[13px] text-text-light/70 hover:text-accent transition-colors"
+              >
+                {credit.label}
+              </a>
+            )}
+          </div>
         ))}
       </div>
     )
@@ -324,7 +341,12 @@ export function OnePager({ content }: { content: OnePagerContent }) {
         )
 
         const imagesColumn = (
-          <ImageStack count={section.imageCount} images={section.images} uncropped={section.imagesUncropped} />
+          <ImageStack
+            count={section.imageCount}
+            images={section.images}
+            uncropped={section.imagesUncropped}
+            credit={section.imageCredit}
+          />
         )
 
         return (

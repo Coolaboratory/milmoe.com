@@ -39,6 +39,7 @@ const content: OnePagerContent = {
         `${import.meta.env.BASE_URL}twitter-post.png`,
       ],
       imagesUncropped: true,
+      imageCredit: { label: 'Blue Origin Images', href: 'https://www.blueorigin.com/gallery' },
     },
   ],
 }
