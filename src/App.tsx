@@ -212,9 +212,12 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
   return (
     <section
       id="work"
-      className={`px-8 md:px-16 lg:px-24 py-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'work-samples-bg-reveal'}`}
+      className={`relative px-8 md:px-16 lg:px-24 py-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'bg-reveal'}`}
     >
-      <div className="max-w-7xl mx-auto">
+      {!reducedMotion && (
+        <div className={`work-samples-overlay ${isRevealed ? 'is-revealed' : ''}`} />
+      )}
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {workSamples.map((cs, i) => (
             <a
@@ -270,6 +273,7 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
 }
 
 export default function App() {
+  const reducedMotion = useReducedMotion()
   const [skipIntro] = useState(hasSeenIntro)
   const [footerVisible, setFooterVisible] = useState(false)
   const [workSamplesInView, setWorkSamplesInView] = useState(false)
@@ -281,6 +285,12 @@ export default function App() {
   // a same-session revisit (skipIntro) — the section renders already
   // revealed, same as the rest of the settled page.
   const workSamplesRevealed = skipIntro || (workSamplesInView && loadSequenceDone)
+  // Footer waits for the same trigger as the work samples section, plus a
+  // beat long enough for the three cards to finish their own entrance
+  // (450ms base delay + 2*320ms stagger + 500ms transition = 1590ms) —
+  // otherwise it would fade in underneath the cards while they're still
+  // animating, instead of visibly following them.
+  const footerRevealed = workSamplesRevealed || reducedMotion
 
   // Mark the intro as seen for the rest of this browser session, and apply
   // the CSS override class (see body.intro-skip in index.css) before the
@@ -340,7 +350,14 @@ export default function App() {
       <Grid />
       <Divider />
       <WorkSamples revealed={workSamplesRevealed} />
-      <Footer />
+      <div
+        className={`transition-[opacity,transform] duration-500 ${
+          footerRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+        }`}
+        style={{ transitionDelay: footerRevealed && !reducedMotion ? '1600ms' : '0ms' }}
+      >
+        <Footer />
+      </div>
     </main>
   )
 }

@@ -42,16 +42,25 @@
   animation: bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
 }
 
-/* WorkSamples' own background reveal — same starting dark color, duration,
-   easing, and 3000ms delay as .bg-reveal, but ends at the section's own
-   #e6eaee shade (deliberately different from Hero/Grid's #EEECE6), so it
-   can't just reuse .bg-reveal verbatim without fading to the wrong color. */
-@keyframes work-samples-bg-reveal {
-  from { background-color: #333333; }
-  to { background-color: #e6eaee; }
+/* WorkSamples gets the same dark-to-white .bg-reveal as Hero/Grid (applied
+   directly on the section below) — so it settles to the page's #EEECE6 on
+   the same fixed clock as everything else, not blue. The blue tint is a
+   separate absolutely-positioned overlay layer that fades in via opacity,
+   not a second background-color transition on the section itself: .bg-reveal
+   is a keyframe animation with fill-mode: both, which holds its end value
+   indefinitely and would fight a later transition on that same property.
+   Layering a colored overlay on top sidesteps that conflict entirely, and
+   is also just what "blue band appears over white" literally is. */
+.work-samples-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #e6eaee;
+  opacity: 0;
+  transition: opacity 1100ms cubic-bezier(0.45, 0, 0.2, 1);
+  pointer-events: none;
 }
-.work-samples-bg-reveal {
-  animation: work-samples-bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
+.work-samples-overlay.is-revealed {
+  opacity: 1;
 }
 
 /* Header's own bar reveals to the same light tone the header itself already
@@ -125,10 +134,6 @@
     animation: none !important;
     background-color: #F5F4F0 !important;
   }
-  .work-samples-bg-reveal {
-    animation: none !important;
-    background-color: #e6eaee !important;
-  }
   .video-fade-in,
   .headline-fly-in,
   .header-drop,
@@ -163,10 +168,6 @@ body.intro-skip .bg-reveal {
 body.intro-skip .header-bg-reveal {
   animation: none !important;
   background-color: #F5F4F0 !important;
-}
-body.intro-skip .work-samples-bg-reveal {
-  animation: none !important;
-  background-color: #e6eaee !important;
 }
 body.intro-skip .video-fade-in,
 body.intro-skip .headline-fly-in,
