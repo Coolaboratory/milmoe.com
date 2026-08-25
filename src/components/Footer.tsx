@@ -2,8 +2,8 @@ import { getMailtoHref } from '../lib/email'
 
 export function Footer() {
   return (
-    <footer id="site-footer" className="bg-[#F5F4F0] border-t border-text-light/10 px-8 md:px-16 lg:px-24 py-8">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <footer id="site-footer" className="bg-[#F5F4F0] border-t border-text-light/10 px-8 md:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto h-12 flex items-center justify-between">
         <p className="font-display text-subhead font-semibold text-text-light">Andrew G Milmoe</p>
         <div className="flex items-center gap-5">
           <a

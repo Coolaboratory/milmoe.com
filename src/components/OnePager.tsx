@@ -11,10 +11,23 @@ import { getMailtoHref } from '../lib/email'
 // Per Andrew's explicit, non-negotiable call (overriding the more cautious
 // recommendation in Grant's scope doc §2): every label/content row on this
 // page reuses the exact same grid formula as the landing page's Header,
-// Hero, and Grid sections — grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] —
-// so the label and content columns land at the identical horizontal
-// position as the homepage, not just a visually similar one.
-const RAIL_GRID = 'md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr]'
+// Hero, and Grid sections — so the label and content columns land at the
+// identical horizontal position as the homepage, not just a visually
+// similar one.
+//
+// Column 1 (labels) is deliberately the track that gives way first as the
+// viewport narrows toward the single-column breakpoint: it's wrapped in
+// minmax() with a lower floor (110px) than column 2's (220px), so column 2
+// (body prose) holds its comfortable minimum while column 1 (short labels,
+// which read fine wrapped across a couple of short lines) absorbs the
+// squeeze instead. Column 1's calc(100%/3 + 9px) isn't an fr unit, so
+// without the minmax() wrapper it wouldn't yield space under pressure at
+// all — it'd hold its proportional 1/3 share unconditionally, pushing all
+// the compression onto column 3 (1.5fr) instead once column 2 hit its own
+// floor. Column 3 (images) is left unfloored — images resize gracefully
+// under pressure in a way body text doesn't, so it's the appropriate
+// second-priority release valve.
+const RAIL_GRID = 'md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr]'
 
 export type SectionContent = {
   /** Small caps label above the section title, e.g. "LEAD INITIATIVE". */
@@ -250,7 +263,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
             {heroImages.length > 0 && (
               <div className="flex flex-wrap gap-4 mt-8 md:mt-10">
                 {heroImages.map((src) => (
-                  <img key={src} src={src} alt="" className="h-[216px] w-auto max-w-full rounded-sm" />
+                  <img key={src} src={src} alt="" className="max-h-[216px] max-w-full rounded-sm" />
                 ))}
               </div>
             )}

@@ -2,6 +2,18 @@
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
+    // Overrides the default md breakpoint (768px -> 900px). Every 3-column
+    // rail/card layout on the site (Header, Hero, Grid, OnePager, the work-
+    // sample cards) keys off md: as its single mobile/desktop switch, so
+    // this one change fixes the 768-899px squeeze (columns dropping to a
+    // word or two wide, nav links clipping off the right edge) everywhere
+    // at once instead of hand-picking a new breakpoint name per component.
+    screens: {
+      md: '900px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       fontFamily: {
         display: ['"Instrument Sans"', 'sans-serif'],

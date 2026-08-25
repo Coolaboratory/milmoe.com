@@ -15,12 +15,23 @@ export function Header({ hidden }: { hidden: boolean }) {
       } ${hidden && !reducedMotion ? 'header-hidden' : ''}`}
     >
       <div
-        className={`max-w-7xl mx-auto h-12 flex md:grid md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] items-center justify-between gap-6 md:gap-8 ${
+        className={`max-w-7xl mx-auto h-24 md:h-12 flex md:grid md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] items-center justify-between gap-6 md:gap-8 ${
           reducedMotion ? '' : 'header-drop'
         }`}
       >
-        <p className="font-display text-subhead font-semibold text-text-light shrink-0">Andrew G Milmoe</p>
-        {/* whitespace-nowrap on the whole line, not just the inner span: the
+        {/* display: contents at md+ so this wrapper doesn't become an extra
+            grid cell — "Andrew G Milmoe" needs to land directly in the
+            grid's first column, same as before this wrapper existed. Below
+            md it's a real flex column: name on row 1, tagline flush left
+            underneath on row 2, using the 96px bar's extra height. */}
+        <div className="flex flex-col justify-center md:contents">
+          <p className="font-display text-subhead font-semibold text-text-light shrink-0">Andrew G Milmoe</p>
+          <p className="font-body text-[13px] text-text-light/60 mt-1 md:hidden whitespace-nowrap">
+            <span>Chicago Area / Hybrid</span>{'     '}{getDisplayEmail()}
+          </p>
+        </div>
+        {/* Desktop-only inline tagline — the stacked copy above covers below
+            md. whitespace-nowrap on the whole line, not just the inner span: the
             gap below is plain ASCII spaces (a valid line-break point), and
             this middle grid column (sized by the shared RAIL_GRID formula
             for cross-page alignment, not by this line's own content) is
@@ -30,7 +41,7 @@ export function Header({ hidden }: { hidden: boolean }) {
             the browser wraps at that gap and drops the email to its own
             line. Forcing nowrap lets the line overflow rightward instead,
             which is safe: the nav column sits 32-374px further right across
-            768-1536px viewports, confirmed via measurement, so the overflow
+            900-1536px viewports, confirmed via measurement, so the overflow
             never reaches it. */}
         <p className="font-body text-[13px] text-text-light/60 hidden md:block whitespace-nowrap">
           <span>Chicago Area / Hybrid</span>{'     '}{getDisplayEmail()}

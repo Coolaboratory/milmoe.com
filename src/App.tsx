@@ -101,7 +101,7 @@ function Hero() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] gap-8">
           <div />
           <h1
             className={`md:col-span-2 font-display font-bold text-[24px] lg:text-[30px] text-text-light leading-snug ${
@@ -145,7 +145,7 @@ function Grid() {
     <section
       className={`px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[calc(100%/3_+_9px)_0.75fr_1.5fr] gap-8 md:gap-y-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] gap-8 md:gap-y-10">
         <div
           className={`md:col-start-1 md:row-start-1 md:row-span-2 h-full ${reducedMotion ? '' : 'grid-row-fade-in'}`}
           style={reducedMotion ? undefined : { animationDelay: '5600ms' }}
@@ -284,7 +284,19 @@ export default function App() {
   // reveal, header, headline, grid rows) has even run. Skipped entirely on
   // a same-session revisit (skipIntro) — the section renders already
   // revealed, same as the rest of the settled page.
-  const workSamplesRevealed = skipIntro || (workSamplesInView && loadSequenceDone)
+  // footerVisible is also OR'd in as a backstop: workSamplesInView uses a
+  // threshold: 0.5 observer that only fires if a frame is ever rendered
+  // with the section ≥50% in view. A fast flick-scroll straight to the
+  // bottom (common on mobile, reproduced with Playwright) can jump past it
+  // without the browser ever rendering that frame, so the observer never
+  // fires and workSamplesRevealed gets stuck false forever — leaving the
+  // header hidden (its own observer, watching the footer directly with
+  // threshold: 0, isn't affected) but the cards/footer still invisible. If
+  // the user has scrolled far enough to see the footer, they've
+  // necessarily scrolled past work samples too, so it's always correct to
+  // reveal everything at that point regardless of what the fragile
+  // mid-page observer did or didn't catch.
+  const workSamplesRevealed = skipIntro || (workSamplesInView && loadSequenceDone) || footerVisible
   // Footer waits for the same trigger as the work samples section, plus a
   // beat long enough for the three cards to finish their own entrance
   // (450ms base delay + 2*320ms stagger + 500ms transition = 1590ms) —
