@@ -125,11 +125,19 @@ export function Header({ hidden }: { hidden: boolean }) {
         aria-modal="true"
         aria-label="Site menu"
         aria-hidden={!menuOpen}
-        className={`md:hidden fixed top-0 right-0 z-40 h-full w-72 max-w-[80vw] bg-[#F5F4F0] shadow-xl transform ${
+        className={`md:hidden fixed top-0 right-0 z-40 h-full w-72 max-w-[80vw] bg-[#FFFFFF] shadow-xl transform ${
           reducedMotion ? '' : 'transition-transform duration-300 ease-out'
         } ${menuOpen ? 'translate-x-0' : 'translate-x-full pointer-events-none'}`}
       >
-        <nav className="flex flex-col pt-12 px-8">
+        {/* Location strip: only exists below the 431px "narrowest phone" tier,
+            where the header row hides its own tagline entirely. Sits on the
+            site's bg-light strip so the panel reads as a proper header at
+            this width; disappears completely (not just visually hidden) at
+            431px+ since the nav already starts at the top there. */}
+        <p className="block min-[431px]:hidden bg-light font-body text-[13px] text-text-light/60 px-8 pt-12 pb-4">
+          Chicago Area / Hybrid
+        </p>
+        <nav className="flex flex-col pt-6 min-[431px]:pt-12 px-8">
           <a
             href={`${import.meta.env.BASE_URL}#work`}
             onClick={closeMenu}
