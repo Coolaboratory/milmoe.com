@@ -18,6 +18,14 @@
     color: #F0EFE9;
     overflow-x: hidden;
     animation: bg-reveal 1100ms cubic-bezier(0.45, 0, 0.2, 1) 3000ms both;
+    /* viewport-fit=cover (index.html) lets the page extend under the
+       notch/Dynamic Island area on landscape iPhones; pad the safe area back
+       in by default so ordinary in-flow content (Header, Footer, and
+       anything else that doesn't deliberately full-bleed) never sits under
+       the housing. Resolves to 0 on non-notched devices/browsers that don't
+       support env(), so this is a no-op everywhere else. */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }
 

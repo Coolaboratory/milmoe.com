@@ -76,7 +76,21 @@ function Hero() {
     <section
       className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
-      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10">
+      <div
+        className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10"
+        // This wrapper deliberately breaks out of the section's px padding to
+        // bleed to the true device edges (see the comment above scrollbar-
+        // gutter in index.css for why 100vw math is involved here). Now that
+        // viewport-fit=cover is active, "true device edges" on a landscape
+        // notched/Dynamic-Island iPhone includes the housing cutout, so pad
+        // the video content itself back off the physical exclusion zone on
+        // both sides while the wrapper keeps spanning full-bleed. Resolves to
+        // 0 on all non-notched devices/browsers, so no effect elsewhere.
+        style={{
+          paddingLeft: 'env(safe-area-inset-left)',
+          paddingRight: 'env(safe-area-inset-right)',
+        }}
+      >
         <div className="w-full aspect-[3/1] max-h-[480px] overflow-hidden">
           {reducedMotion ? (
             <img
