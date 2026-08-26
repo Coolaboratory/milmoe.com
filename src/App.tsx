@@ -108,9 +108,9 @@ function Hero() {
               reducedMotion ? '' : 'headline-fly-in'
             }`}
           >
-            I scale software from proof-of-concept to global,{' '}
-            <span className="whitespace-nowrap">high-stakes</span> operations
-            through user-centered design.
+            From concept to global operations:
+            <br />
+            I use AI and user-centered design to give frontline workers superpowers
           </h1>
         </div>
       </div>
