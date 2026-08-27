@@ -134,7 +134,7 @@ export function Header({ hidden }: { hidden: boolean }) {
             site's bg-light strip so the panel reads as a proper header at
             this width; disappears completely (not just visually hidden) at
             431px+ since the nav already starts at the top there. */}
-        <p className="block min-[431px]:hidden bg-light font-body text-[13px] text-text-light/60 px-8 pt-12 pb-4">
+        <p className="flex items-center h-12 min-[431px]:hidden bg-light font-body text-[13px] text-text-light/60 px-8">
           Chicago Area / Hybrid
         </p>
         <nav className="flex flex-col pt-6 min-[431px]:pt-12 px-8">
