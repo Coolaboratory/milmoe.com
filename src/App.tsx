@@ -30,8 +30,8 @@ const workSamples = [
     href: `${import.meta.env.BASE_URL}work/ge-digital/`,
     logo: 'ge-digital-logo.png',
     logoAlt: 'GE Digital logo',
-    image: 'ge-digital-work.jpg',
-    imageAlt: 'GE Digital product screenshot',
+    image: 'am-interviewing.png',
+    imageAlt: 'Andrew interviewing a field engineer on-site during UX research',
   },
   {
     industry: 'AEROSPACE',
@@ -77,7 +77,7 @@ function Hero() {
       className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
       <div
-        className="relative left-1/2 right-1/2 -mx-[50vw] w-screen mb-10"
+        className="relative left-1/2 right-1/2 -mx-[50vw] w-screen"
         // This wrapper deliberately breaks out of the section's px padding to
         // bleed to the true device edges (see the comment above scrollbar-
         // gutter in index.css for why 100vw math is involved here). Now that
@@ -115,6 +115,11 @@ function Hero() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto">
+        <p className="text-right mt-1 mb-4 font-body text-[13px] text-text-light/70">
+          UX Research site visit
+        </p>
+      </div>
+      <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] gap-8">
           <div />
           <h1
@@ -124,7 +129,9 @@ function Hero() {
           >
             From concept to global operations:
             <br />
-            I use AI and user-centered design to give frontline workers superpowers
+            I use AI and user-centered design to give
+            <br />
+            frontline workers superpowers
           </h1>
         </div>
       </div>
