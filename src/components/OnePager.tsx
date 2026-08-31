@@ -45,7 +45,7 @@ export type SectionContent = {
    *  never a fabricated numeric metric. A plain string keeps the original
    *  dot-marker row; `{ label, value }` renders as a mini-eyebrow row,
    *  reusing the page's own eyebrow style per stat instead of a bullet. */
-  proofPoints?: (string | { label: string; value: string })[]
+  proofPoints?: (string | { label: string; value: React.ReactNode })[]
   /** Render one full-width visual above this section's rail row, before the
    *  narrower stacked images in the images column. Used for single-narrative
    *  pages (GE Digital, Blue Origin) to give the section a primary visual
