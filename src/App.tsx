@@ -127,11 +127,9 @@ function Hero() {
               reducedMotion ? '' : 'headline-fly-in'
             }`}
           >
-            From concept to global operations:
+            From concept to global operations,
             <br />
-            I use AI and user-centered design to give
-            <br />
-            frontline workers superpowers
+            I use AI and user-centered design to give the people who run critical systems superpowers
           </h1>
         </div>
       </div>
@@ -145,7 +143,7 @@ function Grid() {
     {
       label: 'How',
       value: 'Systems level thinking',
-      body: 'UI design is the last 5% of the job. It begins with on-site field research and rapid prototyping to test assumptions with frontline workers before we start coding. These insights shape the roadmap, reducing the risk of building features no one needs.',
+      body: 'UI design is the last 5% of the job. It begins with on-site field research and rapid prototyping to test assumptions with workers before we start coding. These insights shape the roadmap, reducing the risk of building features no one needs.',
       rowStart: 'md:row-start-1',
     },
     {
