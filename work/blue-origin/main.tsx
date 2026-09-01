@@ -17,7 +17,7 @@ const content: OnePagerContent = {
     'Can an astronautics company scale if its engineers are stuck moving files?',
   heroImage: `${import.meta.env.BASE_URL}be3-test-wide.png`,
   sceneSetter:
-    'Rocket engines generate enormous volumes of test and flight telemetry, and roughly 2,000 engineers across Blue Origin depended on a shared data lake, to search for and retrieve it. In practice, engineers were falling back on spreadsheets, directory diving, and manual file transfers that could run up to 8 hours, workarounds nobody on the team had prioritized.',
+    'Rocket flight and component testing generated enormous volumes of sensor data. Although roughly 2,000 Responsible Engineers across Blue Origin could search and retrieve that data through a shared data lake, many still relied on spreadsheets, complex directory searches, and manual file transfers that took up to eight hours. The product team prioritized backend performance while overlooking the user experience problems created by siloed software and inconsistent, bespoke workflows.',
   sceneSetterPlacement: 'section',
   sections: [
     {
