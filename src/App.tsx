@@ -74,7 +74,7 @@ function Hero() {
 
   return (
     <section
-      className={`px-8 md:px-16 lg:px-24 pb-16 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
+      className={`px-8 md:px-16 lg:px-24 pb-[72px] ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
       <div
         className="relative left-1/2 right-1/2 -mx-[50vw] w-screen"
@@ -120,8 +120,21 @@ function Hero() {
         </p>
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] gap-8">
-          <div />
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] gap-8 md:items-baseline">
+          <p className="font-display text-subhead font-semibold text-text-light">
+            Lead UX Product Design
+            <br />
+            {/* Column 1 is only wide enough for "Forward Deployed On-site
+                Research" on one line at xl+ (measured ~371px+); below that
+                (mobile through lg/1024px, where the column narrows to as
+                little as ~286px) the phrase wraps on its own, orphaning
+                "Research" alone on a third line. This forced break instead
+                lands the wrap at a natural phrase boundary, so it reads as
+                a clean 3-line block until there's room for 2. */}
+            Forward Deployed{' '}
+            <br className="xl:hidden" />
+            On-site Research
+          </p>
           <h1
             className={`md:col-span-2 font-display font-bold text-[24px] lg:text-[30px] text-text-light leading-snug ${
               reducedMotion ? '' : 'headline-fly-in'
@@ -162,7 +175,7 @@ function Grid() {
 
   return (
     <section
-      className={`px-8 md:px-16 lg:px-24 pb-20 ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
+      className={`px-8 md:px-16 lg:px-24 pt-12 pb-[72px] ${reducedMotion ? 'bg-light' : 'bg-reveal'}`}
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] gap-8 md:gap-y-10">
         <div
@@ -231,7 +244,7 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
   return (
     <section
       id="work"
-      className={`relative px-8 md:px-16 lg:px-24 py-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'bg-reveal'}`}
+      className={`relative px-8 md:px-16 lg:px-24 pt-12 pb-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'bg-reveal'}`}
     >
       {!reducedMotion && (
         <div className={`work-samples-overlay ${isRevealed ? 'is-revealed' : ''}`} />
@@ -378,6 +391,7 @@ export default function App() {
     <main>
       <Header hidden={footerVisible} />
       <Hero />
+      <Divider />
       <Grid />
       <Divider />
       <WorkSamples revealed={workSamplesRevealed} />

@@ -18,7 +18,6 @@ export default {
       fontFamily: {
         display: ['"Instrument Sans"', 'sans-serif'],
         body: ['"Public Sans"', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'monospace'],
       },
       fontSize: {
         subhead: ['20px', '26px'],
