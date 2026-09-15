@@ -63,6 +63,28 @@
   opacity: 1;
 }
 
+/* The rule directly before WorkSamples' three cards (App.tsx's second
+   <Divider revealed={...}>) — starts hidden and collapsed, then fades/grows
+   in from the left once WorkSamples' own reveal signal fires, finishing well
+   before the cards' own entrance (450ms base delay + i*320ms stagger) so the
+   rule is already settled when the cards start moving instead of still being
+   invisible. State-driven like .work-samples-overlay above rather than a
+   fixed-delay keyframe, because WorkSamples reveals on scroll position
+   (IntersectionObserver) plus a fallback timer, not a fixed clock offset —
+   the reduced-motion/intro-skip cases are handled in App.tsx's isRevealed
+   logic (same pattern as the cards), not via the CSS override blocks below,
+   since this is a plain transition, not an `animation`. */
+.divider-reveal {
+  opacity: 0;
+  transform: scaleX(0.6);
+  transform-origin: left center;
+  transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1), transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.divider-reveal.is-revealed {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 /* Header's own bar reveals to the same light tone the header itself already
    uses (#F5F4F0), not the page's darker #EEECE6 — otherwise when the header
    drops in at 4000ms, its lighter rectangle visibly "replaces" a differently

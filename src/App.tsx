@@ -121,7 +121,11 @@ function Hero() {
       </div>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] gap-8 md:items-baseline">
-          <p className="font-display text-subhead font-semibold text-text-light">
+          <p
+            className={`font-display text-subhead font-semibold text-text-light ${
+              reducedMotion ? '' : 'headline-fly-in'
+            }`}
+          >
             Lead UX Product Design
             <br />
             {/* Column 1 is only wide enough for "Forward Deployed On-site
@@ -224,10 +228,30 @@ function Grid() {
   )
 }
 
-function Divider() {
+// `revealed` is optional and only passed by the WorkSamples-adjacent usage
+// below — the Hero/Grid divider calls this with no props and keeps its
+// original always-visible rendering untouched. When `revealed` IS passed,
+// the rule starts hidden (opacity 0, collapsed horizontally) and grows/fades
+// in once its caller's reveal signal flips true, via the `.divider-reveal`
+// CSS transition (see index.css) rather than a fixed-delay keyframe —
+// WorkSamples' own reveal is driven by scroll position (IntersectionObserver)
+// and a fallback timer, not a fixed clock offset, so the divider needs to
+// react to that same dynamic signal instead of a hardcoded ms value.
+function Divider({ revealed }: { revealed?: boolean }) {
+  const reducedMotion = useReducedMotion()
+  const isAnimated = revealed !== undefined
+  // Same isRevealed pattern as WorkSamples' cards: reduced motion or a
+  // same-session intro-skip revisit renders already-settled (no transition
+  // play), instead of replaying the reveal.
+  const isRevealed = revealed || reducedMotion
+
   return (
     <div className="px-8 md:px-16 lg:px-24">
-      <div className="max-w-7xl mx-auto h-px bg-text-light/15" />
+      <div
+        className={`max-w-7xl mx-auto h-px bg-text-light/15 ${
+          isAnimated ? 'divider-reveal' : ''
+        } ${isAnimated && isRevealed ? 'is-revealed' : ''}`}
+      />
     </div>
   )
 }
@@ -393,7 +417,7 @@ export default function App() {
       <Hero />
       <Divider />
       <Grid />
-      <Divider />
+      <Divider revealed={workSamplesRevealed} />
       <WorkSamples revealed={workSamplesRevealed} />
       <div
         className={`transition-[opacity,transform] duration-500 ${
