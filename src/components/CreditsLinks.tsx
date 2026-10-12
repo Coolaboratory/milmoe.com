@@ -34,3 +34,19 @@ export function Credit({ label, children }: { label: string; children: React.Rea
     </>
   )
 }
+
+/** Description-first tool line: plain description, then the linked name.
+ *  No visible comma (the colour change is the separator); a screen-reader-only
+ *  comma keeps the spoken pause, e.g. "The build tool and local preview
+ *  server, Vite (opens in a new tab)". */
+export function ToolCredit({ description, href, name }: { description: string; href: string; name: string }) {
+  return (
+    <>
+      {description}
+      <span className="sr-only">,</span>{' '}
+      <span className="whitespace-nowrap">
+        <ExternalLink href={href}>{name}</ExternalLink>
+      </span>
+    </>
+  )
+}

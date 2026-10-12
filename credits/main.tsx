@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../src/index.css'
 import { OnePager, type OnePagerContent } from '../src/components/OnePager'
-import { Credit, ExternalLink as Ext } from '../src/components/CreditsLinks'
+import { Credit, ExternalLink as Ext, ToolCredit } from '../src/components/CreditsLinks'
 
 // Credits page content. Copy source: Andrew Inbox/Milmoe_Credits_Copy_v1.md
 // (Ruth), with Andrew's decisions applied 2026-10-12: story Version B (no
@@ -71,35 +71,31 @@ const content: OnePagerContent = {
         {
           heading: 'Built with',
           items: [
-            <Ext href="https://react.dev">React</Ext>,
-            <Ext href="https://vite.dev">Vite</Ext>,
-            <Ext href="https://www.typescriptlang.org">TypeScript</Ext>,
-            <Ext href="https://tailwindcss.com">Tailwind CSS</Ext>,
-            <>
-              <Ext href="https://claude.com/product/claude-code">Claude Code</Ext> by Anthropic
-            </>,
+            <ToolCredit description="The library that builds the interface" href="https://react.dev" name="React" />,
+            <ToolCredit description="The build tool and local preview server" href="https://vite.dev" name="Vite" />,
+            <ToolCredit description="JavaScript with type checking to catch errors" href="https://www.typescriptlang.org" name="TypeScript" />,
+            <ToolCredit description="The styling system for layout and design" href="https://tailwindcss.com" name="Tailwind CSS" />,
+            <ToolCredit description="Anthropic's tool where my AI team works" href="https://claude.com/product/claude-code" name="Claude Code" />,
           ],
         },
         {
           heading: 'Hosted and deployed',
           items: [
-            <Ext href="https://pages.github.com">GitHub Pages</Ext>,
-            <Ext href="https://github.com/features/actions">GitHub Actions</Ext>,
+            <ToolCredit description="Where the site is hosted" href="https://pages.github.com" name="GitHub Pages" />,
+            <ToolCredit description="The automation that publishes each approved change" href="https://github.com/features/actions" name="GitHub Actions" />,
           ],
         },
         {
           heading: 'Video animation',
-          items: [<Ext href="https://runway.com">Runway</Ext>],
+          items: [
+            <ToolCredit description="The AI tool that animated the drillship photo" href="https://runway.com" name="Runway" />,
+          ],
         },
         {
           heading: 'Fonts',
           items: [
-            <>
-              <Ext href="https://fonts.google.com/specimen/Instrument+Sans">Instrument Sans</Ext>, from Google Fonts
-            </>,
-            <>
-              <Ext href="https://fonts.google.com/specimen/Public+Sans">Public Sans</Ext>, from Google Fonts
-            </>,
+            <ToolCredit description="Heading typeface from Google Fonts" href="https://fonts.google.com/specimen/Instrument+Sans" name="Instrument Sans" />,
+            <ToolCredit description="Body typeface from Google Fonts" href="https://fonts.google.com/specimen/Public+Sans" name="Public Sans" />,
           ],
         },
       ],
