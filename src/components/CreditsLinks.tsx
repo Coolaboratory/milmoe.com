@@ -22,7 +22,7 @@ export function ExternalLink({ href, children }: { href: string; children: React
 export function Credit({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <>
-      <strong className="font-semibold text-text-light">{label}:</strong> {children}
+      <strong className="font-semibold text-text-light">{label}</strong> {children}
     </>
   )
 }
