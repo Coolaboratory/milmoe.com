@@ -19,10 +19,18 @@ export function ExternalLink({ href, children }: { href: string; children: React
   )
 }
 
+/** Bold run-in label followed by regular text. Site-wide rule (Andrew,
+ *  2026-10-12): no visible colon after a bold run-in label; the weight change
+ *  is the separator. A screen-reader-only colon keeps the spoken pause. Use
+ *  this component (or the same sr-only colon) for any future run-in label. */
 export function Credit({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <>
-      <strong className="font-semibold text-text-light">{label}</strong> {children}
+      <strong className="font-semibold text-text-light">
+        {label}
+        <span className="sr-only">:</span>
+      </strong>{' '}
+      {children}
     </>
   )
 }
