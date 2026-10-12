@@ -35,8 +35,12 @@ export type SectionContent = {
   /** Muted eyebrow treatment for secondary/supporting sections. */
   eyebrowMuted?: boolean
   title: string
-  /** Body copy, one paragraph per array entry. */
-  body: string[]
+  /** Body copy, one paragraph per array entry. Plain strings on the work
+   *  pages; nodes (e.g. inline links) allowed for the Credits page. */
+  body: React.ReactNode[]
+  /** Optional headed lists rendered below the body, e.g. the Credits page's
+   *  "Built with" / "Fonts" link lists. Unused on the work pages. */
+  lists?: { heading?: string; items: React.ReactNode[] }[]
   quote?: string
   /** A single confirmed hard number, e.g. Ontrak's "60 days". Optional —
    *  not every section has one (see Blue Origin, which has none). */
@@ -204,7 +208,10 @@ export function OnePager({ content }: { content: OnePagerContent }) {
   // given page actually has.
   let rowIndex = 0
   const heroBg = railBg(rowIndex++)
-  const sceneBg = sceneSetterPlacement === 'row' ? railBg(rowIndex++) : undefined
+  // An empty sceneSetter (Credits page) skips the standalone row entirely
+  // so it doesn't render a blank band. Work pages always set one.
+  const showSceneRow = sceneSetterPlacement === 'row' && sceneSetter.length > 0
+  const sceneBg = showSceneRow ? railBg(rowIndex++) : undefined
 
   // Same hide-on-footer-approach behavior as the landing page's Header —
   // per Andrew's non-negotiable "identical Header/Footer" requirement, this
@@ -271,7 +278,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
         </div>
       </Rail>
 
-      {sceneSetterPlacement === 'row' && (
+      {showSceneRow && (
         <Rail bg={sceneBg!} className="py-10 md:py-12">
           <div className={`grid grid-cols-1 ${RAIL_GRID} gap-8`}>
             <p className="font-body text-[16px] md:text-[17px] text-text-light/85 leading-relaxed text-pretty">
@@ -321,6 +328,26 @@ export function OnePager({ content }: { content: OnePagerContent }) {
               >
                 {paragraph}
               </p>
+            ))}
+
+            {section.lists?.map((list, li) => (
+              <div key={li} className={li === 0 && section.body.length === 0 ? '' : 'mt-6'}>
+                {list.heading && (
+                  <p className="font-body text-[11px] font-medium tracking-widest uppercase text-accent mb-2">
+                    {list.heading}
+                  </p>
+                )}
+                <ul className="flex flex-col gap-2">
+                  {list.items.map((item, ii) => (
+                    <li
+                      key={ii}
+                      className="font-body text-[16px] md:text-[17px] text-text-light/85 leading-relaxed text-pretty"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
 
             {section.quote && (

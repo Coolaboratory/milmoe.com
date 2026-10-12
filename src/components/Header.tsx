@@ -175,6 +175,14 @@ export function Header({ hidden }: { hidden: boolean }) {
           >
             Email Contact
           </a>
+          <a
+            href={`${import.meta.env.BASE_URL}credits/`}
+            onClick={closeMenu}
+            tabIndex={menuOpen ? 0 : -1}
+            className="font-body text-[15px] text-text-light/70 hover:text-accent transition-colors py-4"
+          >
+            Credits
+          </a>
         </nav>
       </div>
     </header>

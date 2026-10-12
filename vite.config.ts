@@ -22,6 +22,7 @@ export default defineConfig({
         geDigital: fileURLToPath(new URL('./work/ge-digital/index.html', import.meta.url)),
         blueOrigin: fileURLToPath(new URL('./work/blue-origin/index.html', import.meta.url)),
         ontrak: fileURLToPath(new URL('./work/ontrak/index.html', import.meta.url)),
+        credits: fileURLToPath(new URL('./credits/index.html', import.meta.url)),
       },
     },
   },
