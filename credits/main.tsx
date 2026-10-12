@@ -14,7 +14,7 @@ const content: OnePagerContent = {
   industry: 'CREDITS',
   client: 'Site building resources',
   role: '',
-  headline: 'How this site was made',
+  headline: 'I designed and built this site with a small team of AI agents I set up in Claude Code CLI.',
   sceneSetter: '',
   wideBody: true,
   sections: [
@@ -22,7 +22,7 @@ const content: OnePagerContent = {
       eyebrow: 'THE STORY',
       title: 'How it was made',
       body: [
-        'I designed and built this site with a small team of AI agents I set up in Claude Code. A chief of staff coordinates the work and checks it before it reaches me. Specialists handle UX and strategy, front-end development, copywriting, and research, and an HR agent brings on a new specialist when the work calls for one. I set the direction and made the calls: the positioning, the layout, the typefaces, the timing of each animation. Every plan waited on my approval before the next step began, and when something looked a pixel off, I sent it back.',
+        'A chief of staff coordinates the work and checks it before it reaches me. Specialists handle UX and strategy, front-end development, copywriting, and research, and an HR agent brings on a new specialist when the work calls for one. I set the direction and made the calls: the positioning, the layout, the typefaces, the timing of each animation. Every plan waited on my approval before the next step began, and when something looked a pixel off, I sent it back.',
       ],
       imageCount: 0,
     },
