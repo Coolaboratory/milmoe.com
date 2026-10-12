@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /*.pdf$
 
 Sitemap: https://milmoe.com/sitemap.xml
