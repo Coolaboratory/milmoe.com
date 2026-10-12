@@ -99,6 +99,10 @@ export type OnePagerContent = {
    *  image simply renders wider, a tall one narrower, never cropped. */
   heroImage?: string | string[]
   sections: SectionContent[]
+  /** Credits page only: section body/lists span columns 2 and 3 (capped at
+   *  a ~72ch reading measure) instead of column 2 alone, and the empty
+   *  images column is dropped. Work pages leave this unset. */
+  wideBody?: boolean
 }
 
 /** Alternates light page-bg / tint-bg per row, systematically, matching the
@@ -200,6 +204,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
     sceneSetterPlacement = 'row',
     heroImage,
     sections,
+    wideBody = false,
   } = content
   const heroImages = heroImage ? (Array.isArray(heroImage) ? heroImage : [heroImage]) : []
   // Row order: hero(0), scene-setter(1) — only when it renders as its own
@@ -309,7 +314,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
         )
 
         const contentColumn = (
-          <div>
+          <div className={wideBody ? 'md:col-span-2 max-w-[72ch]' : undefined}>
             {section.metric && (
               <>
                 <p className="font-display font-bold text-text-light text-[32px] md:text-[38px] leading-none mb-2">
@@ -380,7 +385,7 @@ export function OnePager({ content }: { content: OnePagerContent }) {
           </div>
         )
 
-        const imagesColumn = (
+        const imagesColumn = wideBody ? null : (
           <ImageStack
             count={section.imageCount}
             images={section.images}
