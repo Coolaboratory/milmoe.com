@@ -1,10 +1,18 @@
 import { getMailtoHref } from '../lib/email'
+import { handleHomeClick } from '../lib/nav'
 
 export function Footer() {
   return (
     <footer id="site-footer" className="hidden md:block bg-[#F5F4F0] border-t border-text-light/10 px-8 md:px-16 lg:px-24">
       <div className="max-w-7xl mx-auto h-12 grid grid-cols-[minmax(110px,calc(100%/3_+_9px))_minmax(220px,0.75fr)_1.5fr] items-center gap-4 md:gap-8">
-        <p className="font-display text-subhead font-semibold text-text-light">Andrew G Milmoe</p>
+        <a
+          href={import.meta.env.BASE_URL}
+          onClick={(e) => handleHomeClick(e)}
+          aria-label="Andrew G Milmoe, home"
+          className="font-display text-subhead font-semibold text-text-light justify-self-start hover:text-accent transition-colors"
+        >
+          Andrew G Milmoe
+        </a>
         <a
           href={`${import.meta.env.BASE_URL}credits/`}
           className="font-body text-[13px] text-text-light/40 hover:text-accent transition-colors"

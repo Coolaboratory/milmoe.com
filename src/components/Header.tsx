@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getDisplayEmail, getMailtoHref } from '../lib/email'
 import { useReducedMotion } from '../hooks/useReducedMotion'
+import { handleHomeClick, handleWorkClick } from '../lib/nav'
 
 export function Header({ hidden }: { hidden: boolean }) {
   const reducedMotion = useReducedMotion()
@@ -39,7 +40,14 @@ export function Header({ hidden }: { hidden: boolean }) {
           reducedMotion ? '' : 'header-drop'
         }`}
       >
-        <p className="font-display text-subhead font-semibold text-text-light shrink-0">Andrew G Milmoe</p>
+        <a
+          href={import.meta.env.BASE_URL}
+          onClick={(e) => handleHomeClick(e, closeMenu)}
+          aria-label="Andrew G Milmoe, home"
+          className="font-display text-subhead font-semibold text-text-light shrink-0 hover:text-accent transition-colors"
+        >
+          Andrew G Milmoe
+        </a>
         {/* Inline at every breakpoint now — mobile collapsed to a single row,
             so the name/tagline no longer stack. whitespace-nowrap on the whole
             line, not just the inner span: the gap below is plain ASCII spaces
@@ -77,11 +85,13 @@ export function Header({ hidden }: { hidden: boolean }) {
           >
             Resume
           </a>
-          {/* Root-relative + hash so this resolves correctly from the homepage
-              (in-page scroll, same as a bare "#work") and from any one-pager
-              subpage (full navigation back to the homepage's #work anchor). */}
+          {/* Root-relative + hash: on the homepage handleWorkClick intercepts
+              and smooth-scrolls in place (even if the URL already ends in
+              #work); from a one-pager or /credits/ it navigates normally and
+              the homepage aligns itself on arrival (see src/lib/nav.ts). */}
           <a
             href={`${import.meta.env.BASE_URL}#work`}
+            onClick={(e) => handleWorkClick(e)}
             className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors"
           >
             Work
@@ -140,7 +150,7 @@ export function Header({ hidden }: { hidden: boolean }) {
         <nav className="flex flex-col pt-6 min-[431px]:pt-12 px-8">
           <a
             href={`${import.meta.env.BASE_URL}#work`}
-            onClick={closeMenu}
+            onClick={(e) => handleWorkClick(e, closeMenu)}
             tabIndex={menuOpen ? 0 : -1}
             className="font-body text-[15px] text-text-light/70 hover:text-accent transition-colors py-4"
           >

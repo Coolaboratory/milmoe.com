@@ -2,6 +2,7 @@ import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { useReducedMotion } from './hooks/useReducedMotion'
+import { alignToWorkOnArrival, WORK_REQUEST_EVENT } from './lib/nav'
 
 // Session-scoped "have they already seen the homepage intro" flag. Read
 // synchronously during App's first render (not in an effect) so the very
@@ -268,7 +269,9 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
   return (
     <section
       id="work"
-      className={`relative px-8 md:px-16 lg:px-24 pt-12 pb-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'bg-reveal'}`}
+      // scroll-mt-12 = the sticky header's h-12, so a jump to #work lands
+      // with the section's top edge just below the header, not under it.
+      className={`scroll-mt-12 relative px-8 md:px-16 lg:px-24 pt-12 pb-20 ${reducedMotion ? 'bg-[#e6eaee]' : 'bg-reveal'}`}
     >
       {!reducedMotion && (
         <div className={`work-samples-overlay ${isRevealed ? 'is-revealed' : ''}`} />
@@ -330,7 +333,13 @@ function WorkSamples({ revealed }: { revealed: boolean }) {
 
 export default function App() {
   const reducedMotion = useReducedMotion()
-  const [skipIntro] = useState(hasSeenIntro)
+  // Arriving straight at /#work (the header's Work link from a one-pager or
+  // /credits/) skips the intro, so the cards are already settled instead of
+  // waiting out the multi-second load sequence.
+  const [skipIntro] = useState(() => hasSeenIntro() || window.location.hash === '#work')
+  // Set when the header's Work link is used on the homepage mid-intro, so
+  // the cards reveal as the page scrolls to them.
+  const [workRequested, setWorkRequested] = useState(false)
   const [footerVisible, setFooterVisible] = useState(false)
   const [workSamplesInView, setWorkSamplesInView] = useState(false)
   const [loadSequenceDone, setLoadSequenceDone] = useState(false)
@@ -352,7 +361,8 @@ export default function App() {
   // necessarily scrolled past work samples too, so it's always correct to
   // reveal everything at that point regardless of what the fragile
   // mid-page observer did or didn't catch.
-  const workSamplesRevealed = skipIntro || (workSamplesInView && loadSequenceDone) || footerVisible
+  const workSamplesRevealed =
+    skipIntro || workRequested || (workSamplesInView && loadSequenceDone) || footerVisible
   // Footer waits for the same trigger as the work samples section, plus a
   // beat long enough for the three cards to finish their own entrance
   // (450ms base delay + 2*320ms stagger + 500ms transition = 1590ms) —
@@ -375,6 +385,15 @@ export default function App() {
       // Ignore — worst case the intro replays on the next visit this session.
     }
   }, [skipIntro])
+
+  // Header Work link: land on #work on cross-page arrival, and reveal the
+  // cards immediately when Work is clicked on this page.
+  useLayoutEffect(() => alignToWorkOnArrival(), [])
+  useEffect(() => {
+    const onRequest = () => setWorkRequested(true)
+    window.addEventListener(WORK_REQUEST_EVENT, onRequest)
+    return () => window.removeEventListener(WORK_REQUEST_EVENT, onRequest)
+  }, [])
 
   useEffect(() => {
     if (skipIntro) return
