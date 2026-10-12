@@ -55,8 +55,10 @@ const content: OnePagerContent = {
             <Credit label="Everything else">
               sketches, diagrams, screens, and other photos are my own work.
             </Credit>,
-            <Credit label="Design inspiration">
-              <Ext href="https://www.chackerman.com/">Chad Ackerman</Ext>
+            <Credit label="Site structure design inspiration">
+              <span className="whitespace-nowrap">
+                <Ext href="https://www.chackerman.com/">Chad Ackerman</Ext>
+              </span>
             </Credit>,
           ],
         },
