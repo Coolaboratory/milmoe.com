@@ -78,7 +78,7 @@ export function Header({ hidden }: { hidden: boolean }) {
             LinkedIn
           </a>
           <a
-            href={`${import.meta.env.BASE_URL}MilmoeResumeQ3_2026.pdf`}
+            href={`${import.meta.env.BASE_URL}MilmoeResumeQ4_2026.pdf`}
             target="_blank"
             rel="noopener noreferrer"
             className="font-body text-[13px] text-text-light/70 hover:text-accent transition-colors"
@@ -157,7 +157,7 @@ export function Header({ hidden }: { hidden: boolean }) {
             Work
           </a>
           <a
-            href={`${import.meta.env.BASE_URL}MilmoeResumeQ3_2026.pdf`}
+            href={`${import.meta.env.BASE_URL}MilmoeResumeQ4_2026.pdf`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={closeMenu}

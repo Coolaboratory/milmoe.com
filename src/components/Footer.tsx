@@ -33,7 +33,7 @@ export function Footer() {
             </svg>
           </a>
           <a
-            href={`${import.meta.env.BASE_URL}MilmoeResumeQ3_2026.pdf`}
+            href={`${import.meta.env.BASE_URL}MilmoeResumeQ4_2026.pdf`}
             target="_blank"
             rel="noopener noreferrer"
             title="AGMilmoe Resume"
