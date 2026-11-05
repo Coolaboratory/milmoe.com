@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Page not found · Andrew G Milmoe</title>
+    <script>
+      // GitHub Pages serves this file for any path it can't find, and its
+      // file matching is case sensitive. If the requested path matches a
+      // known file or page ignoring case (and ignoring a trailing slash or
+      // index.html), send the visitor to the canonical path. Otherwise fall
+      // through and show the not-found page below.
+      (function () {
+        var canonical = [
+          '/',
+          '/work/blue-origin/',
+          '/work/ge-digital/',
+          '/work/ontrak/',
+          '/credits/',
+          '/MilmoePortfolio.pdf',
+          '/MilmoeResumeQ4_2026.pdf',
+          '/MilmoeResumeQ3_2026.pdf'
+        ];
+        function key(p) {
+          var k;
+          try { k = decodeURIComponent(p); } catch (e) { k = p; }
+          k = k.toLowerCase().replace(/\/index\.html$/, '/').replace(/\/+$/, '');
+          return k === '' ? '/' : k;
+        }
+        var path = location.pathname;
+        var want = key(path);
+        for (var i = 0; i < canonical.length; i++) {
+          var target = canonical[i];
+          // The exact-match guard prevents a redirect loop if the canonical
+          // file itself is missing on a given host.
+          if (key(target) === want && target !== path) {
+            location.replace(target + location.search + location.hash);
+            return;
+          }
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Public+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        font-family: 'Public Sans', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background-color: #EEECE6;
+        color: #212121;
+      }
+      main {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 48px 24px;
+        box-sizing: border-box;
+      }
+      .site {
+        font-family: 'Instrument Sans', sans-serif;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 26px;
+        color: #212121;
+        text-decoration: none;
+      }
+      .site:hover,
+      .site:focus-visible { color: #BF6B69; }
+      h1 {
+        font-family: 'Instrument Sans', sans-serif;
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 1.2;
+        margin: 48px 0 12px;
+      }
+      p {
+        font-size: 17px;
+        line-height: 1.6;
+        margin: 0 0 24px;
+        color: rgba(33, 33, 33, 0.85);
+      }
+      .home {
+        font-family: 'Instrument Sans', sans-serif;
+        font-weight: 600;
+        color: #212121;
+        text-decoration: underline;
+        text-decoration-color: #BF6B69;
+        text-underline-offset: 3px;
+      }
+      .home:hover,
+      .home:focus-visible { color: #BF6B69; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="site" href="/">Andrew G Milmoe</a>
+      <h1>Page not found</h1>
+      <p>The page you are looking for doesn't exist or has moved.</p>
+      <a class="home" href="/">Go to the home page</a>
+    </main>
+  </body>
+</html>
